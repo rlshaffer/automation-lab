@@ -8,8 +8,7 @@
 
   tasks:
     - name: Terraform init
-      command: "{{ terraform_dir }} init"
-     
+      command: terraform init
       args:
         chdir: "{{ terraform_dir }}"
 
