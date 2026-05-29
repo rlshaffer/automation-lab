@@ -1,0 +1,12 @@
+- name: Configure new VM
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Ensure system is reachable
+      ping:
+
+    - name: Install common packages (Linux example)
+      package:
+        name: vim
+        state: present
