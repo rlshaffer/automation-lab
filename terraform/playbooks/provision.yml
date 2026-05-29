@@ -2,14 +2,13 @@
   hosts: localhost
   gather_facts: no
 
-
-
   vars:
+    terraform_dir: /home/randy/automation-lab/terraform
     terraform_bin: /usr/local/bin/terraform
 
   tasks:
     - name: Terraform init
-      command: "{{ terraform_bin }} init"
+      command: "{{ terraform_dir }} init"
      
       args:
         chdir: "{{ terraform_dir }}"
