@@ -1,0 +1,72 @@
+- name: Build VM with Terraform
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    terraform_dir: "{{ playbook_dir }}/../terraform"
+
+  tasks:
+    - name: Terraform init
+      command: terraform init
+      args:
+        chdir: "{{ terraform_dir }}"
+
+    - name: Terraform apply
+      command: terraform apply -auto-approve
+      args:
+        chdir: "{{ terraform_dir }}"
+      environment:
+        TF_VAR_vm_name: "{{ vm_name }}"
+        TF_VAR_vsphere_server: "{{ vsphere_server }}"
+        TF_VAR_vsphere_user: "{{ vsphere_user }}"
+        TF_VAR_vsphere_password: "{{ vsphere_password }}"
+        TF_VAR_datacenter: "{{ datacenter }}"
+        TF_VAR_cluster: "{{ cluster }}"
+        TF_VAR_datastore: "{{ datastore }}"
+        TF_VAR_network: "{{ network }}"
+        TF_VAR_template_name: "{{ template_name }}"
+
+    - name: Get Terraform outputs
+      command: terraform output -json
+      args:
+        chdir: "{{ terraform_dir }}"
+      register: tf_output
+
+    - name: Parse outputs
+      set_fact:
+        vm_ip: "{{ (tf_output.stdout | from_json).vm_ip.value }}"
+        vm_name: "{{ (tf_output.stdout | from_json).vm_name.value }}"
+
+- name: Configure the new VM
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: Wait for WinRM (Windows)
+      wait_for:
+        host: "{{ vm_ip }}"
+        port: 5985
+        timeout: 600
+
+    - name: Add host dynamically
+      add_host:
+        name: new_vm
+        ansible_host: "{{ vm_ip }}"
+        ansible_user: "{{ vm_admin_user }}"
+        ansible_password: "{{ vm_admin_password }}"
+        ansible_connection: winrm
+        ansible_winrm_transport: ntlm
+
+- name: Configure VM via Ansible
+  hosts: new_vm
+  gather_facts: no
+
+  tasks:
+    - name: Test connectivity
+      win_ping:
+
+    - name: Install IIS
+      win_feature:
+        name: Web-Server
+        state: present
+
