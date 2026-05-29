@@ -3,17 +3,27 @@
   gather_facts: no
 
   vars:
-    terraform_dir: /home/randy/automation-lab/terraform
-    terraform_bin: /usr/local/bin/terraform
+    terraform_dir: "{{ playbook_dir }}/../../terraform"
+    terraform_bin: terraform
 
   tasks:
+    - name: Validate Terraform directory exists
+      stat:
+        path: "{{ terraform_dir }}"
+      register: tf_dir
+
+    - name: Fail if Terraform dir is missing
+      fail:
+        msg: "Terraform directory not found: {{ terraform_dir }}"
+      when: not tf_dir.stat.exists
+
     - name: Terraform init
-      command: terraform init
+      command: "{{ terraform_bin }} init"
       args:
         chdir: "{{ terraform_dir }}"
 
     - name: Terraform apply
-      command: terraform apply -auto-approve
+      command: "{{ terraform_bin }} apply -auto-approve"
       args:
         chdir: "{{ terraform_dir }}"
       environment:
@@ -28,7 +38,7 @@
         TF_VAR_template_name: "{{ template_name }}"
 
     - name: Get Terraform outputs
-      command: terraform output -json
+      command: "{{ terraform_bin }} output -json"
       args:
         chdir: "{{ terraform_dir }}"
       register: tf_output
@@ -37,6 +47,8 @@
       set_fact:
         vm_ip: "{{ (tf_output.stdout | from_json).vm_ip.value }}"
         vm_name: "{{ (tf_output.stdout | from_json).vm_name.value }}"
+
+# ----------------------------------------
 
 - name: Configure the new VM
   hosts: localhost
@@ -58,6 +70,8 @@
         ansible_connection: winrm
         ansible_winrm_transport: ntlm
 
+# ----------------------------------------
+
 - name: Configure VM via Ansible
   hosts: new_vm
   gather_facts: no
@@ -70,4 +84,4 @@
       win_feature:
         name: Web-Server
         state: present
-
+``

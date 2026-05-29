@@ -1,0 +1,5 @@
+---
+plugin: vmware.vmware.vms
+strict: false
+validate_certs: false
+with_tags: true
