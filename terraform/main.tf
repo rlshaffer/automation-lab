@@ -13,6 +13,9 @@ provider "vsphere" {
   vsphere_server       = var.vsphere_server
 
   allow_unverified_ssl = true
+
+  # ADD THESE (critical for some environments)
+  api_timeout          = 30
 }
 
 data "vsphere_datacenter" "dc" {
