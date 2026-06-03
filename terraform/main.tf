@@ -6,6 +6,7 @@ terraform {
   }
 }
 
+
 provider "vsphere" {
   user           = var.vsphere_user
   password       = var.vsphere_password
@@ -13,6 +14,8 @@ provider "vsphere" {
 
   allow_unverified_ssl = true
 }
+
+
 data "vsphere_datacenter" "dc" {
   name = var.datacenter
 }
