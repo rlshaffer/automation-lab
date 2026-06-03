@@ -10,3 +10,10 @@
       package:
         name: vim
         state: present
+
+- name: Terraform apply
+  command: terraform apply -auto-approve
+  environment:
+    VSPHERE_SERVER: "{{ vsphere_server }}"
+    VSPHERE_USER: "{{ lookup('env','VSPHERE_USER') }}"
+    VSPHERE_PASSWORD: "{{ lookup('env','VSPHERE_PASSWORD') }}"
