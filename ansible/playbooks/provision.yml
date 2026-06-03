@@ -15,12 +15,28 @@
     - name: Fail if Terraform dir is missing
       fail:
         msg: "Terraform directory not found: {{ terraform_dir }}"
+
+
+    - debug:
+      var: curl_test.stdout
+
       when: not tf_dir.stat.exists
 
     - name: Terraform init
       command: "{{ terraform_bin }} init"
       args:
         chdir: "{{ terraform_dir }}"
+
+
+    - name: Test connectivity to vCenter
+      shell: |
+        echo "Testing vCenter connectivity..."
+        curl -k https://{{ vsphere_server }}/sdk
+      register: curl_test
+
+    - debug:
+        var: curl_test.stdout
+
 
     - name: Terraform apply
       command: "{{ terraform_bin }} apply -auto-approve"
