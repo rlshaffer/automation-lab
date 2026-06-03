@@ -55,6 +55,6 @@
 - name: Terraform apply
   command: terraform apply -auto-approve
   environment:
-    VSPHERE_SERVER: "{{ vsphere_server }}"
-    VSPHERE_USER: "{{ lookup('env','VSPHERE_USER') }}"
-    VSPHERE_PASSWORD: "{{ lookup('env','VSPHERE_PASSWORD') }}"
+    TF_VAR_vsphere_server: "{{ vsphere_server }}"
+    TF_VAR_vsphere_user: "{{ lookup('env','VSPHERE_USER') }}"
+    TF_VAR_vsphere_password: "{{ lookup('env','VSPHERE_PASSWORD') }}"
