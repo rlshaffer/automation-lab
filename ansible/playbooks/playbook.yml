@@ -17,7 +17,14 @@
 
 - debug:
     var: vs_env.stdout_lines
-
+    
+- name: Show BOTH env + TF vars
+  shell: |
+    echo "---- VSPHERE ----"
+    env | grep VSPHERE
+    echo "---- TF VARS ----"
+    env | grep TF_VAR
+        
 - name: Terraform apply
   command: terraform apply -auto-approve
   environment:
