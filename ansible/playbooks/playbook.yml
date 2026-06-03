@@ -24,7 +24,18 @@
     env | grep VSPHERE
     echo "---- TF VARS ----"
     env | grep TF_VAR
-        
+
+- name: Show EXACT values being used
+  shell: |
+    echo "SERVER=$TF_VAR_vsphere_server"
+    echo "USER=$TF_VAR_vsphere_user"
+    echo "PASS_LENGTH=$(echo -n $TF_VAR_vsphere_password | wc -c)"
+  register: tf_debug
+
+- debug:
+    var: tf_debug.stdout_lines
+ 
+       
 - name: Terraform apply
   command: terraform apply -auto-approve
   environment:
