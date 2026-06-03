@@ -52,6 +52,12 @@
 - debug:
     var: tf_vals.stdout_lines
 
+- name: Show what Terraform will receive
+  shell: |
+    echo "TF_VAR_vsphere_server=$TF_VAR_vsphere_server"
+    echo "TF_VAR_vsphere_user=$TF_VAR_vsphere_user"
+    echo "PASS_LEN=$(echo -n $TF_VAR_vsphere_password | wc -c)"
+
 - name: Terraform apply
   command: terraform apply -auto-approve
   environment:
