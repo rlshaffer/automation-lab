@@ -39,7 +39,18 @@
   shell: |
     echo "SERVER=$TF_VAR_vsphere_server"
     echo "USER=$TF_VAR_vsphere_user"
-    echo "PASS_LEN=$(echo -n $TF_VAR_vsphere_password | wc -c)"   
+    echo "PASS_LEN=$(echo -n $TF_VAR_vsphere_password | wc -c)"
+
+
+- name: Show EXACT Terraform input values
+  shell: |
+    echo "SERVER=$TF_VAR_vsphere_server"
+    echo "USER=$TF_VAR_vsphere_user"
+    echo "PASS_LEN=$(echo -n $TF_VAR_vsphere_password | wc -c)"
+  register: tf_vals
+
+- debug:
+    var: tf_vals.stdout_lines
 
 - name: Terraform apply
   command: terraform apply -auto-approve
