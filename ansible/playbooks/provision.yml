@@ -11,6 +11,14 @@
 
 
   tasks:
+
+    - name: Show what AWX actually pulled
+      shell: ls -R /runner/project
+      register: awx_files
+
+    - debug:
+        var: awx_files.stdout_lines
+
     - name: Validate Terraform directory exists
       stat:
         path: "{{ terraform_dir }}"
