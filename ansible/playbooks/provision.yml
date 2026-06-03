@@ -16,12 +16,6 @@
       fail:
         msg: "Terraform directory not found: {{ terraform_dir }}"
 
-
-    - debug:
-      var: curl_test.stdout
-
-      when: not tf_dir.stat.exists
-
     - name: Terraform init
       command: "{{ terraform_bin }} init"
       args:
