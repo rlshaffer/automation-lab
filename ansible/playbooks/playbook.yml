@@ -11,6 +11,13 @@
         name: vim
         state: present
 
+- name: Show vSphere env (debug)
+  shell: env | grep VSPHERE
+  register: vs_env
+
+- debug:
+    var: vs_env.stdout_lines
+
 - name: Terraform apply
   command: terraform apply -auto-approve
   environment:
