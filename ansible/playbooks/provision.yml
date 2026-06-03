@@ -2,11 +2,13 @@
   hosts: localhost
   gather_facts: no
 
-  terraform_dir: "/runner/project/terraform"
+
 
   vars:
-    terraform_dir: "{{ playbook_dir }}/../../terraform"
+    terraform_dir: "/runner/project/terraform"
+    #terraform_dir: "{{ playbook_dir }}/../../terraform"
     terraform_bin: terraform
+
 
   tasks:
     - name: Validate Terraform directory exists
