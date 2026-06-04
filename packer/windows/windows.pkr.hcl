@@ -76,11 +76,11 @@ source "vsphere-iso" "windows" {
     "[LABVMW_DATASTORE] Repository/SW_DVD9_Win_Server_STD_CORE_2025_24H2.1_64Bit_English_DC_STD_MLF_X23-89914.ISO"
   ]
 
-  boot_order = "cdrom,disk"
+  boot_order = "disk,cdrom"
 
-  boot_wait  = "1s"
+  boot_wait  = "5s"
   boot_command = [
-   "<esc><enter>"
+   "<enter>"
   ]
 
   communicator = "winrm"
