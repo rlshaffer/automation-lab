@@ -40,14 +40,18 @@ source "vsphere-iso" "windows" {
   datacenter = var.datacenter
   cluster    = var.cluster
   datastore  = var.datastore
-  network    = var.network
 
   vm_name = var.template_name
 
-  vm_cpu    = var.vm_cpu
-  vm_memory = var.vm_memory_mb
-
   guest_os_type = "windows9Server64Guest"
+
+  CPUs = var.vm_cpu
+  RAM  = var.vm_memory_mb
+
+  network_adapters {
+    network      = var.network
+    network_card = "vmxnet3"
+  }
 
   disk_controller_type = ["pvscsi"]
 
@@ -55,8 +59,8 @@ source "vsphere-iso" "windows" {
     disk_size             = 40960
     disk_thin_provisioned = true
   }
-
 }
+
 
 build {
   sources = ["source.vsphere-iso.windows"]
