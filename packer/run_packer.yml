@@ -4,7 +4,7 @@
 
   tasks:
     - name: Run Packer build
-      ansible.builtin.command: >
+      ansible.builtin.command: 
         packer build
         -var "vsphere_user={{ vsphere_user }}"
         -var "vsphere_password={{ vsphere_password }}"
