@@ -39,6 +39,15 @@
     - debug:
         var: sdk_test.stdout_lines
     
+    - name: Show EXACT runtime values
+      shell: |
+        echo "SERVER={{ vsphere_server }}"
+        echo "USER=$(echo $VSPHERE_USER)"
+        echo "PASS_LEN=$(echo -n $VSPHERE_PASSWORD | wc -c)"
+      register: runtime_check
+
+    - debug:
+        var: runtime_check.stdout_lines
 
     - name: Terraform apply
       command: terraform apply -auto-approve
