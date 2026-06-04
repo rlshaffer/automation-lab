@@ -52,6 +52,13 @@ source "vsphere-iso" "windows" {
   communicator    = "winrm"
   winrm_username  = "Administrator"
   winrm_password  = var.win_admin_password
+  disk_size             = 40960
+  disk_controller_type  = ["pvscsi"]
+  storage {
+    disk_size             = 40960
+    disk_thin_provisioned = true
+  }
+
 }
 
 build {
