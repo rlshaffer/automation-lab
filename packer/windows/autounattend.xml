@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+
+  <!-- WINDOWS SETUP -->
+  <settings pass="windowsPE">
+    <component name="Microsoft-Windows-Setup"
+               processorArchitecture="amd64"
+               publicKeyToken="31bf3856ad364e35"
+               language="neutral"
+               versionScope="nonSxS">
+
+      <DiskConfiguration>
+        <Disk         <DiskID>0</DiskID>
+          <WillWipeDisk>true</WillWipeDisk>
+          <CreatePartitions>
+            <dd
+              <Order>1</Order>
+              <Type>Primary</Type>
+              <Size>40960</Size>
+            </CreatePartition>
+          </CreatePartitions>
+        </Disk>
+      </DiskConfiguration>
+
+      <ImageInstall>
+        <OSImage>
+          <InstallTo>
+            <DiskID>0</DiskID>
+            <PartitionID>1</PartitionID>
+          </InstallTo>
+        </OSImage>
+      </ImageInstall>
+
+      <UserData>
+        <AcceptEula>true</AcceptEula>
+      </UserData>
+
+    </component>
+  </settings>
+
+
+  <!-- OOBE SETTINGS -->
+  <settings pass="oobeSystem">
+    <component name="Microsoft-Windows-Shell-Setup"
+               processorArchitecture="amd64"
+               publicKeyToken="31bf3856ad364e35"
+               language="neutral"
+               versionScope="nonSxS">
+
+      <AutoLogon>
+        <Password>
+          <Value>Johnathan0730-!</Value>
+          <PlainText>true</PlainText>
+        </Password>
+        <Enabled>true</Enabled>
+        <LogonCount>5</LogonCount>
+        <Username>Administrator</Username>
+      </AutoLogon>
+
+      <UserAccounts>
+        <AdministratorPassword>
+          <Value>Johnathan0730-!</Value>
+          <PlainText>true</PlainText>
+        </AdministratorPassword>
+      </UserAccounts>
+
+      <OOBE>
+        <HideEULAPage>true</HideEULAPage>
+        <NetworkLocation>Work</NetworkLocation>
+        <ProtectYourPC>1</ProtectYourPC>
+      </OOBE>
+
+      <TimeZone>Eastern Standard Time</TimeZone>
+
+      <!-- THIS IS KEY: Enable WinRM -->
+      <FirstLogonCommands>
+
+        add
+          <Order>1</Order>
+          <CommandLine>cmd /c winrm quickconfig -q</CommandLine>
+          <Description>Enable WinRM</Description>
+        </SynchronousCommand>
+
+        add
+          <Order>2</Order>
+          <CommandLine>cmd /c winrm set winrm/config/service @{AllowUnencrypted="true"}</CommandLine>
+          <Description>Allow Unencrypted</Description>
+        </SynchronousCommand>
+
+        add
+          <Order>3</Order>
+          <CommandLine>cmd /c winrm set winrm/config/service/auth @{Basic="true"}</CommandLine>
+          <Description>Enable Basic Auth</Description>
+        </SynchronousCommand>
+
+        <SynchronousCommand wcm:action="add      <CommandLine>cmd /c netsh advfirewall firewall add rule name="WinRM" dir=in action=allow protocol=TCP localport=5985</CommandLine>
+          <Description>Open Firewall</Description>
+        </SynchronousCommand>
+
+      </FirstLogonCommands>
+
+    </component>
+  </settings>
+
+</unattend>
