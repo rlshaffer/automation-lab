@@ -33,7 +33,7 @@ variable "win_admin_password" {
 
 source "vsphere-iso" "windows" {
   vcenter_server = var.vsphere_server
-  username = "NORDSONCORP\\admin.shaffer"
+  username = "admin.shaffer@nordsoncorp.local"
   password = var.vsphere_password
 
 
