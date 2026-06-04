@@ -16,7 +16,6 @@
     - name: Run Packer build
       ansible.builtin.shell: 
         ./packer build \
-        -var "vsphere_user={{ vsphere_user }}" \
         -var "vsphere_password={{ vsphere_password }}" \
         -var "vsphere_server={{ vsphere_server }}" \
         -var "datacenter={{ datacenter }}" \

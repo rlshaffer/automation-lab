@@ -34,8 +34,9 @@ variable "win_admin_password" {
 
 source "vsphere-iso" "windows" {
   vcenter_server = var.vsphere_server
-  username       = var.vsphere_user
-  password       = var.vsphere_password
+  username = "NORDSONCORP\\admin.shaffer"
+  password = var.vsphere_password
+
 
   datacenter = var.datacenter
   cluster    = var.cluster
