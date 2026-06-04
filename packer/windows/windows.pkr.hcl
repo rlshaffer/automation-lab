@@ -60,6 +60,9 @@ source "vsphere-iso" "windows" {
     disk_size             = 40960
     disk_thin_provisioned = true
   }
+  floppy_files = [
+  "windows/autounattend.xml"
+]
 
   communicator = "winrm"
   winrm_username = "Administrator"
