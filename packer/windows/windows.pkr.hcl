@@ -46,9 +46,7 @@ source "vsphere-iso" "windows" {
 
   guest_os_type = "windows9Server64Guest"
 
-  boot_command = [
-    "<esc><enter>"
-      ]
+
 
   firmware = "efi"
 
@@ -80,7 +78,10 @@ source "vsphere-iso" "windows" {
 
   boot_order = "disk,cdrom"
 
-  boot_wait  = "10s"
+  boot_wait  = "5s"
+  boot_command = [
+   "<esc><enter>"
+  ]
 
   communicator = "winrm"
   winrm_username = "Administrator"
