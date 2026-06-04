@@ -61,6 +61,7 @@ source "vsphere-iso" "windows" {
     disk_thin_provisioned = true
   }
 
+  
   floppy_files = [
     "./windows/autounattend.xml"
   ]
@@ -69,10 +70,8 @@ source "vsphere-iso" "windows" {
     "[LABVMW_DATASTORE] Repository/SW_DVD9_Win_Server_STD_CORE_2025_24H2.1_64Bit_English_DC_STD_MLF_X23-89914.ISO"
   ]
 
-boot_order = "cdrom,disk"
-boot_wait  = "10s"
-
-]
+  boot_order = "cdrom,disk"
+  boot_wait  = "10s"
 
   communicator = "winrm"
   winrm_username = "Administrator"
@@ -95,7 +94,7 @@ build {
       "winrm quickconfig -q",
       "Enable-PSRemoting -Force",
 
-      "winrm delete winrm/config/listener?Address=*+Transport=HTTP 2>$null",
+      "winrm delete winrm/config/listener?Address=*+Transport=HTTP 2> $null",
       "winrm create winrm/config/listener?Address=*+Transport=HTTP",
 
       "Set-Service WinRM -StartupType Automatic",
