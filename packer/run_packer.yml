@@ -15,3 +15,29 @@
     - name: Show packer errors (if any)
       debug:
         var: packer_check.stderr_lines
+
+- name: Debug Packer Environment
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: Which packer
+      ansible.builtin.shell: which packer || echo "not found"
+      register: packer_path
+
+    - debug:
+        var: packer_path.stdout_lines
+
+    - name: Check packer file
+      ansible.builtin.shell: ls -l $(which packer) || echo "no binary"
+      register: packer_file
+
+    - debug:
+        var: packer_file.stdout_lines
+
+    - name: Try packer version explicitly
+      ansible.builtin.shell: /usr/local/bin/packer version || echo "failed"
+      register: packer_version
+
+    - debug:
+        var: packer_version.stdout_lines
