@@ -2,7 +2,17 @@
   hosts: localhost
   gather_facts: no
 
-  tasks:
+  
+tasks:
+    - name: Initialize Packer plugins
+      ansible.builtin.shell: |
+        ./packer init ./windows/windows.pkr.hcl
+      register: packer_init
+
+    - name: Show init output
+      debug:
+        var: packer_init.stdout_lines
+
     - name: Run Packer build
       ansible.builtin.shell: 
         ./packer build \
