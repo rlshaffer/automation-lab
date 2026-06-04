@@ -87,7 +87,7 @@
       wait_for:
         host: "{{ vm_ip }}"
         port: 5985
-        timeout: 600
+        timeout: 60
 
     - name: Add host dynamically
       add_host:
