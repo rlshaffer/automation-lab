@@ -21,33 +21,33 @@
       args:
         chdir: "{{ terraform_dir }}"
 
-    - name: Show EXACT values being sent to Terraform
-      shell: |
-        echo "SERVER={{ vsphere_server }}"
-        echo "USER=$(echo $VSPHERE_USER)"
-        echo "PASS_LEN=$(echo -n $VSPHERE_PASSWORD | wc -c)"
-      register: final_debug
+    #- name: Show EXACT values being sent to Terraform
+    #  shell: |
+    #    echo "SERVER={{ vsphere_server }}"
+    #    echo "USER=$(echo $VSPHERE_USER)"
+    #    echo "PASS_LEN=$(echo -n $VSPHERE_PASSWORD | wc -c)"
+    #  register: final_debug
 
-    - debug:
-        var: final_debug.stdout_lines  
+    #- debug:
+    #    var: final_debug.stdout_lines  
 
 
     - name: Test vCenter SDK connectivity
       shell: curl -k https://{{ vsphere_server }}/sdk
       register: sdk_test
 
-    - debug:
-        var: sdk_test.stdout_lines
+    #- debug:
+    #    var: sdk_test.stdout_lines
     
-    - name: Show EXACT runtime values
-      shell: |
-        echo "SERVER={{ vsphere_server }}"
-        echo "USER=$(echo $VSPHERE_USER)"
-        echo "PASS_LEN=$(echo -n $VSPHERE_PASSWORD | wc -c)"
-      register: runtime_check
+    #- name: Show EXACT runtime values
+    #  shell: |
+    #    echo "SERVER={{ vsphere_server }}"
+    #    echo "USER=$(echo $VSPHERE_USER)"
+    #    echo "PASS_LEN=$(echo -n $VSPHERE_PASSWORD | wc -c)"
+    #  register: runtime_check
 
-    - debug:
-        var: runtime_check.stdout_lines
+    #- debug:
+    #    var: runtime_check.stdout_lines
 
 
     - name: Terraform apply
