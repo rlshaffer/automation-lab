@@ -10,15 +10,26 @@
                versionScope="nonSxS">
 
       <DiskConfiguration>
-        <Disk         <DiskID>0</DiskID>
+        <Disk wcm:    <DiskID>0</DiskID>
           <WillWipeDisk>true</WillWipeDisk>
+
           <CreatePartitions>
-            <dd
-              <Order>1</Order>
+            <CreatePartition wcm:action/Order>
               <Type>Primary</Type>
-              <Size>40960</Size>
+              <Extend>true</Extend>
             </CreatePartition>
           </CreatePartitions>
+
+          <ModifyPartitions>
+            <Modify           <Order>1</Order>
+              <PartitionID>1</PartitionID>
+              <Format>NTFS</Format>
+              <Label>Windows</Label>
+              <Letter>C</Letter>
+              <Active>true</Active>
+            </ModifyPartition>
+          </ModifyPartitions>
+
         </Disk>
       </DiskConfiguration>
 
@@ -28,16 +39,24 @@
             <DiskID>0</DiskID>
             <PartitionID>1</PartitionID>
           </InstallTo>
+
+          <InstallFrom>
+            <MetaData         <Key>/IMAGE/NAME</Key>
+              <Value>Windows Server 2025 Standard</Value>
+            </MetaData>
+          </InstallFrom>
+
         </OSImage>
       </ImageInstall>
 
       <UserData>
         <AcceptEula>true</AcceptEula>
+        <FullName>Packer</FullName>
+        <Organization>Lab</Organization>
       </UserData>
 
     </component>
   </settings>
-
 
   <!-- OOBE SETTINGS -->
   <settings pass="oobeSystem">
@@ -72,11 +91,9 @@
 
       <TimeZone>Eastern Standard Time</TimeZone>
 
-      <!-- THIS IS KEY: Enable WinRM -->
       <FirstLogonCommands>
 
-        add
-          <Order>1</Order>
+        <SynchronousCommand w1</Order>
           <CommandLine>cmd /c winrm quickconfig -q</CommandLine>
           <Description>Enable WinRM</Description>
         </SynchronousCommand>
@@ -87,13 +104,11 @@
           <Description>Allow Unencrypted</Description>
         </SynchronousCommand>
 
-        add
-          <Order>3</Order>
-          <CommandLine>cmd /c winrm set winrm/config/service/auth @{Basic="true"}</CommandLine>
+        <SynchronousCommand wcm:action="add      <CommandLine>cmd /c winrm set winrm/config/service/auth @{Basic="true"}</CommandLine>
           <Description>Enable Basic Auth</Description>
         </SynchronousCommand>
 
-        <SynchronousCommand wcm:action="add      <CommandLine>cmd /c netsh advfirewall firewall add rule name="WinRM" dir=in action=allow protocol=TCP localport=5985</CommandLine>
+        <SynchronousCommand wcm:action="         <CommandLine>cmd /c netsh advfirewall firewall add rule name="WinRM" dir=in action=allow protocol=TCP localport=5985</CommandLine>
           <Description>Open Firewall</Description>
         </SynchronousCommand>
 
