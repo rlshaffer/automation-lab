@@ -46,6 +46,9 @@ source "vsphere-iso" "windows" {
 
   guest_os_type = "windows9Server64Guest"
 
+  firmware = "efi"
+
+
   CPUs = var.vm_cpu
   RAM  = var.vm_memory_mb
 
