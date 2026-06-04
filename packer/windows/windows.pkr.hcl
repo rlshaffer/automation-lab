@@ -48,6 +48,7 @@ source "vsphere-iso" "windows" {
 
   firmware = "efi"
 
+  cdrom_type = "sata"
 
   CPUs = var.vm_cpu
   RAM  = var.vm_memory_mb
@@ -60,7 +61,7 @@ source "vsphere-iso" "windows" {
   disk_controller_type = ["lsilogic-sas"]
 
   storage {
-    disk_size             = 40960
+    disk_size             = 16384
     disk_thin_provisioned = true
   }
 
