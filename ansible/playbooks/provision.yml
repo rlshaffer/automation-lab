@@ -29,7 +29,16 @@
       register: final_debug
 
     - debug:
-        var: final_debug.stdout_lines      
+        var: final_debug.stdout_lines  
+
+
+    - name: Test vCenter SDK connectivity
+      shell: curl -k https://{{ vsphere_server }}/sdk
+      register: sdk_test
+
+    - debug:
+        var: sdk_test.stdout_lines
+    
 
     - name: Terraform apply
       command: terraform apply -auto-approve
