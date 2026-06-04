@@ -49,14 +49,15 @@
     - debug:
         var: runtime_check.stdout_lines
 
+
     - name: Terraform apply
       command: terraform apply -auto-approve
       args:
         chdir: "/runner/project/terraform"
       environment:
         TF_VAR_vsphere_server: "{{ vsphere_server }}"
-        TF_VAR_vsphere_user: "{{ ansible_user }}"
-        TF_VAR_vsphere_password: "{{ ansible_password }}" 
+        TF_VAR_vsphere_user: "{{ lookup('env','VSPHERE_USER') }}"
+        TF_VAR_vsphere_password: "{{ lookup('env','VSPHERE_PASSWORD') }}"
         TF_VAR_vm_name: "{{ vm_name }}"
         TF_VAR_datacenter: "{{ datacenter }}"
         TF_VAR_cluster: "{{ cluster }}"
