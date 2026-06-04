@@ -59,8 +59,12 @@ source "vsphere-iso" "windows" {
     disk_size             = 40960
     disk_thin_provisioned = true
   }
-}
 
+  communicator = "winrm"
+  winrm_username = "Administrator"
+  winrm_password = var.win_admin_password
+  winrm_timeout  = "2h"
+}
 
 build {
   sources = ["source.vsphere-iso.windows"]
