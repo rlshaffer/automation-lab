@@ -80,7 +80,7 @@ source "vsphere-iso" "windows" {
 
   boot_wait  = "20s"
   boot_command = [
-   "<wait><enter>"
+   "<esc><wait><enter>"
   ]
 
   communicator = "winrm"
