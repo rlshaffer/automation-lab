@@ -46,6 +46,11 @@ source "vsphere-iso" "windows" {
 
   guest_os_type = "windows9Server64Guest"
 
+  boot_command = [
+    "<esc><wait>",
+    "exit<enter>"
+  ]
+
   firmware = "efi"
 
   cdrom_type = "sata"
@@ -85,6 +90,7 @@ source "vsphere-iso" "windows" {
 
   insecure_connection = true
   set_host_for_datastore_uploads = true
+  remove_cdrom = true
 }
 
 build {
