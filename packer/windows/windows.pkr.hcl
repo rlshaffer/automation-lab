@@ -35,6 +35,7 @@ source "vsphere-iso" "windows" {
   vcenter_server = var.vsphere_server
   username = "admin.shaffer@nordsoncorp.local"
   password = var.vsphere_password
+  
 
 
   datacenter = var.datacenter
@@ -66,6 +67,7 @@ source "vsphere-iso" "windows" {
   winrm_timeout  = "2h"
 
   insecure_connection = true
+  set_host_for_datastore_uploads = true
 }
 
 build {
