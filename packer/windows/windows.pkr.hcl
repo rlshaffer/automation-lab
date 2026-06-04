@@ -64,6 +64,8 @@ source "vsphere-iso" "windows" {
   winrm_username = "Administrator"
   winrm_password = var.win_admin_password
   winrm_timeout  = "2h"
+
+  insecure_connection = true
 }
 
 build {
