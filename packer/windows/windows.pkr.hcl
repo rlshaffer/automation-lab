@@ -37,23 +37,20 @@ source "vsphere-iso" "windows" {
   username       = var.vsphere_user
   password       = var.vsphere_password
 
-  datacenter     = var.datacenter
-  cluster        = var.cluster
-  datastore      = var.datastore
+  datacenter = var.datacenter
+  cluster    = var.cluster
+  datastore  = var.datastore
+  network    = var.network
 
-  vm_name        = var.template_name
-  CPUs           = var.vm_cpu
-  RAM            = var.vm_memory_mb
+  vm_name = var.template_name
 
-  network_adapters {
-    network = var.network
-  }
+  vm_cpu    = var.vm_cpu
+  vm_memory = var.vm_memory_mb
 
-  communicator    = "winrm"
-  winrm_username  = "Administrator"
-  winrm_password  = var.win_admin_password
-  disk_size             = 40960
-  disk_controller_type  = ["pvscsi"]
+  guest_os_type = "windows9Server64Guest"
+
+  disk_controller_type = ["pvscsi"]
+
   storage {
     disk_size             = 40960
     disk_thin_provisioned = true
