@@ -1,4 +1,4 @@
-- name: Configure new VM
+- name: Configure new VM and run Terraform
   hosts: all
   become: yes
 
@@ -11,67 +11,39 @@
         name: vim
         state: present
 
+    # --- DEBUG: Environment Variables ---
+    - name: Show vSphere env
+      shell: env | grep VSPHERE
+      register: vs_env
 
+    - name: Show vSphere env output
+      debug:
+        var: vs_env.stdout_lines
 
-  provider "vsphere" {
-    user                 = var.vsphere_user
-    password             = var.vsphere_password
-    vsphere_server       = var.vsphere_server
-    allow_unverified_ssl = true
-  }
+    - name: Show BOTH env + TF vars
+      shell: 
+        echo "---- VSPHERE ----"
+        env | grep VSPHERE
+        echo "---- TF VARS ----"
+        env | grep TF_VAR
 
+    - name: Show exact Terraform values
+      shell: 
+        echo "SERVER=$TF_VAR_vsphere_server"
+        echo "USER=$TF_VAR_vsphere_user"
+        echo "PASS_LENGTH=$(echo -n $TF_VAR_vsphere_password | wc -c)"
+      register: tf_debug
 
+    - name: Show Terraform debug output
+      debug:
+        var: tf_debug.stdout_lines
 
-- name: Show vSphere env (debug)
-  shell: env | grep VSPHERE
-  register: vs_env
-
-- debug:
-    var: vs_env.stdout_lines
-    
-- name: Show BOTH env + TF vars
-  shell: |
-    echo "---- VSPHERE ----"
-    env | grep VSPHERE
-    echo "---- TF VARS ----"
-    env | grep TF_VAR
-
-- name: Show EXACT values being used
-  shell: |
-    echo "SERVER=$TF_VAR_vsphere_server"
-    echo "USER=$TF_VAR_vsphere_user"
-    echo "PASS_LENGTH=$(echo -n $TF_VAR_vsphere_password | wc -c)"
-  register: tf_debug
-
-- debug:
-    var: tf_debug.stdout_lines
- 
-- name: Show EXACT credentials being passed
-  shell: |
-    echo "SERVER=$TF_VAR_vsphere_server"
-    echo "USER=$TF_VAR_vsphere_user"
-    echo "PASS_LEN=$(echo -n $TF_VAR_vsphere_password | wc -c)"
-
-
-- name: Show EXACT Terraform input values
-  shell: |
-    echo "SERVER=$TF_VAR_vsphere_server"
-    echo "USER=$TF_VAR_vsphere_user"
-    echo "PASS_LEN=$(echo -n $TF_VAR_vsphere_password | wc -c)"
-  register: tf_vals
-
-- debug:
-    var: tf_vals.stdout_lines
-
-- name: Show what Terraform will receive
-  shell: |
-    echo "TF_VAR_vsphere_server=$TF_VAR_vsphere_server"
-    echo "TF_VAR_vsphere_user=$TF_VAR_vsphere_user"
-    echo "PASS_LEN=$(echo -n $TF_VAR_vsphere_password | wc -c)"
-
-- name: Terraform apply
-  command: terraform apply -auto-approve
-  environment:
-    TF_VAR_vsphere_server: "{{ vsphere_server }}"
-    TF_VAR_vsphere_user: "{{ lookup('env','VSPHERE_USER') }}"
-    TF_VAR_vsphere_password: "{{ lookup('env','VSPHERE_PASSWORD') }}"
+    # --- Terraform Execution ---
+    - name: Terraform apply
+      command: terraform apply -auto-approve
+      args:
+        chdir: "/runner/project/terraform"
+      environment:
+        TF_VAR_vsphere_server: "{{ vsphere_server }}"
+        TF_VAR_vsphere_user: "{{ lookup('env','VSPHERE_USER') }}"
+        TF_VAR_vsphere_password: "{{ lookup('env','VSPHERE_PASSWORD') }}"
