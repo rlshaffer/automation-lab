@@ -1,5 +1,10 @@
-- name: Run Packer build
-      ansible.builtin.shell: |
+- name: Build Windows Template with Packer
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: Run Packer build
+      ansible.builtin.shell: 
         ./packer/packer build \
         -var "vsphere_user={{ vsphere_user }}" \
         -var "vsphere_password={{ vsphere_password }}" \
@@ -15,5 +20,6 @@
         packer/windows/windows.pkr.hcl
       register: packer_output
 
-    - debug:
+    - name: Show Packer output
+      ansible.builtin.debug:
         var: packer_output.stdout_lines
