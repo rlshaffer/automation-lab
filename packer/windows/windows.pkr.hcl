@@ -47,9 +47,8 @@ source "vsphere-iso" "windows" {
   guest_os_type = "windows9Server64Guest"
 
   boot_command = [
-    "<esc><wait>",
-    "exit<enter>"
-  ]
+    "<esc><wait><enter>"
+      ]
 
   firmware = "efi"
 
