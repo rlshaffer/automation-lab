@@ -1,8 +1,7 @@
-variable "vsphere_server" {}
+
 variable "vsphere_user" {}
-variable "vsphere_password" {
-  sensitive = true
-}
+variable "vsphere_password" {}
+variable "vsphere_server" {}
 
 variable "datacenter" {}
 variable "cluster" {}

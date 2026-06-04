@@ -21,12 +21,24 @@
       args:
         chdir: "{{ terraform_dir }}"
 
+    - name: Show EXACT values being sent to Terraform
+      shell: |
+        echo "SERVER={{ vsphere_server }}"
+        echo "USER=$(echo $VSPHERE_USER)"
+        echo "PASS_LEN=$(echo -n $VSPHERE_PASSWORD | wc -c)"
+      register: final_debug
+
+    - debug:
+        var: final_debug.stdout_lines      
 
     - name: Terraform apply
-      command: "{{ terraform_bin }} apply -auto-approve"
+      command: terraform apply -auto-approve
       args:
-        chdir: "{{ terraform_dir }}"
+        chdir: "/runner/project/terraform"
       environment:
+        TF_VAR_vsphere_server: "{{ vsphere_server }}"
+        TF_VAR_vsphere_user: "{{ lookup('env','VSPHERE_USER') }}"
+        TF_VAR_vsphere_password: "{{ lookup('env','VSPHERE_PASSWORD') }}"
         TF_VAR_vm_name: "{{ vm_name }}"
         TF_VAR_vsphere_server: "{{ vsphere_server }}"
         TF_VAR_vsphere_user: "{{ lookup('env','VSPHERE_USER') }}"
