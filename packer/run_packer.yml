@@ -1,43 +1,25 @@
-- name: Check Packer Installation
+- name: Build Windows Template with Packer
   hosts: localhost
   gather_facts: no
 
   tasks:
-    - name: Check packer version
-      ansible.builtin.shell: packer version
-      register: packer_check
-      ignore_errors: yes
+    - name: Run Packer build
+      ansible.builtin.shell: |
+        /tmp/packer build \
+        -var "vsphere_user={{ vsphere_user }}" \
+        -var "vsphere_password={{ vsphere_password }}" \
+        -var "vsphere_server={{ vsphere_server }}" \
+        -var "datacenter={{ datacenter }}" \
+        -var "cluster={{ cluster }}" \
+        -var "datastore={{ datastore }}" \
+        -var "network={{ network }}" \
+        -var "template_name={{ template_name }}-gold" \
+        -var "vm_cpu={{ vm_cpu }}" \
+        -var "vm_memory_mb={{ vm_memory_mb }}" \
+        -var "win_admin_password={{ vm_admin_password }}" \
+        packer/windows/windows.pkr.hcl
+      register: packer_output
 
-    - name: Show packer version output
+    - name: Show Packer output
       debug:
-        var: packer_check.stdout_lines
-
-    - name: Show packer errors (if any)
-      debug:
-        var: packer_check.stderr_lines
-
-- name: Debug Packer Environment
-  hosts: localhost
-  gather_facts: no
-
-  tasks:
-    - name: Which packer
-      ansible.builtin.shell: which packer || echo "not found"
-      register: packer_path
-
-    - debug:
-        var: packer_path.stdout_lines
-
-    - name: Check packer file
-      ansible.builtin.shell: ls -l $(which packer) || echo "no binary"
-      register: packer_file
-
-    - debug:
-        var: packer_file.stdout_lines
-
-    - name: Try packer version explicitly
-      ansible.builtin.shell: /usr/local/bin/packer version || echo "failed"
-      register: packer_version
-
-    - debug:
-        var: packer_version.stdout_lines
+        var: packer_output.stdout_lines
