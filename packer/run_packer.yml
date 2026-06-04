@@ -3,7 +3,7 @@
   gather_facts: no
 
   
-tasks:
+  tasks:
     - name: Initialize Packer plugins
       ansible.builtin.shell: |
         ./packer init ./windows/windows.pkr.hcl
