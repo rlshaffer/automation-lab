@@ -17,19 +17,7 @@ variable "network" { type = string }
 
 variable "template_name" { type = string }
 
-variable "vm_cpu" {
-  type    = number
-  default = 2
-}
 
-variable "vm_memory_mb" {
-  type    = number
-  default = 4096
-}
-
-variable "win_admin_password" {
-  type = string
-}
 
 source "vsphere-iso" "windows" {
   vcenter_server = var.vsphere_server
@@ -41,13 +29,27 @@ source "vsphere-iso" "windows" {
 
 disk_controller_type = ["lsilogic-sas"]
 
-storage {
-  disk_size = 40960
-}
 
+
+variable "win_admin_password" {
+  type = string
+}
   firmware = "efi"
 
   cdrom_type = "sata"
+
+  storage {
+  disk_size = 40960
+}
+variable "vm_cpu" {
+  type    = number
+  default = 2
+}
+
+variable "vm_memory_mb" {
+  type    = number
+  default = 4096
+}
 
     CPUs = var.vm_cpu
   RAM  = var.vm_memory_mb
