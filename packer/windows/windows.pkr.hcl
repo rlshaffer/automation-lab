@@ -46,6 +46,8 @@ source "vsphere-iso" "windows" {
 
   guest_os_type = "windows9Server64Guest"
 
+  vm_version = 17
+
   firmware = "efi"
 
   cdrom_type = "sata"
