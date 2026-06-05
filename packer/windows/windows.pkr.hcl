@@ -76,17 +76,15 @@ source "vsphere-iso" "windows" {
 
   boot_order = "cdrom,disk"
 
-  boot_wait  = "5s"
+  boot_wait = "10s"
 
   boot_command = [
-    "<esc><enter>",
-    "<enter>",
-    "<enter>",
-    "<enter>",
-    "<enter>",
-    "<enter>",
-    "<enter>"
+    "<enter><wait>",
+    "<enter><wait>",
+    "<enter><wait>",
+    "<enter><wait>"
   ]
+  
 
 
   communicator = "winrm"
