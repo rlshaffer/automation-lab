@@ -31,27 +31,50 @@
         <AcceptEula>true</AcceptEula>
       </UserData>
 
+      <!-- ✅ Minimal, safe disk handling (no prompts) -->
       <DiskConfiguration>
         <Disk>
-        <DiskID>0</DiskID>
+          <DiskID>0</DiskID>
           <WillWipeDisk>true</WillWipeDisk>
+
+          <CreatePartitions>
+            <CreatePartition wcm:Order="1">
+              <Type>Primary</Type>
+              <Extend>true</Extend>
+            </CreatePartition>
+          </CreatePartitions>
+
+          <ModifyPartitions>
+            <ModifyPartition wcm:Order="1">
+              <PartitionID>1</PartitionID>
+              <Format>NTFS</Format>
+              <Letter>C</Letter>
+            </ModifyPartition>
+          </ModifyPartitions>
+
         </Disk>
       </DiskConfiguration>
 
       <ImageInstall>
         <OSImage>
+
           <InstallFrom>
-            <MetaData>
+            <MetaData wcm:Selector="/IMAGE/INDEX">
               <Key>/IMAGE/INDEX</Key>
               <Value>2</Value>
             </MetaData>
           </InstallFrom>
-          <InstallToAvailablePartition>true</InstallToAvailablePartition>
+
+          <InstallTo>
+            <DiskID>0</DiskID>
+            <PartitionID>1</PartitionID>
+          </InstallTo>
           <WillShowUI>OnError</WillShowUI>
+
         </OSImage>
       </ImageInstall>
-      <WillShowUI>OnError</WillShowUI>
     </component>
+
   </settings>
 
   <!-- OOBE -->
@@ -93,14 +116,13 @@
 
       <FirstLogonCommands>
 
-        <SynchronousCommand>
+        <SynchronousCommand wcm:Order="1">
           <Order>1</Order>
           <CommandLine>powershell -ExecutionPolicy Bypass -Command "Enable-PSRemoting -Force"</CommandLine>
           <Description>Enable WinRM</Description>
         </SynchronousCommand>
 
-        <SynchronousCommand>
-          <Order>2</Order>
+        <SynchronousCommand wcm:Order="2">
           <CommandLine>powershell -ExecutionPolicy Bypass -Command "Set-Item WSMan:\localhost\Service\Auth\Basic -Value $true; Set-Item WSMan:\localhost\Service\AllowUnencrypted -Value $true"</CommandLine>
           <Description>Configure WinRM</Description>
         </SynchronousCommand>
