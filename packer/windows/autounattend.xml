@@ -25,7 +25,8 @@
         <ImageInstall>
           <OSImage>
             <InstallFrom>
-              <MetaData wcm:action="E/INDEX</Key>
+              add
+                <key>/INDEX</Key>
                 <Value>2</Value>
               </MetaData>
             </InstallFrom>
