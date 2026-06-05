@@ -33,7 +33,8 @@
       </UserData>
 
       <DiskConfiguration>
-        <Disk wcm     <DiskID>0</DiskID>
+        <Disk>  
+          <DiskID>0</DiskID>
           <WillWipeDisk>true</WillWipeDisk>
 
           <CreatePartitions>
