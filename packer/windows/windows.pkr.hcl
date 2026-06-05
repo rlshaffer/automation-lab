@@ -48,9 +48,6 @@ source "vsphere-iso" "windows" {
 
   firmware = "efi"
 
-  efi_secure_boot = false
-
-
   cdrom_type = "sata"
 
   CPUs = var.vm_cpu
