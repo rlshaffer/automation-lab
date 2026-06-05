@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <unattend xmlns="urn:schemas-microsoft-com:unattend">
-
   <!-- WINDOWS SETUP -->
   <settings pass="windowsPE">
     <component name="Microsoft-Windows-Setup"
@@ -8,29 +7,24 @@
                publicKeyToken="31bf3856ad364e35"
                language="neutral"
                versionScope="nonSxS">
-
       <DiskConfiguration>
         <Disk wcmDiskID>0</DiskID>
           <WillWipeDisk>true</WillWipeDisk>
-
           <CreatePartitions>
             add
               <Order>1</Order>
               <Type>EFI</Type>
               <Size>100</Size>
             </CreatePartition>
-
-            <Create     <Order>2</Order>
+           <Create     <Order>2</Order>
               <Type>MSR</Type>
               <Size>16</Size>
             </CreatePartition>
-
             <CreatePartition wcm</Order>
               <Type>Primary</Type>
               <Extend>true</Extend>
             </CreatePartition>
           </CreatePartitions>
-
           <ModifyPartitions>
             <ModifyPartition w>3</Order>
               <PartitionID>3</PartitionID>
@@ -39,7 +33,6 @@
               <Letter>C</Letter>
             </ModifyPartition>
           </ModifyPartitions>
-
         </Disk>
       </DiskConfiguration>
       <ImageInstall>
@@ -48,23 +41,19 @@
             <DiskID>0</DiskID>
             <PartitionID>1</PartitionID>
          </InstallTo>
-
          <InstallFrom>
            <MetaData wcmKey>/IMAGE/INDEX</Key>
              <Value>1</Value>
            </MetaData>
          </InstallFrom>
-
          <WillShowUI>OnError</WillShowUI>
        </OSImage>
      </ImageInstall>
-
       <UserData>
         <AcceptEula>true</AcceptEula>
         <FullName>Packer</FullName>
         <Organization>Lab</Organization>
       </UserData>
-
     </component>
   </settings>
 
@@ -75,7 +64,6 @@
                publicKeyToken="31bf3856ad364e35"
                language="neutral"
                versionScope="nonSxS">
-
       <AutoLogon>
         <Password>
           <Value>Johnathan0730-!</Value>
@@ -85,46 +73,35 @@
         <LogonCount>5</LogonCount>
         <Username>Administrator</Username>
       </AutoLogon>
-
       <UserAccounts>
         <AdministratorPassword>
           <Value>Johnathan0730-!</Value>
           <PlainText>true</PlainText>
         </AdministratorPassword>
       </UserAccounts>
-
       <OOBE>
         <HideEULAPage>true</HideEULAPage>
         <NetworkLocation>Work</NetworkLocation>
         <ProtectYourPC>1</ProtectYourPC>
       </OOBE>
-
       <TimeZone>Eastern Standard Time</TimeZone>
-
       <FirstLogonCommands>
-
         <SynchronousCommand w1</Order>
           <CommandLine>cmd /c winrm quickconfig -q</CommandLine>
           <Description>Enable WinRM</Description>
         </SynchronousCommand>
-
         add
           <Order>2</Order>
           <CommandLine>cmd /c winrm set winrm/config/service @{AllowUnencrypted="true"}</CommandLine>
           <Description>Allow Unencrypted</Description>
         </SynchronousCommand>
-
         <SynchronousCommand wcm:action="add      <CommandLine>cmd /c winrm set winrm/config/service/auth @{Basic="true"}</CommandLine>
           <Description>Enable Basic Auth</Description>
         </SynchronousCommand>
-
         <SynchronousCommand wcm:action="         <CommandLine>cmd /c netsh advfirewall firewall add rule name="WinRM" dir=in action=allow protocol=TCP localport=5985</CommandLine>
           <Description>Open Firewall</Description>
         </SynchronousCommand>
-
       </FirstLogonCommands>
-
     </component>
   </settings>
-
 </unattend>
