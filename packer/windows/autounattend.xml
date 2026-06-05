@@ -31,24 +31,27 @@
         <AcceptEula>true</AcceptEula>
       </UserData>
 
+      <DiskConfiguration>
+        <Disk>
+        <DiskID>0</DiskID>
+          <WillWipeDisk>true</WillWipeDisk>
+        </Disk>
+      </DiskConfiguration>
+
       <ImageInstall>
         <OSImage>
-
           <InstallFrom>
             <MetaData>
               <Key>/IMAGE/INDEX</Key>
               <Value>2</Value>
             </MetaData>
           </InstallFrom>
-
           <InstallToAvailablePartition>true</InstallToAvailablePartition>
           <WillShowUI>OnError</WillShowUI>
-
         </OSImage>
       </ImageInstall>
-
+      <WillShowUI>OnError</WillShowUI>
     </component>
-
   </settings>
 
   <!-- OOBE -->
