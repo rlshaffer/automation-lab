@@ -40,26 +40,30 @@
 
   </Disk>
 </DiskConfiguration>
-      <ImageInstall>
-        <OSImage>
-          <InstallTo>
-            <DiskID>0</DiskID>
-            <PartitionID>2</PartitionID>
-         </InstallTo>
-          <InstallFrom>
-            add
-              <Key>/IMAGE/NAME</Key>
-              <Value>Windows Server 2025 Standard (Desktop Experience)</Value>
-            </MetaData>
-          </InstallFrom>
-          <WillShowUI>OnError</WillShowUI>
-        </OSImage>
-      </ImageInstall>
-      <UserData>
-        <AcceptEula>true</AcceptEula>
-        <FullName>Packer</FullName>
-        <Organization>Lab</Organization>
-      </UserData>
+<ImageInstall>
+  <OSImage>
+    <InstallFrom>
+      add
+        <Key>/IMAGE/INDEX</Key>
+        <Value>1</Value>
+      </MetaData>
+    </InstallFrom>
+
+    <InstallTo>
+      <DiskID>0</DiskID>
+      <PartitionID>2</PartitionID>
+    </InstallTo>
+
+    <InstallToAvailablePartition>false</InstallToAvailablePartition>
+
+    <WillShowUI>Never</WillShowUI>
+  </OSImage>
+</ImageInstall>
+<UserData>
+  <AcceptEula>true</AcceptEula>
+  <FullName>Automation</FullName>
+  <Organization>Lab</Organization>
+</UserData>
     </component>
   </settings>
 
@@ -70,6 +74,7 @@
                publicKeyToken="31bf3856ad364e35"
                language="neutral"
                versionScope="nonSxS">
+      <UseConfigurationSet>false</UseConfigurationSet>               
       <AutoLogon>
         <Password>
           <Value>Johnathan0730-!</Value>
