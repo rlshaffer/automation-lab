@@ -23,18 +23,8 @@ source "vsphere-iso" "windows" {
   vcenter_server = var.vsphere_server
   username = "admin.shaffer@nordsoncorp.local"
   password = var.vsphere_password
-  
-  }
 
-
-disk_controller_type = ["lsilogic-sas"]
-
-
-
-variable "win_admin_password" {
-  type = string
-}
-  firmware = "efi"
+    firmware = "efi"
 
   cdrom_type = "sata"
 
@@ -50,13 +40,24 @@ variable "vm_memory_mb" {
   type    = number
   default = 4096
 }
-
-    CPUs = var.vm_cpu
+  CPUs = var.vm_cpu
   RAM  = var.vm_memory_mb
 
   network_adapters {
     network      = var.network
     network_card = "vmxnet3"
+  
+  }
+
+
+disk_controller_type = ["lsilogic-sas"]
+
+
+
+variable "win_admin_password" {
+  type = string
+}
+
 
   datacenter = var.datacenter
   cluster    = var.cluster
