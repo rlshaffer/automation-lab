@@ -1,133 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<unattend xmlns="urn:schemas-microsoft-com:unattend"
-          xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
 
-  <!-- WINDOWS PE -->
   <settings pass="windowsPE">
 
-    <component name="Microsoft-Windows-International-Core-WinPE"
-               processorArchitecture="amd64"
-               publicKeyToken="31bf3856ad364e35"
-               language="neutral"
-               versionScope="nonSxS">
-
-      <SetupUILanguage>
-        <UILanguage>en-US</UILanguage>
-      </SetupUILanguage>
-      <InputLocale>en-US</InputLocale>
-      <SystemLocale>en-US</SystemLocale>
-      <UILanguage>en-US</UILanguage>
-      <UserLocale>en-US</UserLocale>
-
-    </component>
-
     <component name="Microsoft-Windows-Setup"
-               processorArchitecture="amd64"
-               publicKeyToken="31bf3856ad364e35"
-               language="neutral"
-               versionScope="nonSxS">
+               processorArchitecture="amd64">
 
       <UserData>
         <AcceptEula>true</AcceptEula>
       </UserData>
-
-      <!-- ✅ Minimal, safe disk handling (no prompts) -->
-      <DiskConfiguration>
-        <Disk>
-          <DiskID>0</DiskID>
-          <WillWipeDisk>true</WillWipeDisk>
-
-          <CreatePartitions>
-            <CreatePartition wcm:Order="1">
-              <Type>Primary</Type>
-              <Extend>true</Extend>
-            </CreatePartition>
-          </CreatePartitions>
-
-          <ModifyPartitions>
-            <ModifyPartition wcm:Order="1">
-              <PartitionID>1</PartitionID>
-              <Format>NTFS</Format>
-              <Letter>C</Letter>
-            </ModifyPartition>
-          </ModifyPartitions>
-
-        </Disk>
-      </DiskConfiguration>
-
-      <ImageInstall>
-        <OSImage>
-
-          <InstallFrom>
-            <MetaData wcm:Selector="/IMAGE/INDEX">
-              <Key>/IMAGE/INDEX</Key>
-              <Value>2</Value>
-            </MetaData>
-          </InstallFrom>
-
-          <InstallTo>
-            <DiskID>0</DiskID>
-            <PartitionID>1</PartitionID>
-          </InstallTo>
-          <WillShowUI>OnError</WillShowUI>
-
-        </OSImage>
-      </ImageInstall>
-    </component>
-
-  </settings>
-
-  <!-- OOBE -->
-  <settings pass="oobeSystem">
-
-    <component name="Microsoft-Windows-International-Core"
-               processorArchitecture="amd64">
-      <InputLocale>en-US</InputLocale>
-      <SystemLocale>en-US</SystemLocale>
-      <UILanguage>en-US</UILanguage>
-      <UserLocale>en-US</UserLocale>
-    </component>
-
-    <component name="Microsoft-Windows-Shell-Setup"
-               processorArchitecture="amd64">
-
-      <OOBE>
-        <HideEULAPage>true</HideEULAPage>
-        <NetworkLocation>Work</NetworkLocation>
-        <ProtectYourPC>2</ProtectYourPC>
-      </OOBE>
-
-      <UserAccounts>
-        <AdministratorPassword>
-          <Value>P@ssw0rd!</Value>
-          <PlainText>true</PlainText>
-        </AdministratorPassword>
-      </UserAccounts>
-
-      <AutoLogon>
-        <Username>Administrator</Username>
-        <Enabled>true</Enabled>
-        <LogonCount>2</LogonCount>
-        <Password>
-          <Value>P@ssw0rd!</Value>
-          <PlainText>true</PlainText>
-        </Password>
-      </AutoLogon>
-
-      <FirstLogonCommands>
-
-        <SynchronousCommand wcm:Order="1">
-          <Order>1</Order>
-          <CommandLine>powershell -ExecutionPolicy Bypass -Command "Enable-PSRemoting -Force"</CommandLine>
-          <Description>Enable WinRM</Description>
-        </SynchronousCommand>
-
-        <SynchronousCommand wcm:Order="2">
-          <CommandLine>powershell -ExecutionPolicy Bypass -Command "Set-Item WSMan:\localhost\Service\Auth\Basic -Value $true; Set-Item WSMan:\localhost\Service\AllowUnencrypted -Value $true"</CommandLine>
-          <Description>Configure WinRM</Description>
-        </SynchronousCommand>
-
-      </FirstLogonCommands>
 
     </component>
 
