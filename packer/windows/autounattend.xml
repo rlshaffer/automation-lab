@@ -39,16 +39,17 @@
         <OSImage>
           <InstallTo>
             <DiskID>0</DiskID>
-            <PartitionID>1</PartitionID>
-         </InstallTo>
-         <InstallFrom>
-           <MetaData wcmKey>/IMAGE/INDEX</Key>
-             <Value>2</Value>
-           </MetaData>
-         </InstallFrom>
-         <WillShowUI>OnError</WillShowUI>
-       </OSImage>
-     </ImageInstall>
+            <PartitionID>3</PartitionID>
+          </InstallTo>
+          <InstallFrom>
+            add
+              <Key>/IMAGE/NAME</Key>
+              <Value>Windows Server 2025 Standard (Desktop Experience)</Value>
+            </MetaData>
+          </InstallFrom>
+          <WillShowUI>OnError</WillShowUI>
+        </OSImage>
+      </ImageInstall>
       <UserData>
         <AcceptEula>true</AcceptEula>
         <FullName>Packer</FullName>
