@@ -13,7 +13,7 @@
       <UILanguage>en-US</UILanguage>
       <UserLocale>en-US</UserLocale>
     </component>
-    
+    <WillShowUI>OnError</WillShowUI>
     <component name="Microsoft-Windows-Setup" processorArchitecture="amd64">
 
       <UserData>
