@@ -8,31 +8,44 @@
                language="neutral"
                versionScope="nonSxS">
       <DiskConfiguration>
-        <Disk wcmDiskID>0</DiskID>
+        <Disk wcm:action="/DiskID>
           <WillWipeDisk>true</WillWipeDisk>
+
           <CreatePartitions>
-            add
-              <Order>1</Order>
+            <!-- EFI System Partition -->
+            <CreatePartition w>1</Order>
               <Type>EFI</Type>
               <Size>100</Size>
             </CreatePartition>
-           <Create     <Order>2</Order>
+
+            <!-- Microsoft Reserved -->
+            <CreatePartition wcm:action>
               <Type>MSR</Type>
               <Size>16</Size>
             </CreatePartition>
-            <CreatePartition wcm</Order>
-              <Type>Primary</Type>
+
+            <!-- Windows Partition -->
+            <CreatePartition wcm:action="        <Type>Primary</Type>
               <Extend>true</Extend>
             </CreatePartition>
           </CreatePartitions>
+
           <ModifyPartitions>
-            <ModifyPartition w>3</Order>
-              <PartitionID>3</PartitionID>
+            <!-- Format EFI -->
+            <ModifyPartitioner>1</Order>
+              <PartitionID>1</PartitionID>
+              <Format>FAT32</Format>
+              <Label>System</Label>
+            </ModifyPartition>
+
+            <!-- Format Windows partition -->
+            <ModifyPartition wcm:action="add     <PartitionID>3</PartitionID>
               <Format>NTFS</Format>
               <Label>Windows</Label>
               <Letter>C</Letter>
             </ModifyPartition>
           </ModifyPartitions>
+
         </Disk>
       </DiskConfiguration>
       <ImageInstall>
