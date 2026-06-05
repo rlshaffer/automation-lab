@@ -98,7 +98,7 @@ source "vsphere-iso" "windows" {
 
   insecure_connection = true
   set_host_for_datastore_uploads = true
-  remove_cdrom = true
+
 }
 
 build {
