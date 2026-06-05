@@ -3,6 +3,7 @@
 
   <!-- WINDOWS PE -->
   <settings pass="windowsPE">
+
     <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64">
       <SetupUILanguage>
         <UILanguage>en-US</UILanguage>
@@ -19,19 +20,45 @@
         <AcceptEula>true</AcceptEula>
       </UserData>
 
+      <!-- ✅ SIMPLE + RELIABLE DISK CONFIG -->
+      <DiskConfiguration>
+        <Disk wcm     <DiskID>0</DiskID>
+          <WillWipeDisk>true</WillWipeDisk>
+
+          <CreatePartitions>
+            add
+              <Order>1</Order>
+              <Type>Primary</Type>
+              <Extend>true</Extend>
+            </CreatePartition>
+          </CreatePartitions>
+
+          <ModifyPartitions>
+            add
+              <Order>1</Order>
+              <PartitionID>1</PartitionID>
+              <Format>NTFS</Format>
+              <Letter>C</Letter>
+              <Label>Windows</Label>
+            </ModifyPartition>
+          </ModifyPartitions>
+        </Disk>
+      </DiskConfiguration>
+
       <ImageInstall>
         <OSImage>
 
-          <!-- ✅ USE INDEX (much safer than NAME) -->
+          <!-- ✅ TRY THIS FIRST -->
           <InstallFrom>
-            add
-              <Key>/IMAGE/INDEX</Key>
+            <MetaData wcm:action=">/IMAGE/INDEX</Key>
               <Value>2</Value>
             </MetaData>
           </InstallFrom>
 
-          <!-- ✅ Let Windows handle partitioning safely -->
-          <InstallToAvailablePartition>true</InstallToAvailablePartition>
+          <InstallTo>
+            <DiskID>0</DiskID>
+            <PartitionID>1</PartitionID>
+          </InstallTo>
 
         </OSImage>
       </ImageInstall>
@@ -49,6 +76,7 @@
     </component>
 
     <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64">
+
       <OOBE>
         <HideEULAPage>true</HideEULAPage>
         <NetworkLocation>Work</NetworkLocation>
