@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <unattend xmlns="urn:schemas-microsoft-com:unattend">
 
-  <!-- WINDOWS PE PHASE -->
+  <!-- WINDOWS PE -->
   <settings pass="windowsPE">
-    <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+    <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64">
       <SetupUILanguage>
         <UILanguage>en-US</UILanguage>
       </SetupUILanguage>
@@ -13,91 +13,14 @@
       <UserLocale>en-US</UserLocale>
     </component>
 
-    <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
-
-      <DiskConfiguration>
-        <Disk wcm:    <DiskID>0</DiskID>
-          <WillWipeDisk>true</WillWipeDisk>
-
-          <CreatePartitions>
-            <!-- EFI -->
-            <Create           <Order>1</Order>
-              <Type>EFI</Type>
-              <Size>100</Size>
-            </CreatePartition>
-
-            <!-- MSR -->
-            add
-              <Order>2</Order>
-              <Type>MSR</Type>
-              <Size>16</Size>
-            </CreatePartition>
-
-            <!-- OS -->
-            <Create           <Order>3</Order>
-              <Type>Primary</Type>
-              <Extend>true</Extend>
-            </CreatePartition>
-          </CreatePartitions>
-
-          <ModifyPartitions>
-            <ModifyPartition wcmrder>1</Order>
-              <PartitionID>1</PartitionID>
-              <Format>FAT32</Format>
-              <Label>System</Label>
-            </ModifyPartition>
-
-            <ModifyPartition wcm:action="rder>
-              <PartitionID>3</PartitionID>
-              <Format>NTFS</Format>
-              <Letter>C</Letter>
-              <Label>Windows</Label>
-            </ModifyPartition>
-          </ModifyPartitions>
-        </Disk>
-      </DiskConfiguration>
-
-      <ImageInstall>
-        <OSImage>
-          <InstallTo>
-            <DiskID>0</DiskID>
-            <PartitionID>3</PartitionID>
-          </InstallTo>
-
-          <!-- Desktop Experience -->
-          <InstallFrom>
-            add
-              <Key>/IMAGE/NAME</Key>
-              <Value>Windows Server 2025 Standard (Desktop Experience)</Value>
-            </MetaData>
-          </InstallFrom>
-        </OSImage>
-      </ImageInstall>
-
+    <component name="Microsoft-Windows-Setup" processorArchitecture="amd64">
       <UserData>
         <AcceptEula>true</AcceptEula>
-        <FullName>Administrator</FullName>
-        <Organization>Lab</Organization>
       </UserData>
-
     </component>
   </settings>
 
-
-  <!-- SPECIALIZE PHASE -->
-  <settings pass="specialize">
-    <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64">
-      <ComputerName>*</ComputerName>
-      <TimeZone>Eastern Standard Time</TimeZone>
-    </component>
-
-    <component name="Microsoft-Windows-ServerManager-SvrMgrNc">
-      <DoNotOpenServerManagerAtLogon>true</DoNotOpenServerManagerAtLogon>
-    </component>
-  </settings>
-
-
-  <!-- OOBE PHASE -->
+  <!-- OOBE -->
   <settings pass="oobeSystem">
     <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64">
       <InputLocale>en-US</InputLocale>
@@ -107,12 +30,9 @@
     </component>
 
     <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64">
-
       <OOBE>
         <HideEULAPage>true</HideEULAPage>
-        <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
         <NetworkLocation>Work</NetworkLocation>
-        <ProtectYourPC>2</ProtectYourPC>
       </OOBE>
 
       <UserAccounts>
@@ -125,36 +45,12 @@
       <AutoLogon>
         <Username>Administrator</Username>
         <Enabled>true</Enabled>
-        <LogonCount>2</LogonCount>
+        <LogonCount>1</LogonCount>
         <Password>
           <Value>P@ssw0rd!</Value>
           <PlainText>true</PlainText>
         </Password>
       </AutoLogon>
-
-      <FirstLogonCommands>
-        <!-- Enable WinRM (critical for automation pipelines) -->
-        add
-          <Order>1</Order>
-          <CommandLine>powershell -ExecutionPolicy Bypass -Command "Enable-PSRemoting -Force"</CommandLine>
-          <Description>Enable WinRM</Description>
-        </SynchronousCommand>
-
-        <!-- Allow Basic Auth & Unencrypted (lab only) -->
-        add
-          <Order>2</Order>
-          <CommandLine>powershell -ExecutionPolicy Bypass -Command "Set-Item WSMan:\localhost\Service\Auth\Basic -Value $true; Set-Item WSMan:\localhost\Service\AllowUnencrypted -Value $true"</CommandLine>
-          <Description>WinRM config</Description>
-        </SynchronousCommand>
-
-        <!-- Disable password complexity for lab -->
-        add
-          <Order>3</Order>
-          <CommandLine>powershell -Command "secedit /export /cfg C:\secpol.cfg; (Get-Content C:\secpol.cfg).replace('PasswordComplexity = 1','PasswordComplexity = 0') | Set-Content C:\secpol.cfg; secedit /configure /db C:\windows\security\local.sdb /cfg C:\secpol.cfg /areas SECURITYPOLICY"</CommandLine>
-          <Description>Relax password policy</Description>
-        </SynchronousCommand>
-      </FirstLogonCommands>
-
     </component>
   </settings>
 
