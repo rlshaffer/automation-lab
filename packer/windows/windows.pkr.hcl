@@ -86,6 +86,10 @@ boot_command = [
   "<spacebar>",
   "<spacebar>",
   "<spacebar>",
+  "<enter>",
+  "<wait>",
+  "<wait>".
+  "<wait>"
 
   ]
   
