@@ -46,7 +46,9 @@ source "vsphere-iso" "windows" {
 
   guest_os_type = "windows9Server64Guest"
 
-  vm_version = 17
+  cpu_type = "host"
+
+  vm_version = 21
 
   firmware = "efi"
 
