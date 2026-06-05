@@ -5,7 +5,6 @@
   <!-- WINDOWS PE -->
   <settings pass="windowsPE">
 
-    <!-- Language -->
     <component name="Microsoft-Windows-International-Core-WinPE"
                processorArchitecture="amd64"
                publicKeyToken="31bf3856ad364e35"
@@ -22,7 +21,6 @@
 
     </component>
 
-    <!-- Setup -->
     <component name="Microsoft-Windows-Setup"
                processorArchitecture="amd64"
                publicKeyToken="31bf3856ad364e35"
@@ -37,16 +35,13 @@
         <OSImage>
 
           <InstallFrom>
-            <Metadata>
+            <MetaData>
               <Key>/IMAGE/INDEX</Key>
               <Value>2</Value>
             </MetaData>
           </InstallFrom>
 
-          <!-- ✅ Let Windows handle partitioning safely -->
           <InstallToAvailablePartition>true</InstallToAvailablePartition>
-
-          <!-- ✅ Prevent silent failures -->
           <WillShowUI>OnError</WillShowUI>
 
         </OSImage>
@@ -56,7 +51,7 @@
 
   </settings>
 
-  <!-- OOBE / FIRST BOOT -->
+  <!-- OOBE -->
   <settings pass="oobeSystem">
 
     <component name="Microsoft-Windows-International-Core"
@@ -76,7 +71,6 @@
         <ProtectYourPC>2</ProtectYourPC>
       </OOBE>
 
-      <!-- ✅ Admin password -->
       <UserAccounts>
         <AdministratorPassword>
           <Value>P@ssw0rd!</Value>
@@ -84,7 +78,6 @@
         </AdministratorPassword>
       </UserAccounts>
 
-      <!-- ✅ Auto logon for provisioning -->
       <AutoLogon>
         <Username>Administrator</Username>
         <Enabled>true</Enabled>
@@ -95,10 +88,10 @@
         </Password>
       </AutoLogon>
 
-      <!-- ✅ Enable WinRM for Packer -->
       <FirstLogonCommands>
 
-        <SynchronousCommand wcm:Order>
+        <SynchronousCommand>
+          <Order>1</Order>
           <CommandLine>powershell -ExecutionPolicy Bypass -Command "Enable-PSRemoting -Force"</CommandLine>
           <Description>Enable WinRM</Description>
         </SynchronousCommand>
