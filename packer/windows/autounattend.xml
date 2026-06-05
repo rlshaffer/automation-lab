@@ -43,7 +43,7 @@
          </InstallTo>
          <InstallFrom>
            <MetaData wcmKey>/IMAGE/INDEX</Key>
-             <Value>1</Value>
+             <Value>2</Value>
            </MetaData>
          </InstallFrom>
          <WillShowUI>OnError</WillShowUI>
