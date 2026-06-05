@@ -10,31 +10,30 @@
       <UserData>
         <AcceptEula>true</AcceptEula>
       </UserData>
-    </component>
-    <component name="Microsoft-Windows-International-Core-WinPE"
-           processorArchitecture="amd64"
-           publicKeyToken="31bf3856ad364e35"
-           language="neutral"
-           versionScope="nonSxS">
-      <SetupUILanguage>
+      <component name="Microsoft-Windows-International-Core-WinPE"
+        processorArchitecture="amd64"
+        publicKeyToken="31bf3856ad364e35"
+        language="neutral"
+        versionScope="nonSxS">
+        <SetupUILanguage>
+          <UILanguage>en-US</UILanguage>
+        </SetupUILanguage>
+        <InputLocale>en-US</InputLocale>
+        <SystemLocale>en-US</SystemLocale>
         <UILanguage>en-US</UILanguage>
-      </SetupUILanguage>
-      <InputLocale>en-US</InputLocale>
-      <SystemLocale>en-US</SystemLocale>
-      <UILanguage>en-US</UILanguage>
-      <UserLocale>en-US</UserLocale>
-
-      <ImageInstall>
-        <OSImage>
-          <InstallFrom>
-            <MetaData wcm:action="E/INDEX</Key>
-              <Value>2</Value>
-            </MetaData>
-          </InstallFrom>
-          <InstallToAvailablePartition>true</InstallToAvailablePartition>
-        </OSImage>
-      </ImageInstall>
-    </component>
+        <UserLocale>en-US</UserLocale>
+        <ImageInstall>
+          <OSImage>
+            <InstallFrom>
+              <MetaData wcm:action="E/INDEX</Key>
+                <Value>2</Value>
+              </MetaData>
+            </InstallFrom>
+            <InstallToAvailablePartition>true</InstallToAvailablePartition>
+          </OSImage>
+        </ImageInstall>
+      </component>
   </settings>
-
+    </component>
+    
 </unattend>
