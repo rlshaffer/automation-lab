@@ -33,12 +33,11 @@
       <ImageInstall>
         <OSImage>
           <InstallFrom>
-            add
+            <MetaData>
               <Key>/IMAGE/INDEX</Key>
               <Value>2</Value>
             </MetaData>
           </InstallFrom>
-
           <InstallToAvailablePartition>true</InstallToAvailablePartition>
         </OSImage>
       </ImageInstall>
