@@ -23,6 +23,17 @@
       <SystemLocale>en-US</SystemLocale>
       <UILanguage>en-US</UILanguage>
       <UserLocale>en-US</UserLocale>
+
+      <ImageInstall>
+        <OSImage>
+          <InstallFrom>
+            <MetaData wcm:action="E/INDEX</Key>
+              <Value>2</Value>
+            </MetaData>
+          </InstallFrom>
+          <InstallToAvailablePartition>true</InstallToAvailablePartition>
+        </OSImage>
+      </ImageInstall>
     </component>
   </settings>
 
