@@ -35,9 +35,6 @@ source "vsphere-iso" "windows" {
   vcenter_server = var.vsphere_server
   username = "admin.shaffer@nordsoncorp.local"
   password = var.vsphere_password
-  
-
-
   datacenter = var.datacenter
   cluster    = var.cluster
   datastore  = var.datastore
@@ -66,7 +63,6 @@ source "vsphere-iso" "windows" {
     disk_size             = 163840
     disk_thin_provisioned = true
   }
-
   
   floppy_files = [
     "./windows/autounattend.xml"
@@ -79,19 +75,6 @@ source "vsphere-iso" "windows" {
   boot_order = "disk,cdrom"
 
   boot_wait = "2s"
-
- 
-boot_command = [
-  "<spacebar>",
-  "<spacebar>",
-  "<spacebar>",
-  "<spacebar>",
-  "<spacebar>",
-  "<spacebar>",
- 
-  ]
-  
-
 
   communicator = "winrm"
   winrm_username = "Administrator"
@@ -109,17 +92,12 @@ build {
   provisioner "powershell" {
     inline = [
       "Write-Host 'Configuring WinRM + firewall...'",
-
       "Set-NetConnectionProfile -NetworkCategory Private",
-
       "winrm quickconfig -q",
       "Enable-PSRemoting -Force",
-
       "winrm delete winrm/config/listener?Address=*+Transport=HTTP 2> $null",
       "winrm create winrm/config/listener?Address=*+Transport=HTTP",
-
       "Set-Service WinRM -StartupType Automatic",
-
       "Enable-NetFirewallRule -DisplayGroup \"Windows Remote Management\""
     ]
   }
