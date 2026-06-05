@@ -17,20 +17,6 @@ variable "network" { type = string }
 
 variable "template_name" { type = string }
 
-
-
-source "vsphere-iso" "windows" {
-  vcenter_server = var.vsphere_server
-  username = "admin.shaffer@nordsoncorp.local"
-  password = var.vsphere_password
-
-    firmware = "efi"
-
-  cdrom_type = "sata"
-
-  storage {
-  disk_size = 40960
-}
 variable "vm_cpu" {
   type    = number
   default = 2
@@ -40,23 +26,16 @@ variable "vm_memory_mb" {
   type    = number
   default = 4096
 }
-  CPUs = var.vm_cpu
-  RAM  = var.vm_memory_mb
-
-  network_adapters {
-    network      = var.network
-    network_card = "vmxnet3"
-  
-  }
-
-
-disk_controller_type = ["lsilogic-sas"]
-
-
 
 variable "win_admin_password" {
   type = string
 }
+
+source "vsphere-iso" "windows" {
+  vcenter_server = var.vsphere_server
+  username = "admin.shaffer@nordsoncorp.local"
+  password = var.vsphere_password
+  
 
 
   datacenter = var.datacenter
@@ -67,6 +46,26 @@ variable "win_admin_password" {
 
   guest_os_type = "windows9Server64Guest"
 
+  firmware = "efi"
+
+  cdrom_type = "sata"
+
+  CPUs = var.vm_cpu
+  RAM  = var.vm_memory_mb
+
+  network_adapters {
+    network      = var.network
+    network_card = "vmxnet3"
+  }
+
+  disk_controller_type = ["lsilogic-sas"]
+
+  storage {
+    disk_size             = 163840
+    disk_thin_provisioned = true
+  }
+
+  
   floppy_files = [
     "./windows/autounattend.xml"
   ]
@@ -90,6 +89,8 @@ boot_command = [
 
   ]
   
+
+
   communicator = "winrm"
   winrm_username = "Administrator"
   winrm_password = var.win_admin_password
@@ -97,6 +98,7 @@ boot_command = [
 
   insecure_connection = true
   set_host_for_datastore_uploads = true
+
 }
 
 build {
