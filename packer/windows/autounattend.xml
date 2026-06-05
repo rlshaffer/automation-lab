@@ -14,9 +14,28 @@
     </component>
 
     <component name="Microsoft-Windows-Setup" processorArchitecture="amd64">
+
       <UserData>
         <AcceptEula>true</AcceptEula>
       </UserData>
+
+      <ImageInstall>
+        <OSImage>
+
+          <!-- ✅ USE INDEX (much safer than NAME) -->
+          <InstallFrom>
+            add
+              <Key>/IMAGE/INDEX</Key>
+              <Value>2</Value>
+            </MetaData>
+          </InstallFrom>
+
+          <!-- ✅ Let Windows handle partitioning safely -->
+          <InstallToAvailablePartition>true</InstallToAvailablePartition>
+
+        </OSImage>
+      </ImageInstall>
+
     </component>
   </settings>
 
@@ -51,6 +70,7 @@
           <PlainText>true</PlainText>
         </Password>
       </AutoLogon>
+
     </component>
   </settings>
 
