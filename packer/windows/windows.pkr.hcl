@@ -46,9 +46,10 @@ source "vsphere-iso" "windows" {
 
   guest_os_type = "windows9Server64Guest"
 
-
-
   firmware = "efi"
+
+  efi_secure_boot = false
+
 
   cdrom_type = "sata"
 
@@ -60,7 +61,7 @@ source "vsphere-iso" "windows" {
     network_card = "vmxnet3"
   }
 
-  disk_controller_type = ["lsilogic-sas"]
+  disk_controller_type = ["pvscsi"]
 
   storage {
     disk_size             = 163840
@@ -76,7 +77,7 @@ source "vsphere-iso" "windows" {
     "[LABVMW_DATASTORE] Repository/SW_DVD9_Win_Server_STD_CORE_2025_24H2.1_64Bit_English_DC_STD_MLF_X23-89914.ISO"
   ]
 
-  boot_order = "disk,cdrom"
+  boot_order = "cdrom,disk"
 
   boot_wait  = "5s"
 
