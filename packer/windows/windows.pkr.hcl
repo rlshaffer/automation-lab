@@ -58,7 +58,7 @@ source "vsphere-iso" "windows" {
     network_card = "vmxnet3"
   }
 
-  disk_controller_type = ["pvscsi"]
+  disk_controller_type = ["lsilogic-sas"]
 
   storage {
     disk_size             = 163840
