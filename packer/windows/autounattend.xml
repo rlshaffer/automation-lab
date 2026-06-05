@@ -2,6 +2,7 @@
 <unattend xmlns="urn:schemas-microsoft-com:unattend"
           xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
 
+  <!-- WINDOWS PE -->
   <settings pass="windowsPE">
 
     <!-- Language -->
@@ -32,69 +33,83 @@
         <AcceptEula>true</AcceptEula>
       </UserData>
 
-      <DiskConfiguration>
-        <Disk>  
-          <DiskID>0</DiskID>
-          <WillWipeDisk>true</WillWipeDisk>
-
-          <CreatePartitions>
-            <CreatePartition>
-              <Order>1</Order>
-              <Type>EFI</Type>
-              <Size>100</Size>
-            </CreatePartition>
-
-            <CreatePartition>
-              <Order>2</Order>
-              <Type>MSR</Type>
-              <Size>16</Size>
-            </CreatePartition>
-
-            <CreatePartition>
-              <Order>3</Order>
-              <Type>Primary</Type>
-              <Extend>true</Extend>
-            </CreatePartition>
-          </CreatePartitions>
-
-          <ModifyPartitions>
-            <ModifyPartition>
-              <Order>1</Order>
-              <PartitionID>1</PartitionID>
-              <Format>FAT32</Format>
-              <Label>System</Label>
-            </ModifyPartition>
-            <ModifyPartition>
-              <Order>2</Order>
-              <PartitionID>3</PartitionID>
-              <Format>NTFS</Format>
-              <Letter>C</Letter>
-              <Label>Windows</Label>
-            </ModifyPartition>
-          </ModifyPartitions>
-
-        </Disk>
-      </DiskConfiguration>
-
       <ImageInstall>
         <OSImage>
 
           <InstallFrom>
-            <MetaData>
+            <Metadata>
               <Key>/IMAGE/INDEX</Key>
               <Value>2</Value>
             </MetaData>
           </InstallFrom>
 
-          <InstallTo>
-            <DiskID>0</DiskID>
-            <PartitionID>3</PartitionID>
-          </InstallTo>
+          <!-- ✅ Let Windows handle partitioning safely -->
+          <InstallToAvailablePartition>true</InstallToAvailablePartition>
 
+          <!-- ✅ Prevent silent failures -->
           <WillShowUI>OnError</WillShowUI>
 
         </OSImage>
       </ImageInstall>
+
+    </component>
+
+  </settings>
+
+  <!-- OOBE / FIRST BOOT -->
+  <settings pass="oobeSystem">
+
+    <component name="Microsoft-Windows-International-Core"
+               processorArchitecture="amd64">
+      <InputLocale>en-US</InputLocale>
+      <SystemLocale>en-US</SystemLocale>
+      <UILanguage>en-US</UILanguage>
+      <UserLocale>en-US</UserLocale>
+    </component>
+
+    <component name="Microsoft-Windows-Shell-Setup"
+               processorArchitecture="amd64">
+
+      <OOBE>
+        <HideEULAPage>true</HideEULAPage>
+        <NetworkLocation>Work</NetworkLocation>
+        <ProtectYourPC>2</ProtectYourPC>
+      </OOBE>
+
+      <!-- ✅ Admin password -->
+      <UserAccounts>
+        <AdministratorPassword>
+          <Value>P@ssw0rd!</Value>
+          <PlainText>true</PlainText>
+        </AdministratorPassword>
+      </UserAccounts>
+
+      <!-- ✅ Auto logon for provisioning -->
+      <AutoLogon>
+        <Username>Administrator</Username>
+        <Enabled>true</Enabled>
+        <LogonCount>2</LogonCount>
+        <Password>
+          <Value>P@ssw0rd!</Value>
+          <PlainText>true</PlainText>
+        </Password>
+      </AutoLogon>
+
+      <!-- ✅ Enable WinRM for Packer -->
+      <FirstLogonCommands>
+
+        <SynchronousCommand wcm:Order>
+          <CommandLine>powershell -ExecutionPolicy Bypass -Command "Enable-PSRemoting -Force"</CommandLine>
+          <Description>Enable WinRM</Description>
+        </SynchronousCommand>
+
+        <SynchronousCommand>
+          <Order>2</Order>
+          <CommandLine>powershell -ExecutionPolicy Bypass -Command "Set-Item WSMan:\localhost\Service\Auth\Basic -Value $true; Set-Item WSMan:\localhost\Service\AllowUnencrypted -Value $true"</CommandLine>
+          <Description>Configure WinRM</Description>
+        </SynchronousCommand>
+
+      </FirstLogonCommands>
 
     </component>
 
