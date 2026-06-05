@@ -14,12 +14,6 @@
       <UserLocale>en-US</UserLocale>
     </component>
     
-    <RunSynchronous>
-      <RunSynchronousCommand wcm:action    <Path>cmd /k pause</Path>
-      </RunSynchronousCommand>
-    </RunSynchronous>
-
-
     <component name="Microsoft-Windows-Setup" processorArchitecture="amd64">
 
       <UserData>
