@@ -87,9 +87,22 @@ source "vsphere-iso" "windows" {
   winrm_username = "Administrator"
   winrm_password = var.win_admin_password
   winrm_timeout  = "2h"
-
+  winrm_insecure = true
+ 
   insecure_connection = true
   set_host_for_datastore_uploads = true
+
+  shutdown_command = "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\""
+  shutdown_timeout = "15m"
+
+  
+cd_files = [
+  "windows/autounattend.xml",
+  "windows/scripts/"
+]
+
+cd_label = "cidata"
+
 
 }
 
