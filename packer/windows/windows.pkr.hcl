@@ -63,7 +63,7 @@ source "vsphere-iso" "windows" {
   cdrom_type = "sata"
 
   
-  cd_files = ["${path.root}/windows/autounattend.xml"]
+  cd_files = ["${path.root}/autounattend.xml"]
   cd_label = "cidata"
 
 
