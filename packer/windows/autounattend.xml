@@ -28,7 +28,6 @@
       <DiskConfiguration>
         <WillShowUI>Never</WillShowUI>
         <Disk wcm:action="add">
-          <WillWipeDisk>true</WillWipeDisk>
           <CreatePartitions>
             <CreatePartition wcm:action="add">
               <Order>1</Order>
@@ -72,10 +71,6 @@
       </ImageInstall>
 
       <UserData>
-        <ProductKey>
-          <Key></Key>
-          <WillShowUI>Never</WillShowUI>
-        </ProductKey>
         <AcceptEula>true</AcceptEula>
       </UserData>
 
