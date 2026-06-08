@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<unattend xmlns="urn:schemas-microsoft-com:unattend">
-  xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<unattend xmlns="urn:schemas-microsoft-com:unattend"
+          xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
   <!-- Windows PE Phase: Setup and Partitioning -->
   <settings pass="windowsPE">
     <component name="Microsoft-Windows-International-Core-WinPE"
@@ -84,25 +85,22 @@
         </Password>
         <Enabled>true</Enabled>
         <Username>Administrator</Username>
-        <Count>1</Count>
-      </AutoLogon>
+        <LogonCount>2</LogonCount>      </AutoLogon>
       <UserAccounts>
         <AdministratorPassword>
           <Value>L04a22s3!</Value>
           <PlainText>true</PlainText>
         </AdministratorPassword>
       </UserAccounts>
-      <FirstLogonCommands>
-        <SynchronousCommand wcm:action="add">
-          <LogonCount>2</LogonCount>
-          <Description>Enable WinRM over HTTP for Provisioners</Description>
-
-          <CommandLine>
-            powershell -ExecutionPolicy Bypass -Command "Enable-PSRemoting -Force"
-          </CommandLine>
-
-        </SynchronousCommand>
-      </FirstLogonCommands>
+     <FirstLogonCommands>
+      <SynchronousCommand wcm:action="add"> 
+        <Order>1</Order>
+        <Description>Enable WinRM</Description>
+        <CommandLine>
+          powershell -ExecutionPolicy Bypass -Command "Enable-PSRemoting -Force; Set-Item WSMan:\localhost\Service\AllowUnencrypted -Value true; Set-Item WSMan:\localhost\Service\Auth\Basic -Value true; netsh advfirewall firewall add rule name='WinRM HTTP' dir=in action=allow protocol=TCP localport=5985"
+        </CommandLine>
+      </SynchronousCommand>
+    </FirstLogonCommands>
     </component>
   </settings>
 </unattend>
