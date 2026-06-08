@@ -67,8 +67,9 @@ source "vsphere-iso" "windows" {
   iso_paths = [
     "[LABVMW_DATASTORE] Repository/SW_DVD9_Win_Server_STD_CORE_2025_24H2.1_64Bit_English_DC_STD_MLF_X23-89914.ISO"
   ]
-  floppy_files = ["autounattend.xml"]
-
+  floppy_files = [
+  "./windows/autounattend.xml"
+  ]
   boot_order = "disk,cdrom"
 
   boot_wait = "2s" 
@@ -86,22 +87,9 @@ source "vsphere-iso" "windows" {
   winrm_username = "Administrator"
   winrm_password = var.win_admin_password
   winrm_timeout  = "2h"
-  winrm_insecure = true
- 
+
   insecure_connection = true
   set_host_for_datastore_uploads = true
-
-  shutdown_command = "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\""
-  shutdown_timeout = "15m"
-
-  
-cd_files = [
-  "windows/autounattend.xml",
-  "windows/scripts/"
-]
-
-cd_label = "cidata"
-
 
 }
 
