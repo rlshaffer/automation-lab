@@ -63,8 +63,7 @@ source "vsphere-iso" "windows" {
   cdrom_type = "sata"
 
   
-  cd_files = ["${path.root}/autounattend.xml"]
-  cd_label = "cidata"
+  floppy_files = ["autounattend.xml"]
 
 
   communicator = "winrm"
