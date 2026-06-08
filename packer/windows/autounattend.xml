@@ -55,11 +55,11 @@
         <Count>1</Count>
       </AutoLogon>
       <UserAccounts>
-        <--!AdministratorPassword>
-          <--!Value>${admin_password}<--!/Value>
-          <--!PlainText>true<--!/PlainText>
-          <--!/AdministratorPassword>
-          <--!/UserAccounts>
+        <!--AdministratorPassword>
+          <Value>${admin_password}</Value>
+          <PlainText>true</PlainText>
+          </AdministratorPassword>
+          </UserAccounts><!-->
           <FirstLogonCommands>
             <SynchronousCommand wcm:action="add">
               <Order>1</Order>
