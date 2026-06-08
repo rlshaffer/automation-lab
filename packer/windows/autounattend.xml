@@ -26,7 +26,11 @@
       language="neutral" 
       versionScope="nonSxS">
       <DiskConfiguration>
+      <WillShowUI>Never</WillShowUI>
+      <DiskConfiguration>
+        <WillShowUI>Never</WillShowUI>
         <Disk wcm:action="add">
+          <WillWipeDisk>true</WillWipeDisk>
           <CreatePartitions>
             <CreatePartition wcm:action="add">
               <Order>1</Order>
@@ -77,30 +81,37 @@
 
   <!-- OOBE Phase: Local Accounts, AutoLogon, and Post-Deployment Scripts -->
   <settings pass="oobeSystem">
-    <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
-      <AutoLogon>
-        <Password>
-          <Value>L04a22s3!</Value>
-          <PlainText>true</PlainText>
-        </Password>
-        <Enabled>true</Enabled>
-        <Username>Administrator</Username>
-        <LogonCount>2</LogonCount>      </AutoLogon>
-      <UserAccounts>
-        <AdministratorPassword>
-          <Value>L04a22s3!</Value>
-          <PlainText>true</PlainText>
-        </AdministratorPassword>
-      </UserAccounts>
-     <FirstLogonCommands>
-      <SynchronousCommand wcm:action="add"> 
+   <component name="Microsoft-Windows-Shell-Setup"
+             processorArchitecture="amd64"
+             publicKeyToken="31bf3856ad364e35"
+             language="neutral"
+             versionScope="nonSxS">
+
+    <AutoLogon>
+      <Password>
+        <Value>L04a22s3!</Value>
+        <PlainText>true</PlainText>
+      </Password>
+      <Enabled>true</Enabled>
+      <Username>Administrator</Username>
+      <LogonCount>2</LogonCount>
+    </AutoLogon>
+
+    <UserAccounts>
+      <AdministratorPassword>
+        <Value>L04a22s3!</Value>
+        <PlainText>true</PlainText>
+      </AdministratorPassword>
+    </UserAccounts>
+
+    <FirstLogonCommands>
+      <SynchronousCommand wcm:action="add">
         <Order>1</Order>
         <Description>Enable WinRM</Description>
-        <CommandLine>
-          powershell -ExecutionPolicy Bypass -Command "Enable-PSRemoting -Force; Set-Item WSMan:\localhost\Service\AllowUnencrypted -Value true; Set-Item WSMan:\localhost\Service\Auth\Basic -Value true; netsh advfirewall firewall add rule name='WinRM HTTP' dir=in action=allow protocol=TCP localport=5985"
-        </CommandLine>
+        <CommandLine>powershell -ExecutionPolicy Bypass -Command "Enable-PSRemoting -Force; Set-Item WSMan:\localhost\Service\AllowUnencrypted -Value true; Set-Item WSMan:\localhost\Service\Auth\Basic -Value true; netsh advfirewall firewall add rule name='WinRM HTTP' dir=in action=allow protocol=TCP localport=5985"</CommandLine>
       </SynchronousCommand>
     </FirstLogonCommands>
-    </component>
-  </settings>
+
+  </component>
+</settings>
 </unattend>
