@@ -60,8 +60,6 @@ source "vsphere-iso" "windows" {
 
   iso_paths = ["[LABVMW_DATASTORE] Repository/SW_DVD9_Win_Server_STD_CORE_2025_24H2.1_64Bit_English_DC_STD_MLF_X23-89914.ISO"] 
 
-  cdrom_type = "sata"
-
   
   floppy_files = ["autounattend.xml"]
 
@@ -93,6 +91,18 @@ source "vsphere-iso" "windows" {
 
 build {
   sources = ["source.vsphere-iso.windows"]
+- name: Run Packer build
+  command: >
+    ./packer build ...
+  register: packer_output
+  ignore_errors: yes
+
+
+- debug:
+    var: packer_output.stdout
+
+- debug:
+    var: packer_output.stderr
 
   provisioner "powershell" {
     inline = [
