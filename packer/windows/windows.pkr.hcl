@@ -91,19 +91,7 @@ source "vsphere-iso" "windows" {
 
 build {
   sources = ["source.vsphere-iso.windows"]
-- name: Run Packer build
-  command: >
-    ./packer build ...
-  register: packer_output
-  ignore_errors: yes
-
-
-- debug:
-    var: packer_output.stdout
-
-- debug:
-    var: packer_output.stderr
-
+  floppy_files = ["autounattend.xml"]
   provisioner "powershell" {
     inline = [
       "Write-Host 'Configuring WinRM + firewall...'",
