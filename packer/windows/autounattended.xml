@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+    <!-- Windows PE Phase: Setup and Partitioning -->
+      <settings pass="windowsPE">
+    <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35">
+        <AutoLogon>
+          <Password>
+            <Value>Johnathan0730-!</Value>
+            <PlainText>true</PlainText>
+          </Password>
+          <Enabled>true</Enabled>
+          <Username>Administrator</Username>
+        </AutoLogon>
+        <RegisteredOrganization>Lab</RegisteredOrganization>
+        <RegisteredOwner>Packer</RegisteredOwner>
+        <TimeZone>Eastern Standard Time</TimeZone>
+    </component>
+        <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://microsoft.com" xmlns:xsi="http://w3.org">
+            <DiskConfiguration>
+                <Disk wcm:action="add">
+                    <CreatePartitions>
+                        <CreatePartition wcm:action="add">
+                            <Order>1</Order>
+                            <Type>Primary</Type>
+                            <Extend>true</Extend>
+                        </CreatePartition>
+                    </CreatePartitions>
+                    <ModifyPartitions>
+                        <ModifyPartition wcm:action="add">
+                            <Active>true</Active>
+                            <Format>NTFS</Format>
+                            <Label>System</Label>
+                            <Letter>C</Letter>
+                            <Order>1</Order>
+                            <PartitionID>1</PartitionID>
+                        </ModifyPartition>
+                    </ModifyPartitions>
+                    <DiskID>0</DiskID>
+                    <WillWipeDisk>true</WillWipeDisk>
+                </Disk>
+            </DiskConfiguration>
+            <UserData>
+                <AcceptEula>true</AcceptEula>
+                <FullName>Administrator</FullName>
+                <Organization>Nordson Corporation</Organization>
+            </UserData>
+        </component>
+    </settings>
+
+    <!-- Specialize Phase: Computer Name & Network Configurations -->
+    <settings pass="specialize">
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://microsoft.com" xmlns:xsi="http://w3.org">
+            <ComputerName>NordsonTemplate</ComputerName>
+            <!--TimeZone>${timezone}</TimeZone-->
+        </component>
+    </settings>
+
+    <!-- OOBE Phase: Local Accounts, AutoLogon, and Post-Deployment Scripts -->
+    <settings pass="oobeSystem">
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://microsoft.com" xmlns:xsi="http://w3.org">
+            <AutoLogon>
+                <Password>
+                    <Value>L04a22s3!</Value>
+                    <PlainText>true</PlainText>
+                </Password>
+                <Enabled>true</Enabled>
+                <Username>Administrator</Username>
+                <Count>1</Count>
+            </AutoLogon>
+            <UserAccounts>
+                <--!AdministratorPassword>
+                    <--!Value>${admin_password}<--!/Value>
+                    <--!PlainText>true<--!/PlainText>
+                <--!/AdministratorPassword>
+            <--!/UserAccounts>
+            <FirstLogonCommands>
+                <SynchronousCommand wcm:action="add">
+                    <Order>1</Order>
+                    <Description>Enable WinRM over HTTP for Provisioners</Description>
+                    <CommandLine>powershell -ExecutionPolicy Bypass -Command "PowerShell -Command Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://githubusercontent.com'))"</CommandLine>
+                </SynchronousCommand>
+            </FirstLogonCommands>
+        </component>
+    </settings>
+</unattend>
