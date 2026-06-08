@@ -50,30 +50,31 @@
           <WillWipeDisk>true</WillWipeDisk>
         </Disk>
       </DiskConfiguration>
-     <ImageInstall>
-       <OSImage>
-         <InstallFrom>
-           <MetaData> <Key>/IMAGE/INDEX</Key>
-             <Value>1</Value>
-           </MetaData>
-         </InstallFrom>
+      <ImageInstall>
+        <OSImage>
+          <InstallFrom>
+            <MetaData wcm:action="add">
+              <Key>/IMAGE/INDEX</Key>
+              <Value>1</Value>
+            </MetaData>
+          </InstallFrom>
 
-    <InstallTo>
-      <DiskID>0</DiskID>
-      <PartitionID>1</PartitionID>
-    </InstallTo>
+          <InstallTo>
+            <DiskID>0</DiskID>
+            <PartitionID>1</PartitionID>
+          </InstallTo>
 
-    <WillShowUI>Never</WillShowUI>
-  </OSImage>
-</ImageInstall>
+          <WillShowUI>Never</WillShowUI>
+       </OSImage>
+      </ImageInstall>
 
-<UserData>
-  <ProductKey>
-    <Key></Key>
-    <WillShowUI>Never</WillShowUI>
-  </ProductKey>
-  <AcceptEula>true</AcceptEula>
-</UserData>
+      <UserData>
+        <ProductKey>
+          <Key></Key>
+          <WillShowUI>Never</WillShowUI>
+        </ProductKey>
+        <AcceptEula>true</AcceptEula>
+      </UserData>
 
     </component>
   </settings>
