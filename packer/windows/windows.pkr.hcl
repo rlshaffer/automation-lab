@@ -62,6 +62,11 @@ source "vsphere-iso" "windows" {
 
   cdrom_type = "sata"
 
+  
+  cd_files = ["${path.root}/windows/autounattend.xml"]
+  cd_label = "cidata"
+
+
   communicator = "winrm"
   winrm_username = "Administrator"
   winrm_password = var.win_admin_password
