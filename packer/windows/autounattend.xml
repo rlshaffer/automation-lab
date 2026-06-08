@@ -54,8 +54,7 @@
        <OSImage>
          <InstallFrom>
            <MetaData wcm:action="add">
-             <Key>/IMAGE/NAME</Key>
-             <Value>Windows Server 2025 Standard</Value>
+             <Value>1</Value>
            </MetaData>
          </InstallFrom>
 
