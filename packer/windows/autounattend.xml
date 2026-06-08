@@ -50,21 +50,27 @@
           <WillWipeDisk>true</WillWipeDisk>
         </Disk>
       </DiskConfiguration>
-      <UserData>
-        <AcceptEula>true</AcceptEula>
-        <FullName>Administrator</FullName>
-        <Organization>Nordson Corporation</Organization>
-      </UserData>
-      
-      <ImageInstall>
-        <OSImage>
-          <InstallTo>
-            <DiskID>0</DiskID>
-            <PartitionID>1</PartitionID>
-          </InstallTo>
-          <WillShowUI>Never</WillShowUI>
-        </OSImage>
-      </ImageInstall>
+     <ImageInstall>
+       <OSImage>
+         <InstallFrom>
+           <MetaData wcm:action="add">
+             <Key>/IMAGE/NAME</Key>
+             <Value>Windows Server 2025 Standard</Value>
+           </MetaData>
+         </InstallFrom>
+
+    <InstallTo>
+      <DiskID>0</DiskID>
+      <PartitionID>1</PartitionID>
+    </InstallTo>
+
+    <WillShowUI>Never</WillShowUI>
+  </OSImage>
+</ImageInstall>
+
+<UserData>
+  <AcceptEula>true</AcceptEula>
+</UserData>
 
     </component>
   </settings>
