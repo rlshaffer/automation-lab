@@ -58,14 +58,9 @@
               <Value>1</Value>
             </MetaData>
           </InstallFrom>
-
-          <InstallTo>
-            <DiskID>0</DiskID>
-            <PartitionID>1</PartitionID>
-          </InstallTo>
-
-          <WillShowUI>Never</WillShowUI>
-       </OSImage>
+          <!-- This tag forces Windows to auto-select the first available disk -->
+          <InstallToAvailablePartition>true</InstallToAvailablePartition>
+        </OSImage>
       </ImageInstall>
 
       <UserData>
