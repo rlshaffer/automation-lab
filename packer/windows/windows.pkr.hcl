@@ -96,13 +96,6 @@ source "vsphere-iso" "windows" {
   shutdown_timeout = "15m"
 
   
-cd_files = [
-  "windows/autounattend.xml",
-  "windows/scripts/"
-]
-
-cd_label = "cidata"
-
 
 }
 
