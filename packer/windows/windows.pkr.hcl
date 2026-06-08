@@ -81,7 +81,6 @@ source "vsphere-iso" "windows" {
     "<spacebar>",
     "<spacebar>",
   ]
-  insecure_connection = true
   set_host_for_datastore_uploads = true
   shutdown_command = "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\""
   shutdown_timeout = "15m"
