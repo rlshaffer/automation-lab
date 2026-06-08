@@ -26,8 +26,6 @@
       language="neutral" 
       versionScope="nonSxS">
       <DiskConfiguration>
-      <WillShowUI>Never</WillShowUI>
-      <DiskConfiguration>
         <WillShowUI>Never</WillShowUI>
         <Disk wcm:action="add">
           <WillWipeDisk>true</WillWipeDisk>
