@@ -9,24 +9,19 @@ packer {
 
 variable "vsphere_password" { type = string }
 variable "vsphere_server" { type = string }
-
 variable "datacenter" { type = string }
 variable "cluster" { type = string }
 variable "datastore" { type = string }
 variable "network" { type = string }
-
 variable "template_name" { type = string }
-
 variable "vm_cpu" {
   type    = number
   default = 2
 }
-
 variable "vm_memory_mb" {
   type    = number
   default = 4096
 }
-
 variable "win_admin_password" {
   type = string
 }
@@ -47,8 +42,6 @@ source "vsphere-iso" "windows" {
 
   firmware = "bios"
 
-  cdrom_type = "ide"
-
   CPUs = var.vm_cpu
   RAM  = var.vm_memory_mb
 
@@ -66,12 +59,14 @@ source "vsphere-iso" "windows" {
   ]
   disk_controller_type = ["lsilogic-sas"]
 
-
-
-floppy_files = [
+  floppy_files = [
   "autounattend.xml",
-]
+  ]
+  cdrom_type = "ide"
   boot_order = "cdrom,disk"
+  
+  # ✅ HTTP server (key fix)
+  http_directory = "./http"
 
   boot_wait = "2s" 
 
@@ -82,6 +77,7 @@ floppy_files = [
     "<spacebar>",
     "<spacebar>",
     "<spacebar>",
+    "autounattend=http://{{ .HTTPIP }}:{{ .HTTPPort }}/autounattend.xml<enter>"
   ]
 
   communicator = "winrm"
