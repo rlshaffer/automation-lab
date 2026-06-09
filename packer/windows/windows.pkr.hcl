@@ -59,12 +59,13 @@ source "vsphere-iso" "windows" {
   ]
  
   disk_controller_type = ["lsilogic-sas"]
-  cdrom_type           = "ide"
-  boot_order           = "cdrom,disk"
+  #cdrom_type           = "ide"
+  #boot_order           = "cdrom,disk"
 
-  floppy_files = [
-  "autounattend.xml",
-  ]
+
+# floppy_files = [
+#   "./autounattend.xml"
+# ]
 
  
   # ✅ HTTP server (key fix)
