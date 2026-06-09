@@ -33,8 +33,8 @@ source "vsphere-iso" "windows" {
   datacenter = var.datacenter
   cluster    = var.cluster
   datastore  = var.datastore
-  resource_pool = "${var.cluster}/Resources"
-  folder = "Discovered virtual machine"
+  #resource_pool = "${var.cluster}/Resources"
+  #folder = "Discovered virtual machine"
 
   vm_name = var.template_name
 
