@@ -26,11 +26,13 @@
       language="neutral" 
       versionScope="nonSxS">
 
+
       <DriverPaths>
         <PathAndCredentials wcm:keyValue="1">
-          <Path>D:\Program Files\VMware\VMware Tools\Drivers\pvscsi\Win8\amd64</Path>
+          <Path>A:\</Path>
         </PathAndCredentials>
       </DriverPaths>
+
 
       <DiskConfiguration>
         <WillShowUI>Never</WillShowUI>
