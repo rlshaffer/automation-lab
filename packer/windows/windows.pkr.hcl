@@ -27,7 +27,7 @@ variable "vm_memory_mb" {
   default = 4096
 }
 
-variable "win_admin_password" {
+variable "vm_admin_password" {
   type = string
 }
 
