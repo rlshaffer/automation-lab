@@ -5,7 +5,7 @@
   
   tasks:
     - name: Initialize Packer plugins
-      ansible.builtin.shell: |
+      ansible.builtin.shell:
         ./packer init ./windows/windows.pkr.hcl
       register: packer_init
 
@@ -13,22 +13,25 @@
       debug:
         var: packer_init.stdout_lines
 
-    - name: Run Packer build
-      ansible.builtin.shell: 
-        ./packer build \
-        -var "vsphere_password={{ vsphere_password }}" \
-        -var "vsphere_server={{ vsphere_server }}" \
-        -var "datacenter={{ datacenter }}" \
-        -var "cluster={{ cluster }}" \
-        -var "datastore={{ datastore }}" \
-        -var "network={{ network }}" \
-        -var "template_name={{ template_name }}-gold" \
-        -var "vm_cpu={{ vm_cpu }}" \
-        -var "vm_memory_mb={{ vm_memory_mb }}" \
-        -var "win_admin_password={{ vm_admin_password }}" \
-        ./windows/windows.pkr.hcl
-      register: packer_output
 
-    - name: Show Packer output
-      debug:
-        var: packer_output.stdout_lines
+    - name: Run Packer build
+      command: 
+        ./packer build
+        -var "vsphere_user={{ lookup('env','VSPHERE_USER') }}"
+        -var "vsphere_password={{ vsphere_password }}"
+        -var "vsphere_server={{ vsphere_server }}"
+        -var "datacenter={{ datacenter }}"
+        -var "cluster={{ cluster }}"
+        -var "datastore={{ datastore }}"
+        -var "network={{ network }}"
+        -var "template_name={{ template_name }}"
+        -var "vm_cpu={{ vm_cpu }}"
+        -var "vm_memory_mb={{ vm_memory_mb }}"
+        -var "win_admin_password={{ win_admin_password }}"
+        ./windows/windows.pkr.hcl
+  environment:
+      PATH: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+- name: Show Packer output
+  debug:
+  var: packer_output.stdout_lines
