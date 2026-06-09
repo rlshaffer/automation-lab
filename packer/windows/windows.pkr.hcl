@@ -47,7 +47,7 @@ source "vsphere-iso" "windows" {
 
   firmware = "bios"
 
-  cdrom_type = "sata"
+  cdrom_type = "ide"
 
   CPUs = var.vm_cpu
   RAM  = var.vm_memory_mb
