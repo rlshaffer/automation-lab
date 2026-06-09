@@ -49,6 +49,10 @@ source "vsphere-iso" "windows" {
 
   cdrom_type = "sata"
 
+  cd_files = ["autounattend.xml"]
+cd_label = "cidata"
+
+
   CPUs = var.vm_cpu
   RAM  = var.vm_memory_mb
 
@@ -66,13 +70,16 @@ source "vsphere-iso" "windows" {
 
   iso_paths = [
     "[LABVMW_DATASTORE] Repository/SW_DVD9_Win_Server_STD_CORE_2025_24H2.1_64Bit_English_DC_STD_MLF_X23-89914.ISO", # Your main OS ISO
-    "[Iso Data Store] vmware_iso/Windows10.iso" # The VMware Tools ISO containing PVSCSI
+    # "[Iso Data Store] vmware_iso/Windows10.iso" # The VMware Tools ISO containing PVSCSI
   ]
 
+  cd_files = ["autounattend.xml"]
+  cd_label = "cidata"
+
   
-  floppy_files = [
-  "./windows/autounattend.xml"
-  ]
+  # floppy_files = [
+  # "./windows/autounattend.xml"
+  # ]
   boot_order = "disk,cdrom"
 
   boot_wait = "2s" 
