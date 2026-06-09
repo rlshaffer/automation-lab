@@ -60,7 +60,7 @@ source "vsphere-iso" "windows" {
   disk_controller_type = ["lsilogic-sas"]
 
   storage {
-    disk_size             = 163840
+    disk_size             = 102400
     disk_thin_provisioned = true
   }
 
