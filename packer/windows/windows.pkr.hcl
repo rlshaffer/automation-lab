@@ -49,10 +49,6 @@ source "vsphere-iso" "windows" {
 
   cdrom_type = "sata"
 
-  cd_files = ["autounattend.xml"]
-cd_label = "cidata"
-
-
   CPUs = var.vm_cpu
   RAM  = var.vm_memory_mb
 
