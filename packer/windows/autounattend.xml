@@ -25,6 +25,17 @@
       publicKeyToken="31bf3856ad364e35" 
       language="neutral" 
       versionScope="nonSxS">
+      <DriverPaths>
+            <PathAndCredentials wcm:action="add" wcm:keyValue="1">
+                <Path>D:\program files\VMware\VMware Tools\Drivers\pvscsi\amd64</Path>
+            </PathAndCredentials>
+            <PathAndCredentials wcm:action="add" wcm:keyValue="2">
+                <Path>E:\program files\VMware\VMware Tools\Drivers\pvscsi\amd64</Path>
+            </PathAndCredentials>
+            <PathAndCredentials wcm:action="add" wcm:keyValue="3">
+                <Path>F:\program files\VMware\VMware Tools\Drivers\pvscsi\amd64</Path>
+            </PathAndCredentials>
+        </DriverPaths>
       <DiskConfiguration>
         <WillShowUI>Never</WillShowUI>
         <Disk wcm:action="add">
