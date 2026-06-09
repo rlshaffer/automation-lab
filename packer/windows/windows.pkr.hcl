@@ -70,18 +70,11 @@ source "vsphere-iso" "windows" {
   # ✅ HTTP server (key fix)
   http_directory = "./http"
 
-  boot_wait = "2s" 
+  boot_wait = "5s"
 
-boot_wait = "5s"
-
-boot_command = [
-  "<spacebar>",
-  "<spacebar>",
-  "<spacebar>",
-  "<spacebar>",
-  "<enter>"
- 
-  ]
+  boot_command = [
+    "<enter>"
+   ]
 
   communicator = "winrm"
   winrm_username = "Administrator"
