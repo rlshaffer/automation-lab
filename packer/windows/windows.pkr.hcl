@@ -91,7 +91,7 @@ source "vsphere-iso" "windows" {
 
   communicator = "winrm"
   winrm_username = "Administrator"
-  winrm_password = var.win_admin_password
+  winrm_password = var.vm_admin_password
   winrm_timeout  = "2h"
 
   insecure_connection = true
