@@ -71,9 +71,6 @@ source "vsphere-iso" "windows" {
 
 floppy_files = [
   "autounattend.xml",
-  "drivers/pvscsi/pvscsi.inf",
-  "drivers/pvscsi/pvscsi.sys",
-  "drivers/pvscsi/pvscsi.cat"
 ]
   boot_order = "disk,cdrom"
 

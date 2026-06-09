@@ -33,31 +33,12 @@
         </PathAndCredentials>
       </DriverPaths>
 
-
       <DiskConfiguration>
-        <WillShowUI>Never</WillShowUI>
-        <Disk wcm:action="add">
-          <CreatePartitions>
-            <CreatePartition wcm:action="add">
-              <Order>1</Order>
-              <Type>Primary</Type>
-              <Extend>true</Extend>
-            </CreatePartition>
-          </CreatePartitions>
-          <ModifyPartitions>
-            <ModifyPartition wcm:action="add">
-              <Active>true</Active>
-              <Format>NTFS</Format>
-              <Label>System</Label>
-              <Letter>C</Letter>
-              <Order>1</Order>
-              <PartitionID>1</PartitionID>
-            </ModifyPartition>
-          </ModifyPartitions>
-          <DiskID>0</DiskID>
-          <WillWipeDisk>true</WillWipeDisk>
-        </Disk>
+        <WillShowUI>OnError</WillShowUI>
       </DiskConfiguration>
+
+
+
       <ImageInstall>
         <OSImage>
           <InstallFrom>
