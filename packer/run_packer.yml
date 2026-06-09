@@ -27,7 +27,7 @@
         -var "template_name={{ template_name }}"
         -var "vm_cpu={{ vm_cpu }}"
         -var "vm_memory_mb={{ vm_memory_mb }}"
-        -var "win_admin_password={{ win_admin_password }}"
+        -var "win_admin_password={{ vm_admin_password }}"
         ./windows/windows.pkr.hcl
   environment:
       PATH: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
