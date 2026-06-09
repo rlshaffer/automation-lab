@@ -41,11 +41,7 @@
 
       <ImageInstall>
         <OSImage>
-          <InstallFrom>
-            <Path>http://{{ .HTTPIP }}:{{ .HTTPPort }}/sources/install.wim</Path>
-          </InstallFrom>
-          <!-- This tag forces Windows to auto-select the first available disk -->
-          <!--InstallToAvailablePartition>true</InstallToAvailablePartition -->
+          <InstallToAvailablePartition>true</InstallToAvailablePartition>
         </OSImage>
       </ImageInstall>
 

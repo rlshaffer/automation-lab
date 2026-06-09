@@ -57,27 +57,30 @@ source "vsphere-iso" "windows" {
   iso_paths = [
     "[LABVMW_DATASTORE] Repository/SW_DVD9_Win_Server_STD_CORE_2025_24H2.1_64Bit_English_DC_STD_MLF_X23-89914.ISO", # Your main OS ISO
   ]
+ 
   disk_controller_type = ["lsilogic-sas"]
+  cdrom_type           = "ide"
+  boot_order           = "cdrom,disk"
 
   floppy_files = [
   "autounattend.xml",
   ]
-  cdrom_type = "ide"
-  boot_order = "cdrom,disk"
-  
+
+ 
   # ✅ HTTP server (key fix)
   http_directory = "./http"
 
   boot_wait = "2s" 
 
-  boot_command = [
-    "<spacebar>",
-    "<spacebar>",
-    "<spacebar>",
-    "<spacebar>",
-    "<spacebar>",
-    "<spacebar>",
-    "autounattend=http://{{ .HTTPIP }}:{{ .HTTPPort }}/autounattend.xml<enter>"
+boot_wait = "5s"
+
+boot_command = [
+  "<spacebar>",
+  "<spacebar>",
+  "<spacebar>",
+  "<spacebar>",
+  "<enter>"
+ 
   ]
 
   communicator = "winrm"
