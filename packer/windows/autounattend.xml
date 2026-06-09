@@ -56,7 +56,7 @@
               <PartitionID>1</PartitionID>
             </ModifyPartition>
           </ModifyPartitions>
-          <DiskID>0</DiskID>
+          <DiskID>1</DiskID>
           <WillWipeDisk>true</WillWipeDisk>
         </Disk>
       </DiskConfiguration>
@@ -72,7 +72,7 @@
           <!--InstallToAvailablePartition>true</InstallToAvailablePartition -->
           
           <InstallTo>
-            <DiskID>0</DiskID>
+            <DiskID>1</DiskID>
             <PartitionID>1</PartitionID>
           </InstallTo>
 
