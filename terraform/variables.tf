@@ -17,4 +17,3 @@ variable "vm_cpu" {
 variable "vm_memory_mb" {
   default = 4096
 }
-variable "win_admin_password" {} 
