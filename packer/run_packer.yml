@@ -32,6 +32,4 @@
   environment:
       PATH: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
-- name: Show Packer output
-  debug:
-  var: packer_output.stdout_lines
+
