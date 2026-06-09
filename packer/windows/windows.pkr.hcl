@@ -33,10 +33,12 @@ source "vsphere-iso" "windows" {
   datacenter = var.datacenter
   cluster    = var.cluster
   datastore  = var.datastore
+  resource_pool = "${var.cluster}/Resources"
+  folder = "Discovered virtual machine"
 
   vm_name = var.template_name
 
-  guest_os_type = "windows9Server64Guest"
+  guest_os_type = "windows2022srv_64Guest"
 
    vm_version = 21
 
@@ -57,7 +59,7 @@ source "vsphere-iso" "windows" {
   iso_paths = [
     "[LABVMW_DATASTORE] Repository/SW_DVD9_Win_Server_STD_CORE_2025_24H2.1_64Bit_English_DC_STD_MLF_X23-89914.ISO", # Your main OS ISO
   ]
- 
+  convert_to_template = false 
   disk_controller_type = ["lsilogic-sas"]
   #cdrom_type           = "ide"
   #boot_order           = "cdrom,disk"
