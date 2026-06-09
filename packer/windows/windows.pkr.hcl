@@ -57,16 +57,13 @@ source "vsphere-iso" "windows" {
     network_card = "vmxnet3"
   }
 
-  disk_controller_type = ["lsilogic-sas"]
-
   storage {
     disk_size             = 163840
     disk_thin_provisioned = true
   }
 
-  extra_config = {
-    "nestedHV" = "passthrough"
-  }
+  disk_controller_type = ["pvscsi"]
+  enable_disk_uuid     = true
 
 iso_paths = [
     "[LABVMW_DATASTORE] Repository/SW_DVD9_Win_Server_STD_CORE_2025_24H2.1_64Bit_English_DC_STD_MLF_X23-89914.ISO", # Your main OS ISO
