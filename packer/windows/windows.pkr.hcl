@@ -66,7 +66,7 @@ source "vsphere-iso" "windows" {
 
   iso_paths = [
     "[LABVMW_DATASTORE] Repository/SW_DVD9_Win_Server_STD_CORE_2025_24H2.1_64Bit_English_DC_STD_MLF_X23-89914.ISO", # Your main OS ISO
-    "[] /vmimages/tools-isoimages/windows.iso" # The VMware Tools ISO containing PVSCSI
+    "[LABVMW_DATASTORE] /usr/lib/vmware/isoimages/windows.iso" # The VMware Tools ISO containing PVSCSI
   ]
 
   
