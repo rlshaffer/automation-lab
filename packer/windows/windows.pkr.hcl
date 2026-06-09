@@ -9,19 +9,24 @@ packer {
 
 variable "vsphere_password" { type = string }
 variable "vsphere_server" { type = string }
+
 variable "datacenter" { type = string }
 variable "cluster" { type = string }
 variable "datastore" { type = string }
 variable "network" { type = string }
+
 variable "template_name" { type = string }
+
 variable "vm_cpu" {
   type    = number
   default = 2
 }
+
 variable "vm_memory_mb" {
   type    = number
   default = 4096
 }
+
 variable "win_admin_password" {
   type = string
 }
@@ -33,16 +38,16 @@ source "vsphere-iso" "windows" {
   datacenter = var.datacenter
   cluster    = var.cluster
   datastore  = var.datastore
-  # resource_pool = "${var.cluster}/Resources"
-  # folder = "Discovered virtual machine"
 
   vm_name = var.template_name
 
-  guest_os_type = "windows2022srv_64Guest"
+  guest_os_type = "windows9Server64Guest"
 
    vm_version = 21
 
-  firmware = "bios"
+  firmware = "efi"
+
+  cdrom_type = "sata"
 
   CPUs = var.vm_cpu
   RAM  = var.vm_memory_mb
@@ -52,32 +57,38 @@ source "vsphere-iso" "windows" {
     network_card = "vmxnet3"
   }
 
+  disk_controller_type = ["lsilogic-sas"]
+
   storage {
     disk_size             = 163840
     disk_thin_provisioned = true
   }
-  iso_paths = [
+
+  extra_config = {
+    "nestedHV" = "passthrough"
+  }
+
+iso_paths = [
     "[LABVMW_DATASTORE] Repository/SW_DVD9_Win_Server_STD_CORE_2025_24H2.1_64Bit_English_DC_STD_MLF_X23-89914.ISO", # Your main OS ISO
+    "[] /vmimages/tools-isoimages/windows.iso" # The VMware Tools ISO containing PVSCSI
   ]
-  convert_to_template = false 
-  disk_controller_type = ["lsilogic-sas"]
-  #cdrom_type           = "ide"
-  #boot_order           = "cdrom,disk"
 
+  
+  floppy_files = [
+  "./windows/autounattend.xml"
+  ]
+  boot_order = "disk,cdrom"
 
-# floppy_files = [
-#   "./autounattend.xml"
-# ]
-
- 
-  # ✅ HTTP server (key fix)
-  http_directory = "./http"
-
-  boot_wait = "5s"
+  boot_wait = "2s" 
 
   boot_command = [
-    "<enter>"
-   ]
+    "<spacebar>",
+    "<spacebar>",
+    "<spacebar>",
+    "<spacebar>",
+    "<spacebar>",
+    "<spacebar>",
+  ]
 
   communicator = "winrm"
   winrm_username = "Administrator"
