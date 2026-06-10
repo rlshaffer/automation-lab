@@ -15,11 +15,12 @@
       </DiskConfiguration>
 
       <ImageInstall>
-          <MetaData wcm:action="add">
-              <Key>/IMAGE/INDEX</Key>
-              <Value>2</Value>
-          </MetaData>
+
         <OSImage>
+          <MetaData wcm:action="add">
+            <Key>/IMAGE/INDEX</Key>
+            <Value>2</Value>
+          </MetaData>
           <InstallToAvailablePartition>true</InstallToAvailablePartition>
         </OSImage>
       </ImageInstall>
