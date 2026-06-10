@@ -81,6 +81,12 @@ source "vsphere-iso" "windows" {
   boot_wait = "5s" 
 
   boot_command = [
+    "<space>",
+    "<space>",
+    "<space>",
+    "<space>",
+    "<space>",
+    "<space>",
     "<enter>"
   ]
 
