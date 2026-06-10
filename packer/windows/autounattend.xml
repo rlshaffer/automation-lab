@@ -18,12 +18,10 @@
         <OSImage>
 
         <InstallFrom>
-        <!-- This tag forces Windows to auto-select Windows Desktop Experience -->
-        <MetaData wcm:action="add">
+          <MetaData wcm:action="add">
             <Key>/IMAGE/INDEX</Key>
             <Value>2</Value>
-        </MetaData>
-
+          </MetaData>
         </InstallFrom>
         <!-- This tag forces Windows to auto-select the first available disk -->
           <InstallToAvailablePartition>true</InstallToAvailablePartition>
