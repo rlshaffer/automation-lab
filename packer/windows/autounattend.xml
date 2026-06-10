@@ -23,7 +23,7 @@
                   <Value>2</Value> <!-- Replace '4' with your specific image index -->
               </MetaData>
           </InstallFrom>
-          <InstallToAvailablePartition>true</InstallToAvailablePartition>
+          <!--InstallToAvailablePartition>true</InstallToAvailablePartition -->
         </OSImage>
       </ImageInstall>
 
