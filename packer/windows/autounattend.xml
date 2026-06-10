@@ -70,6 +70,23 @@
         <Enabled>true</Enabled>
         <LogonCount>3</LogonCount>
       </AutoLogon>
+    <FirstLogonCommands>
+
+    <SynchronousCommand>
+        <CommandLine>winrm quickconfig -q</CommandLine>
+    </SynchronousCommand>
+
+    <SynchronousCommand> wcm:action=<CommandLine>netsh advfirewall firewall add rule name="WinRM" dir=in action=allow protocol=TCP localport=5985</CommandLine>
+    </SynchronousCommand>
+
+    <SynchronousCommand> wcm:action=<CommandLine>powershell -ExecutionPolicy Bypass -Command "Set-Item WSMan:\localhost\Service\AllowUnencrypted -Value true"</CommandLine>
+    </SynchronousCommand>
+
+    <SynchronousCommand> wcm:action=<CommandLine>powershell -ExecutionPolicy Bypass -Command "Set-Item WSMan:\localhost\Service\Auth\Basic -Value true"</CommandLine>
+    </SynchronousCommand>
+
+    </FirstLogonCommands>
+
 
     </component>
   </settings>
