@@ -1,30 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<unattend xmlns="urn:schemas-microsoft-com:unattend">
+<unattend xmlns="urn:schemas-microsoft-com:unattend"
+          xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-  <!-- ✅ Windows PE phase -->
+  <!-- Windows PE Phase: Setup and Partitioning -->
   <settings pass="windowsPE">
-    <component name="Microsoft-Windows-Setup"
-               processorArchitecture="amd64"
-               publicKeyToken="31bf3856ad364e35"
-               language="neutral"
-               versionScope="nonSxS">
+    <component name="Microsoft-Windows-International-Core-WinPE"
+      processorArchitecture="amd64"
+      publicKeyToken="31bf3856ad364e35"
+      language="neutral"
+      versionScope="nonSxS">
 
-      <!-- ✅ Let Windows choose disk -->
+      <SetupUILanguage>
+        <UILanguage>en-US</UILanguage>
+      </SetupUILanguage>
+      <InputLocale>en-US</InputLocale>
+      <SystemLocale>en-US</SystemLocale>
+      <UILanguage>en-US</UILanguage>
+      <UserLocale>en-US</UserLocale>
+
+    </component>
+    <component name="Microsoft-Windows-Setup" 
+      processorArchitecture="amd64" 
+      publicKeyToken="31bf3856ad364e35" 
+      language="neutral" 
+      versionScope="nonSxS">
+      <DriverPaths>
+            <PathAndCredentials wcm:action="add" wcm:keyValue="1">
+                <Path>D:\program files\VMware\VMware Tools\Drivers\pvscsi\amd64</Path>
+            </PathAndCredentials>
+            <PathAndCredentials wcm:action="add" wcm:keyValue="2">
+                <Path>E:\program files\VMware\VMware Tools\Drivers\pvscsi\amd64</Path>
+            </PathAndCredentials>
+            <PathAndCredentials wcm:action="add" wcm:keyValue="3">
+                <Path>F:\program files\VMware\VMware Tools\Drivers\pvscsi\amd64</Path>
+            </PathAndCredentials>
+        </DriverPaths>
       <DiskConfiguration>
-        <WillShowUI>OnError</WillShowUI>
+        <WillShowUI>Never</WillShowUI>
+        <Disk wcm:action="add">
+          <CreatePartitions>
+            <CreatePartition wcm:action="add">
+              <Order>1</Order>
+              <Type>Primary</Type>
+              <Extend>true</Extend>
+            </CreatePartition>
+          </CreatePartitions>
+          <ModifyPartitions>
+            <ModifyPartition wcm:action="add">
+              <Active>true</Active>
+              <Format>NTFS</Format>
+              <Label>System</Label>
+              <Letter>C</Letter>
+              <Order>1</Order>
+              <PartitionID>1</PartitionID>
+            </ModifyPartition>
+          </ModifyPartitions>
+          <DiskID>0</DiskID>
+          <WillWipeDisk>true</WillWipeDisk>
+        </Disk>
       </DiskConfiguration>
-
       <ImageInstall>
         <OSImage>
+          <InstallFrom>
+            <MetaData wcm:action="add">
+              <Key>/IMAGE/INDEX</Key>
+              <Value>1</Value>
+            </MetaData>
+          </InstallFrom>
+          <!-- This tag forces Windows to auto-select the first available disk -->
+          <!--InstallToAvailablePartition>true</InstallToAvailablePartition -->
+          
+          <InstallTo>
+            <DiskID>0</DiskID>
+            <PartitionID>1</PartitionID>
+          </InstallTo>
 
-        <InstallFrom>
-          <MetaData wcm:action="add">
-            <Key>/IMAGE/INDEX</Key>
-            <Value>2</Value>
-          </MetaData>
-        </InstallFrom>
-        <!-- This tag forces Windows to auto-select the first available disk -->
-          <InstallToAvailablePartition>true</InstallToAvailablePartition>
+          <WillShowUI>Never</WillShowUI>
+
         </OSImage>
       </ImageInstall>
 
@@ -33,87 +86,49 @@
       </UserData>
 
     </component>
-
-    <component name="Microsoft-Windows-International-Core-WinPE"
-                processorArchitecture="amd64"
-                publicKeyToken="31bf3856ad364e35"
-                language="neutral"
-                versionScope="nonSxS">
-
-        <SetupUILanguage>
-          <UILanguage>en-US</UILanguage>
-        </SetupUILanguage>
-        <InputLocale>en-US</InputLocale>
-        <SystemLocale>en-US</SystemLocale>
-        <UILanguage>en-US</UILanguage>
-        <UserLocale>en-US</UserLocale>
-
-    </component>
-
   </settings>
 
-  <!-- ✅ Specialize -->
+  <!-- Specialize Phase: Computer Name & Network Configurations -->
   <settings pass="specialize">
-    <component name="Microsoft-Windows-Shell-Setup"
-               processorArchitecture="amd64"
-               publicKeyToken="31bf3856ad364e35"
-               versionScope="nonSxS">
-
-      <ComputerName>packer-win2025</ComputerName>
-
+    <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <ComputerName>NordsonTemplate</ComputerName>
+      <!-- <TimeZone>Eastern Standard Time</TimeZone> -->
     </component>
   </settings>
 
-  <!-- ✅ OOBE -->
+  <!-- OOBE Phase: Local Accounts, AutoLogon, and Post-Deployment Scripts -->
   <settings pass="oobeSystem">
-    <component name="Microsoft-Windows-Shell-Setup"
-               processorArchitecture="amd64"
-               publicKeyToken="31bf3856ad364e35"
-               versionScope="nonSxS">
+   <component name="Microsoft-Windows-Shell-Setup"
+             processorArchitecture="amd64"
+             publicKeyToken="31bf3856ad364e35"
+             language="neutral"
+             versionScope="nonSxS">
 
-      <OOBE>
-        <HideEULAPage>true</HideEULAPage>
-        <NetworkLocation>Work</NetworkLocation>
-        <ProtectYourPC>1</ProtectYourPC>
-      </OOBE>
+    <AutoLogon>
+      <Password>
+        <Value>L04a22s3!</Value>
+        <PlainText>true</PlainText>
+      </Password>
+      <Enabled>true</Enabled>
+      <Username>Administrator</Username>
+      <LogonCount>2</LogonCount>
+    </AutoLogon>
 
-      <!-- ✅ Administrator password -->
-      <UserAccounts>
-        <AdministratorPassword>
-          <Value>Lo4a22s3!</Value>
-          <PlainText>true</PlainText>
-        </AdministratorPassword>
-      </UserAccounts>
+    <UserAccounts>
+      <AdministratorPassword>
+        <Value>L04a22s3!</Value>
+        <PlainText>true</PlainText>
+      </AdministratorPassword>
+    </UserAccounts>
 
-      <!-- ✅ Auto logon -->
-      <AutoLogon>
-        <Username>Administrator</Username>
-        <Password>
-          <Value>Lo4a22s3!</Value>
-          <PlainText>true</PlainText>
-        </Password>
-        <Enabled>true</Enabled>
-        <LogonCount>3</LogonCount>
-      </AutoLogon>
     <FirstLogonCommands>
-
-    <SynchronousCommand>
-        <CommandLine>winrm quickconfig -q</CommandLine>
-    </SynchronousCommand>
-
-    <SynchronousCommand> wcm:action=<CommandLine>netsh advfirewall firewall add rule name="WinRM" dir=in action=allow protocol=TCP localport=5985</CommandLine>
-    </SynchronousCommand>
-
-    <SynchronousCommand> wcm:action=<CommandLine>powershell -ExecutionPolicy Bypass -Command "Set-Item WSMan:\localhost\Service\AllowUnencrypted -Value true"</CommandLine>
-    </SynchronousCommand>
-
-    <SynchronousCommand> wcm:action=<CommandLine>powershell -ExecutionPolicy Bypass -Command "Set-Item WSMan:\localhost\Service\Auth\Basic -Value true"</CommandLine>
-    </SynchronousCommand>
-
+      <SynchronousCommand wcm:action="add">
+        <Order>1</Order>
+        <Description>Enable WinRM</Description>
+        <CommandLine>powershell -ExecutionPolicy Bypass -Command "Enable-PSRemoting -Force; Set-Item WSMan:\localhost\Service\AllowUnencrypted -Value true; Set-Item WSMan:\localhost\Service\Auth\Basic -Value true; netsh advfirewall firewall add rule name='WinRM HTTP' dir=in action=allow protocol=TCP localport=5985"</CommandLine>
+      </SynchronousCommand>
     </FirstLogonCommands>
 
-
-    </component>
-  </settings>
-
+  </component>
+</settings>
 </unattend>
