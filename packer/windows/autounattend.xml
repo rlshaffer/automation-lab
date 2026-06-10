@@ -16,6 +16,16 @@
 
       <ImageInstall>
         <OSImage>
+
+        <InstallFrom>
+        <!-- This tag forces Windows to auto-select Windows Desktop Experience -->
+        <MetaData wcm:action="add">
+            <Key>/IMAGE/INDEX</Key>
+            <Value>2</Value>
+        </MetaData>
+
+        </InstallFrom>
+        <!-- This tag forces Windows to auto-select the first available disk -->
           <InstallToAvailablePartition>true</InstallToAvailablePartition>
         </OSImage>
       </ImageInstall>
@@ -26,7 +36,6 @@
 
     </component>
 
-
     <component name="Microsoft-Windows-International-Core-WinPE"
                 processorArchitecture="amd64"
                 publicKeyToken="31bf3856ad364e35"
@@ -34,17 +43,14 @@
                 versionScope="nonSxS">
 
         <SetupUILanguage>
-        <UILanguage>en-US</UILanguage>
+          <UILanguage>en-US</UILanguage>
         </SetupUILanguage>
-
         <InputLocale>en-US</InputLocale>
         <SystemLocale>en-US</SystemLocale>
         <UILanguage>en-US</UILanguage>
         <UserLocale>en-US</UserLocale>
 
     </component>
-
-
 
   </settings>
 
@@ -76,7 +82,7 @@
       <!-- ✅ Administrator password -->
       <UserAccounts>
         <AdministratorPassword>
-          <Value>Johnathan0730-!</Value>
+          <Value>Lo4a22s3!</Value>
           <PlainText>true</PlainText>
         </AdministratorPassword>
       </UserAccounts>
@@ -85,7 +91,7 @@
       <AutoLogon>
         <Username>Administrator</Username>
         <Password>
-          <Value>Johnathan0730-!</Value>
+          <Value>Lo4a22s3!</Value>
           <PlainText>true</PlainText>
         </Password>
         <Enabled>true</Enabled>
