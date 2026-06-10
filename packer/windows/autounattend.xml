@@ -17,13 +17,14 @@
       <ImageInstall>
         <OSImage>
           <InstallToAvailablePartition>true</InstallToAvailablePartition>
+          <MetaData>
+            <Key>/IMAGE/INDEX</Key>
+            <Value>2</Value>
+          </MetaData>
         </OSImage>
       </ImageInstall>
 
-        <MetaData>
-          <Key>/IMAGE/INDEX</Key>
-          <Value>2</Value>
-        </MetaData>
+
 
       <UserData>
         <AcceptEula>true</AcceptEula>
