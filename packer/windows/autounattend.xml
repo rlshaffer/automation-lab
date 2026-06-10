@@ -18,10 +18,10 @@
 
         <OSImage>
           <InstallFrom>
-              <MetaData wcm:action="add">
-                  <Key>/IMAGE/INDEX</Key>
-                  <Value>2</Value> <!-- Replace '4' with your specific image index -->
-              </MetaData>
+            <MetaData wcm:action="add">
+                <Key>/IMAGE/INDEX</Key>
+                <Value>2</Value> <!-- Replace with your target option number -->
+            </MetaData>
           </InstallFrom>
           <!--InstallToAvailablePartition>true</InstallToAvailablePartition -->
         </OSImage>
