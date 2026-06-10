@@ -26,46 +26,16 @@
       language="neutral" 
       versionScope="nonSxS">
       <DriverPaths>
-            <PathAndCredentials wcm:action="add" wcm:keyValue="1">
-                <Path>D:\program files\VMware\VMware Tools\Drivers\pvscsi\amd64</Path>
-            </PathAndCredentials>
-            <PathAndCredentials wcm:action="add" wcm:keyValue="2">
-                <Path>E:\program files\VMware\VMware Tools\Drivers\pvscsi\amd64</Path>
-            </PathAndCredentials>
-            <PathAndCredentials wcm:action="add" wcm:keyValue="3">
-                <Path>F:\program files\VMware\VMware Tools\Drivers\pvscsi\amd64</Path>
-            </PathAndCredentials>
         </DriverPaths>
       <DiskConfiguration>
         <WillShowUI>Never</WillShowUI>
-        <Disk wcm:action="add">
-          <CreatePartitions>
-            <CreatePartition wcm:action="add">
-              <Order>1</Order>
-              <Type>Primary</Type>
-              <Extend>true</Extend>
-            </CreatePartition>
-          </CreatePartitions>
-          <ModifyPartitions>
-            <ModifyPartition wcm:action="add">
-              <Active>true</Active>
-              <Format>NTFS</Format>
-              <Label>System</Label>
-              <Letter>C</Letter>
-              <Order>1</Order>
-              <PartitionID>1</PartitionID>
-            </ModifyPartition>
-          </ModifyPartitions>
-          <DiskID>0</DiskID>
-          <WillWipeDisk>true</WillWipeDisk>
-        </Disk>
       </DiskConfiguration>
       <ImageInstall>
         <OSImage>
           <InstallFrom>
             <MetaData wcm:action="add">
               <Key>/IMAGE/INDEX</Key>
-              <Value>1</Value>
+              <Value>2</Value>
             </MetaData>
           </InstallFrom>
           <!-- This tag forces Windows to auto-select the first available disk -->
