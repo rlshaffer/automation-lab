@@ -86,8 +86,7 @@ source "vsphere-iso" "windows" {
     "<space>",
     "<space>",
     "<space>",
-    "<space>",
-    "<enter>"
+    "<space>"
   ]
 
   communicator = "winrm"
