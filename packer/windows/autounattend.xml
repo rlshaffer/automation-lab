@@ -26,9 +26,49 @@
         </OSImage>
       </ImageInstall>
       <!-- ✅ Let Windows choose disk -->
-      <DiskConfiguration>
-        <WillShowUI>OnError</WillShowUI>
-      </DiskConfiguration>
+ 
+<DiskConfiguration>
+<Disk wcm:action="add">
+    <WillWipeDisk>true</WillWipeDisk>
+</Disk>
+
+     <CreatePartitions>
+      <!-- System / EFI (required for UEFI boot) -->
+      <CreatePartition wcm:action="add">
+        <Order>1</Order>
+        <Type>EFI</Type>
+        <Size>100</Size>
+      </CreatePartition>
+
+      <!-- MSR -->
+      <CreatePartition wcm:action="add">
+        <Order>2</Order>
+        <Type>MSR</Type>
+        <Size>16</Size>
+      </CreatePartition>
+
+      <!-- OS partition -->
+      <CreatePartition wcm:action="add">
+        <Order>3</Order>
+        <Type>Primary</Type>
+        <Extend>true</Extend>
+      </CreatePartition>
+    </CreatePartitions>
+
+
+    <ModifyPartitions>
+      <!-- Format OS partition -->
+      <ModifyPartition wcm:/Order>
+        <PartitionID>3</PartitionID>
+        <Format>NTFS</Format>
+        <Label>Windows</Label>
+        <Letter>C</Letter>
+      </ModifyPartition>
+    </ModifyPartitions>
+
+  </Disk>
+</DiskConfiguration>
+
       <UserData>
         <AcceptEula>true</AcceptEula>
       </UserData>         
