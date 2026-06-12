@@ -71,8 +71,6 @@
         <Order>2</Order>
         <PartitionID>1</PartitionID>
         <Format>FAT32</Format>
-        <Label></Label>
-        <Letter></Letter>
       </ModifyPartition>
     </ModifyPartitions>
   </Disk>
