@@ -29,7 +29,13 @@
         -var "vm_memory_mb={{ vm_memory_mb }}"
         -var "vm_admin_password={{ vm_admin_password }}"
         ./windows/windows.pkr.hcl
+
+  register: packer_build
   environment:
-      PATH: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    PATH: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    PACKER_LOG: "1"
+    PACKER_LOG_PATH: "packer.log"
+  ignore_errors: yes
+
 
 
