@@ -12,7 +12,8 @@
       <ImageInstall>
         <OSImage>
           <InstallFrom>
-            <MetaData wcm:action="add"><Key>NAME</Key>
+            <MetaData wcm:action="add">
+              <Key>/IMAGE/NAME</Key>
               <Value>Windows Server 2025 Standard (Desktop Experience)</Value>
             </MetaData>
           </InstallFrom>
