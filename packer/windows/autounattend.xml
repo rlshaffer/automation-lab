@@ -16,10 +16,10 @@
               <Value>Windows Server 2025 Standard (Desktop Experience)</Value>
             </MetaData>
           </InstallFrom>
-          <InstallTo>
+          <!--InstallTo>
             <DiskID>0</DiskID>
             <PartitionID>3</PartitionID>
-          </InstallTo>
+          </InstallTo -->
         </OSImage>
       </ImageInstall>
       <!-- ✅ Let Windows choose disk -->
