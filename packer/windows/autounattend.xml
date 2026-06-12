@@ -33,7 +33,7 @@
 <DiskConfiguration>
   <Disk wcm:action="add">
     <DiskID>0</DiskID>
-    <WillWipeDisk>true</WillWipeDisk>
+    <!--WillWipeDisk>true</WillWipeDisk -->
 
     <CreatePartitions>
       <!-- System / EFI (required for UEFI boot) -->
@@ -67,9 +67,6 @@
         <Label>Windows</Label>
         <Letter>C</Letter>
       </ModifyPartition>
-    </ModifyPartitions>
-     <ModifyPartitions>
-
       <ModifyPartition wcm:action="add">
         <Order>2</Order>
         <PartitionID>1</PartitionID>
@@ -78,7 +75,6 @@
         <Letter></Letter>
       </ModifyPartition>
     </ModifyPartitions>
-
   </Disk>
 </DiskConfiguration>
 
