@@ -21,10 +21,8 @@
               <Value>2</Value>
             </MetaData>
           </InstallFrom>
-            <InstallTo>
-              <DiskID>0</DiskID>
-              <PartitionID>1</PartitionID>
-          </InstallTo>
+          <InstallToAvailablePartition>true</InstallToAvailablePartition>
+          <WillShowUI>OnError</WillShowUI>
         </OSImage>
       </ImageInstall>
       <!-- ✅ Let Windows choose disk -->
