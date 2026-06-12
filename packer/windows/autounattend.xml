@@ -21,7 +21,10 @@
               <Value>2</Value>
             </MetaData>
           </InstallFrom>
-          <InstallToAvailablePartition>true</InstallToAvailablePartition>
+          <InstallTo>
+            <DiskID>0</DiskID>
+            <PartitionID>3</PartitionID>
+          </InstallTo>
           <WillShowUI>OnError</WillShowUI>
         </OSImage>
       </ImageInstall>
@@ -37,7 +40,7 @@
       <CreatePartition wcm:action="add">
         <Order>1</Order>
         <Type>EFI</Type>
-        <Size>160</Size>
+        <Size>100</Size>
       </CreatePartition>
 
       <!-- MSR -->
