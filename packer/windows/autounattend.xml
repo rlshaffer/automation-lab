@@ -68,7 +68,7 @@
         <Letter>C</Letter>
       </ModifyPartition>
     <ModifyPartition wcm:action="add">
-        <Order>1</Order>
+        <Order>2</Order>
         <PartitionID>1</PartitionID>
         <Label>System</Label>
         <Format>FAT32</Format>
