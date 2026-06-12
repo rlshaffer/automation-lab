@@ -68,6 +68,16 @@
         <Letter>C</Letter>
       </ModifyPartition>
     </ModifyPartitions>
+     <ModifyPartitions>
+
+      <ModifyPartition wcm:action="add">
+        <Order>2</Order>
+        <PartitionID>1</PartitionID>
+        <Format>FAT32</Format>
+        <Label></Label>
+        <Letter></Letter>
+      </ModifyPartition>
+    </ModifyPartitions>
 
   </Disk>
 </DiskConfiguration>
