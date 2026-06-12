@@ -101,10 +101,11 @@
     <component name="Microsoft-Windows-Shell-Setup"
             processorArchitecture="amd64"
             publicKeyToken="31bf3856ad364e35"
-            language="neutral"
-            versionScope="nonSxS">
+              language="neutral"
+              versionScope="nonSxS">
       <ComputerName>packer-build</ComputerName>
     </component>
+
     <component name="Microsoft-Windows-Shell-Setup"
               processorArchitecture="amd64"
               publicKeyToken="31bf3856ad364e35"
@@ -116,7 +117,29 @@
   </settings>
   <!-- ✅ OOBE -->
   <settings pass="oobeSystem">
+  
     <component name="Microsoft-Windows-Shell-Setup"
+              processorArchitecture="amd64"
+              publicKeyToken="31bf3856ad364e35"
+              language="neutral"
+              versionScope="nonSxS">
+
+      <OOBE>
+        <HideEULAPage>true</HideEULAPage>
+        <NetworkLocation>Work</NetworkLocation>
+        <ProtectYourPC>3</ProtectYourPC>
+      </OOBE>
+
+      <UserAccounts>
+        <AdministratorPassword>
+          <Value>P@ssw0rd!</Value>
+          <PlainText>true</PlainText>
+        </AdministratorPassword>
+      </UserAccounts>
+
+    </component>
+
+    <!-- component name="Microsoft-Windows-Shell-Setup"
               processorArchitecture="amd64"
               publicKeyToken="31bf3856ad364e35"
               versionScope="nonSxS">
@@ -125,18 +148,18 @@
         <HideEULAPage>true</HideEULAPage>
         <NetworkLocation>Work</NetworkLocation>
         <ProtectYourPC>1</ProtectYourPC>
-      </OOBE>
+      </OOBE-->
 
       <!-- ✅ Administrator password -->
-      <UserAccounts>
+      <!-- UserAccounts>
         <AdministratorPassword>
           <Value>Johnathan0730-!</Value>
           <PlainText>true</PlainText>
         </AdministratorPassword>
-      </UserAccounts>
+      </UserAccounts -->
 
       <!-- ✅ Auto logon -->
-      <AutoLogon>
+      <!-- AutoLogon>
         <Username>Administrator</Username>
         <Password>
           <Value>Johnathan0730-!</Value>
@@ -163,7 +186,7 @@
     </FirstLogonCommands>
 
 
-    </component>
+    </component -->
   </settings>
 
 </unattend>
