@@ -30,8 +30,6 @@
 <DiskConfiguration>
 <Disk wcm:action="add">
     <WillWipeDisk>true</WillWipeDisk>
-</Disk>
-
      <CreatePartitions>
       <!-- System / EFI (required for UEFI boot) -->
       <CreatePartition wcm:action="add">
