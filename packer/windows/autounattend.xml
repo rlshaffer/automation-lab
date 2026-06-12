@@ -13,20 +13,6 @@
       <DiskConfiguration>
         <WillShowUI>OnError</WillShowUI>
       </DiskConfiguration>
-
-      <ImageInstall>
-
-        <OSImage>
-          <InstallFrom>
-            <MetaData wcm:action="add">
-                <Key>/IMAGE/INDEX</Key>
-                <Value>2</Value> <!-- Replace with your target option number -->
-            </MetaData>
-          </InstallFrom>
-          <!--InstallToAvailablePartition>true</InstallToAvailablePartition -->
-        </OSImage>
-      </ImageInstall>
-
       <UserData>
         <AcceptEula>true</AcceptEula>
       </UserData>
