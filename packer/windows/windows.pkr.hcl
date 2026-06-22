@@ -81,18 +81,22 @@ source "vsphere-iso" "windows" {
   boot_wait = "2s" 
 
   boot_command = [
-    "<space>",
-    "<space>",
-    "<space>",
-    "<space>",
+    #"<space>",
+    #"<space>",
+    #"<space>",
+    #"<space>",
 
-    
+  "<spacebar><wait>",
+  "<spacebar><wait>",
+  "<enter><wait10>",
+  "<enter><wait10>",
+  "<enter><wait10>",
+
   "shift+f10<wait5>",
 
   "reg add HKLM\\SYSTEM\\Setup\\Status\\ChildCompletion /v setup.exe /t REG_DWORD /d 3 /f<enter>",
 
   "exit<enter>"
-
 
   ]
 
