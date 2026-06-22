@@ -97,38 +97,34 @@
     </component>
   </settings>
   <!-- ✅ Specialize -->
-  <settings pass="specialize">
-    <component name="Microsoft-Windows-Shell-Setup"
-            processorArchitecture="amd64"
-            publicKeyToken="31bf3856ad364e35"
-              language="neutral"
-              versionScope="nonSxS">
-      <ComputerName>packer-build</ComputerName>
-    </component>
 
+  <settings pass="specialize">
+      <component name="Microsoft-Windows-Deployment" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35">
+
+          <RunSynchronous>
+              <RunSynchronousCommand wcm>1</Order>
+                  <Path>cmd /c reg add HKLM\SYSTEM\Setup\Status\ChildCompletion /v setup.exe /t REG_DWORD /d 3 /f</Path>
+                  <Description>Fix Setup ChildCompletion</Description>
+              </RunSynchronousCommand>
+          </RunSynchronous>
+
+      </component>
+  </settings>
+
+
+  
+  <settings pass="oobeSystem">
     <component name="Microsoft-Windows-Shell-Setup"
               processorArchitecture="amd64"
               publicKeyToken="31bf3856ad364e35"
+              language="neutral"
               versionScope="nonSxS">
 
-      <ComputerName>packer-win2025</ComputerName>
+      <OOBE>
+        <HideEULAPage>true</HideEULAPage>
+      </OOBE>
 
     </component>
   </settings>
-
-  
-<settings pass="oobeSystem">
-  <component name="Microsoft-Windows-Shell-Setup"
-             processorArchitecture="amd64"
-             publicKeyToken="31bf3856ad364e35"
-             language="neutral"
-             versionScope="nonSxS">
-
-    <OOBE>
-      <HideEULAPage>true</HideEULAPage>
-    </OOBE>
-
-  </component>
-</settings>
 
 </unattend>
