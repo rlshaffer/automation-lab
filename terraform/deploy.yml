@@ -39,7 +39,7 @@
     - name: Apply Terraform
 
     - name: Apply Terraform
-      command: >
+      Shell: >
         {{ terraform_bin }} apply -auto-approve
         -var "vsphere_user={{ vsphere_user }}"
         -var "vsphere_password={{ vsphere_password }}"
