@@ -30,14 +30,13 @@
       debug:
         msg: "VM deployed with IP: {{ vm_ip_output.stdout }}"
 
-- name: Add host to AWX inventory permanently
-  awx.awx.host:
-    name: "{{ vm_name }}"
-    inventory: windows_deployed
-    variables:
-      ansible_host: "{{ vm_ip_output.stdout }}"
-
 - name: Add new VM to inventory (temporary)
   add_host:
     name: "{{ vm_ip_output.stdout }}"
     groups: windows
+
+- name: Add host to inventory
+  add_host:
+    name: "{{ vm_ip_output.stdout }}"
+    groups: windows
+
