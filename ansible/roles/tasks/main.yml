@@ -1,0 +1,27 @@
+- name: Set timezone
+  win_timezone:
+    timezone: Eastern Standard Time
+
+- name: Create standard folders
+  win_file:
+    path: C:\Temp
+    state: directory
+
+- name: Create Scripts folder
+  win_file:
+    path: C:\Scripts
+    state: directory
+
+- name: Install Chocolatey
+  win_chocolatey:
+    name: chocolatey
+    state: present
+
+- name: Enable Firewall
+  win_firewall:
+    state: enabled
+
+- name: Clear temp files
+  win_shell: |
+    Remove-Item -Recurse -Force C:\Windows\Temp\* -ErrorAction SilentlyContinue
+

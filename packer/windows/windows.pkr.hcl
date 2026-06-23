@@ -33,7 +33,7 @@ variable "vm_admin_password" {
 
 source "vsphere-iso" "windows" {
   vcenter_server = var.vsphere_server
-  username = "admin.shaffer@nordsoncorp.local"
+  username = var.vsphere_user
   password = var.vsphere_password
   datacenter = var.datacenter
   cluster    = var.cluster
@@ -100,17 +100,23 @@ source "vsphere-iso" "windows" {
 
 build {
   sources = ["source.vsphere-iso.windows"]
+}
 
-  provisioner "powershell" {
-    inline = [
-      "Write-Host 'Configuring WinRM + firewall...'",
-      "Set-NetConnectionProfile -NetworkCategory Private",
-      "winrm quickconfig -q",
-      "Enable-PSRemoting -Force",
-      "winrm delete winrm/config/listener?Address=*+Transport=HTTP 2> $null",
-      "winrm create winrm/config/listener?Address=*+Transport=HTTP",
-      "Set-Service WinRM -StartupType Automatic",
-      "Enable-NetFirewallRule -DisplayGroup \"Windows Remote Management\""
-    ]
-  }
+provisioner "ansible" {
+  playbook_file   = "./ansible/base.yml"
+  user            = "Administrator"
+  extra_arguments = [
+    "--extra-vars",
+    "ansible_winrm_server_cert_validation=ignore"
+  ]
+}
+
+provisioner "windows-restart" {
+  restart_timeout = "20m"
+}
+provisioner "remote-exec" {
+  inline = [
+    "PowerShell.exe -Command \"Write-Host 'Running Sysprep...'\"",
+    "C:\\Windows\\System32\\Sysprep\\sysprep.exe /oobe /generalize /shutdown"
+  ]
 }
