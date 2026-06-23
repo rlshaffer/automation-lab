@@ -13,18 +13,6 @@
       ignore_errors: yes
 
     
-
-    - name: Download Terraform
-      get_url:
-        url: https://releases.hashicorp.com/terraform/1.5.7/terraform_1.5.7_linux_amd64.zip
-        dest: /tmp/terraform.zip
-
-    - name: Ensure unzip is installed
-      package:
-        name: unzip
-        state: present
-
- 
     - name: Download Terraform
       get_url:
         url: https://releases.hashicorp.com/terraform/1.5.7/terraform_1.5.7_linux_amd64.zip
