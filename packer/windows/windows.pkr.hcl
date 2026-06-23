@@ -84,7 +84,7 @@ source "vsphere-iso" "windows" {
 
   "<enter>",
   "<wait10>",
-  "<enter>"
+  "<enter>",
   "<wait10>"
 
 
