@@ -39,17 +39,7 @@
     - name: Apply Terraform
 
     - name: Apply Terraform
-      shell: >
-        {{ terraform_bin }} apply -auto-approve
-        -var "vsphere_user={{ vsphere_user }}"
-        -var "vsphere_password={{ vsphere_password }}"
-        -var "vsphere_server={{ vsphere_server }}"
-        -var "datacenter={{ datacenter }}"
-        -var "cluster={{ cluster }}"
-        -var "datastore={{ datastore }}"
-        -var "network={{ network }}"
-        -var "template_name={{ template_name }}"
-        -var "vm_name={{ vm_name }}"
+      shell: "{{ terraform_bin }} apply -auto-approve -var vsphere_user={{ vsphere_user }} -var vsphere_password={{ vsphere_password }} -var vsphere_server={{ vsphere_server }} -var datacenter={{ datacenter }} -var cluster={{ cluster }} -var datastore={{ datastore }} -var network={{ network }} -var template_name={{ template_name }} -var vm_name={{ vm_name }}"
       args:
         chdir: .
 
