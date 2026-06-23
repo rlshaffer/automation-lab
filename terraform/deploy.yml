@@ -3,30 +3,20 @@
   gather_facts: no
 
   vars:
-    terraform_dir: "./terraform"
+    terraform_bin: "/tmp/terraform"
 
   tasks:
 
-    - name: Check if Terraform is installed
-      command: terraform version
-      register: terraform_version
-      ignore_errors: yes
-
-    
     - name: Download Terraform
       get_url:
         url: https://releases.hashicorp.com/terraform/1.5.7/terraform_1.5.7_linux_amd64.zip
         dest: /tmp/terraform.zip
 
-    - name: Unzip Terraform locally
+    - name: Unzip Terraform
       unarchive:
         src: /tmp/terraform.zip
         dest: /tmp/
         remote_src: yes
-
-    - name: Use Terraform from local path
-      set_fact:
-        terraform_bin: "/tmp/terraform"
 
     - name: Verify Terraform install
       command: "{{ terraform_bin }} version"
@@ -35,8 +25,6 @@
       command: "{{ terraform_bin }} init"
       args:
         chdir: .
-
-    - name: Apply Terraform
 
     - name: Apply Terraform
       shell: "{{ terraform_bin }} apply -auto-approve -var vsphere_user={{ vsphere_user }} -var vsphere_password={{ vsphere_password }} -var vsphere_server={{ vsphere_server }} -var datacenter={{ datacenter }} -var cluster={{ cluster }} -var datastore={{ datastore }} -var network={{ network }} -var template_name={{ template_name }} -var vm_name={{ vm_name }}"
@@ -49,12 +37,16 @@
       args:
         chdir: .
 
+    - name: Add host to inventory
+      add_host:
+        name: "{{ vm_ip_output.stdout }}"
+        groups: windows
 
     - name: Get VM IP
-      command: terraform output -raw vm_ip
+      command: "{{ terraform_bin }} output -raw vm_ip"
       register: vm_ip_output
       args:
-        chdir: "{{ terraform_dir }}"
+        chdir: .
 
     - name: Show VM IP
       debug:
