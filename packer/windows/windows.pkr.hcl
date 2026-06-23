@@ -73,9 +73,11 @@ source "vsphere-iso" "windows" {
   # cd_label = "cidata"
 
 
-floppy_files = [
-  "./autounattend.xml"
-]
+
+  floppy_files = [
+    "packer/windows/autounattend.xml"
+  ]
+
   boot_order = "cdrom,disk"
 
   boot_wait = "20s" 
