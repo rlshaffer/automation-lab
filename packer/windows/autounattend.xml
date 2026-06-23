@@ -99,20 +99,28 @@
   <!-- ✅ Specialize -->
 
 
-<settings pass="specialize">
-    <component name="Microsoft-Windows-Deployment" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-        <RunSynchronous>
-            <RunSynchronousCommand wcm:action="add">
-                <Order>1</Order>
-                <Path>cmd /c reg add HKLM\SYSTEM\Setup\Status\ChildCompletion /v setup.exe /t REG_DWORD /d 3 /f</Path>
-                <Description>Fix Setup ChildCompletion</Description>
-            </RunSynchronousCommand>
-        </RunSynchronous>
+
+  <settings pass="specialize">
+    <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" ...>
+      <ComputerName>*</ComputerName>
     </component>
-</settings>
 
+    <component name="Microsoft-Windows-Deployment" processorArchitecture="amd64" ...>
+      <RunSynchronous>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>1</Order>
+          <Description>Enable WinRM</Description>
+          <Path>cmd /c winrm quickconfig -q</Path>
+        </RunSynchronousCommand>
 
-
+        <RunSynchronousCommand wcm:action="add">
+          <Order>2</Order>
+          <Description>Allow WinRM firewall</Description>
+          <Path>cmd /c netsh advfirewall firewall add rule name="WinRM" dir=in action=allow protocol=TCP localport=5985</Path>
+        </RunSynchronousCommand>
+      </RunSynchronous>
+    </component>
+  </settings>
   
   <settings pass="oobeSystem">
     <component name="Microsoft-Windows-Shell-Setup"
