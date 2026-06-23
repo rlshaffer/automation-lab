@@ -1,5 +1,5 @@
 vsphere_user      = "admin.shaffer@nordsoncorp.local"
-vsphere_password  = "YOUR_PASSWORD"
+vsphere_password  = "Johnathan0730-!"
 vsphere_server    = "labvca50.nordsoncorp.local"
 
 datacenter = "LAB Datacenter"
