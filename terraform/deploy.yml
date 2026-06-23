@@ -1,2 +1,38 @@
 - hosts: localhost
   connection: local
+  gather_facts: no
+
+  vars:
+    terraform_dir: "./terraform"
+
+  tasks:
+
+    - name: Initialize Terraform
+      command: terraform init
+      args:
+        chdir: "{{ terraform_dir }}"
+
+    - name: Apply Terraform
+      command: >
+        terraform apply -auto-approve
+        -var "vm_name={{ vm_name }}"
+        -var "template_name={{ template_name }}"
+      args:
+        chdir: "{{ terraform_dir }}"
+
+    - name: Get VM IP
+      command: terraform output -raw vm_ip
+      register: vm_ip_output
+      args:
+        chdir: "{{ terraform_dir }}"
+
+    - name: Show VM IP
+      debug:
+        msg: "VM deployed with IP: {{ vm_ip_output.stdout }}"
+
+- name: Add host to AWX inventory permanently
+  awx.awx.host:
+    name: "{{ vm_name }}"
+    inventory: windows_deployed
+    variables:
+      ansible_host: "{{ vm_ip_output.stdout }}"
