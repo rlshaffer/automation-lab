@@ -10,7 +10,7 @@
     - name: Initialize Terraform
       command: terraform init
       args:
-        chdir: "{{ terraform_dir }}"
+        chdir: .
 
     - name: Apply Terraform
       command: >
