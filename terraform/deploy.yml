@@ -24,29 +24,38 @@
         name: unzip
         state: present
 
-    - name: Unzip Terraform
+ 
+    - name: Download Terraform
+      get_url:
+        url: https://releases.hashicorp.com/terraform/1.5.7/terraform_1.5.7_linux_amd64.zip
+        dest: /tmp/terraform.zip
+
+    - name: Unzip Terraform locally
       unarchive:
         src: /tmp/terraform.zip
         dest: /tmp/
         remote_src: yes
 
-    - name: Copy Terraform to PATH
-      copy:
-        src: /tmp/terraform
-        dest: /usr/local/bin/terraform
-        mode: '0755'
-        remote_src: yes
+    - name: Use Terraform from local path
+      set_fact:
+        terraform_bin: "/tmp/terraform"
 
     - name: Verify Terraform install
-      command: terraform version
+      command: "{{ terraform_bin }} version"
 
     - name: Initialize Terraform
-      command: terraform init
+      command: "{{ terraform_bin }} init"
       args:
         chdir: .
 
     - name: Apply Terraform
-      command: terraform apply -auto-approve
+      command: "{{ terraform_bin }} apply -auto-approve"
+      args:
+        chdir: .
+
+    - name: Get VM IP
+      command: "{{ terraform_bin }} output -raw vm_ip"
+      register: vm_ip_output
       args:
         chdir: .
 
