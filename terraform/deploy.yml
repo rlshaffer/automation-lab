@@ -7,14 +7,34 @@
 
   tasks:
 
+    - name: Check if Terraform is installed
+      command: terraform version
+      register: terraform_version
+      ignore_errors: yes
+
+    
+    - name: Download Terraform
+      get_url:
+        url: https://releases.hashicorp.com/terraform/1.5.7/terraform_1.5.7_linux_amd64.zip
+        dest: /tmp/terraform.zip
+
+    - name: Unzip Terraform
+      unarchive:
+        src: /tmp/terraform.zip
+        dest: /tmp/
+        remote_src: yes
+
+    - name: Move Terraform binary
+      command: mv /tmp/terraform /usr/local/bin/terraform
+  
+
     - name: Initialize Terraform
-      command: /usr/bin/terraform init
+      command: terraform init
       args:
         chdir: .
 
     - name: Apply Terraform
-      command: /usr/bin/terraform init
-        terraform apply -auto-approve
+      command: terraform apply -auto-approve
         -var "vm_name={{ vm_name }}"
         -var "template_name={{ template_name }}"
       args:
