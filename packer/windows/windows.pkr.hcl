@@ -76,16 +76,14 @@ source "vsphere-iso" "windows" {
 floppy_files = [
   "./autounattend.xml"
 ]
-  boot_order = "disk,cdrom"
+  boot_order = "cdrom,disk"
 
-  boot_wait = "10s" 
+  boot_wait = "20s" 
 
   boot_command = [
-
   "<enter>",
   "<wait10>",
   "<enter>"
-
 
   ]
 
