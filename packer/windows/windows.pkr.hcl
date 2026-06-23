@@ -76,9 +76,9 @@ source "vsphere-iso" "windows" {
     "./autounattend.xml"
   ]
 
-  boot_order = "disk,cdrom"
+  boot_order = "cdrom,disk"
 
-  boot_wait = "2s" 
+  boot_wait = "10s" 
 
   boot_command = [
 
