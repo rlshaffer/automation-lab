@@ -1,14 +1,8 @@
-
 packer {
   required_plugins {
     vsphere = {
       version = ">= 1.1.0"
       source  = "github.com/hashicorp/vsphere"
-    }
-
-    ansible = {
-      version = ">= 1.0.0"
-      source  = "github.com/hashicorp/ansible"
     }
   }
 }
@@ -39,7 +33,7 @@ variable "vm_admin_password" {
 
 source "vsphere-iso" "windows" {
   vcenter_server = var.vsphere_server
-  username = var.vsphere_user
+  username = "admin.shaffer@nordsoncorp.local"
   password = var.vsphere_password
   datacenter = var.datacenter
   cluster    = var.cluster
@@ -51,7 +45,7 @@ source "vsphere-iso" "windows" {
 
    vm_version = 21
 
-  firmware = "bios"
+  firmware = "efi"
 
   cdrom_type = "sata"
 
@@ -75,23 +69,25 @@ source "vsphere-iso" "windows" {
     # "[Iso Data Store] vmware_iso/Windows10.iso" # The VMware Tools ISO containing PVSCSI
   ]
 
-  cd_files = ["./autounattend.xml"]
-  cd_label = "cidata"
- 
-  # floppy_files = [
-  #   "./autounattend.xml"
-  # ]
+  # cd_files = ["./windows/autounattend.xml"]
+  # cd_label = "cidata"
 
+
+   floppy_files = [
+   "./windows/autounattend.xml"
+   ]
   boot_order = "disk,cdrom"
 
-  boot_wait = "5s" 
+  boot_wait = "2s" 
 
   boot_command = [
+
   "<enter>",
-  "<enter>",
-  "<enter>",
-  "<enter>",
+  "<wait10>",
+  "<enter>"
   "<wait10>"
+
+
   ]
 
   communicator = "winrm"
@@ -107,26 +103,16 @@ source "vsphere-iso" "windows" {
 build {
   sources = ["source.vsphere-iso.windows"]
 
-  provisioner "ansible" {
-    playbook_file   = "./ansible/base.yml"
-    user            = "Administrator"
-    extra_arguments = [
-      "--extra-vars",
-      "ansible_winrm_server_cert_validation=ignore"
-    ]
-  }
-
-  provisioner "windows-restart" {
-    restart_timeout = "20m"
-  }
-
   provisioner "powershell" {
     inline = [
-      "Write-Host 'Running Sysprep...'",
-      "C:\\Windows\\System32\\Sysprep\\sysprep.exe /oobe /generalize /shutdown"
+      "Write-Host 'Configuring WinRM + firewall...'",
+      "Set-NetConnectionProfile -NetworkCategory Private",
+      "winrm quickconfig -q",
+      "Enable-PSRemoting -Force",
+      "winrm delete winrm/config/listener?Address=*+Transport=HTTP 2> $null",
+      "winrm create winrm/config/listener?Address=*+Transport=HTTP",
+      "Set-Service WinRM -StartupType Automatic",
+      "Enable-NetFirewallRule -DisplayGroup \"Windows Remote Management\""
     ]
   }
 }
-
-
-
