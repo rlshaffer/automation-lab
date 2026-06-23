@@ -1,0 +1,16 @@
+- hosts: all
+  gather_facts: yes
+
+  tasks:
+
+    - name: Test connectivity
+      win_ping:
+
+    - name: Create Temp directory
+      win_file:
+        path: C:\Temp
+        state: directory
+
+    - name: Set timezone
+      win_timezone:
+        timezone: Eastern Standard Time

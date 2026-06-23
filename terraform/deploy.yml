@@ -36,3 +36,8 @@
     inventory: windows_deployed
     variables:
       ansible_host: "{{ vm_ip_output.stdout }}"
+
+- name: Add new VM to inventory (temporary)
+  add_host:
+    name: "{{ vm_ip_output.stdout }}"
+    groups: windows
