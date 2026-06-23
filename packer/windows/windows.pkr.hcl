@@ -45,7 +45,7 @@ source "vsphere-iso" "windows" {
 
    vm_version = 21
 
-  firmware = "efi"
+  firmware = "bios"
 
   cdrom_type = "sata"
 
