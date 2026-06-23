@@ -84,8 +84,6 @@ source "vsphere-iso" "windows" {
 
   "<enter>",
   "<wait10>"
-
-
   ]
 
   communicator = "winrm"
@@ -100,30 +98,27 @@ source "vsphere-iso" "windows" {
 
 build {
   sources = ["source.vsphere-iso.windows"]
+
+  provisioner "ansible" {
+    playbook_file   = "./ansible/base.yml"
+    user            = "Administrator"
+    extra_arguments = [
+      "--extra-vars",
+      "ansible_winrm_server_cert_validation=ignore"
+    ]
+  }
+
+  provisioner "windows-restart" {
+    restart_timeout = "20m"
+  }
+
+  provisioner "powershell" {
+    inline = [
+      "Write-Host 'Running Sysprep...'",
+      "C:\\Windows\\System32\\Sysprep\\sysprep.exe /oobe /generalize /shutdown"
+    ]
+  }
 }
 
-provisioner "ansible" {
-  playbook_file   = "./ansible/base.yml"
-  user            = "Administrator"
-  extra_arguments = [
-    "--extra-vars",
-    "ansible_winrm_server_cert_validation=ignore"
-  ]
-}
-
-provisioner "windows-restart" {
-  restart_timeout = "20m"
-}
-provisioner "remote-exec" {
-  inline = [
-    "PowerShell.exe -Command \"Write-Host 'Running Sysprep...'\"",
-    "C:\\Windows\\System32\\Sysprep\\sysprep.exe /oobe /generalize /shutdown"
-  ]
-}
 
 
-provisioner "powershell" {
-  inline = [
-    "C:\\Windows\\System32\\Sysprep\\sysprep.exe /oobe /generalize /shutdown"
-  ]
-}
