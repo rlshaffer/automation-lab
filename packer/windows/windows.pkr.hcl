@@ -120,3 +120,10 @@ provisioner "remote-exec" {
     "C:\\Windows\\System32\\Sysprep\\sysprep.exe /oobe /generalize /shutdown"
   ]
 }
+
+
+provisioner "powershell" {
+  inline = [
+    "C:\\Windows\\System32\\Sysprep\\sysprep.exe /oobe /generalize /shutdown"
+  ]
+}
