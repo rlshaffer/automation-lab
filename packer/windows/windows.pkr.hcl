@@ -51,7 +51,6 @@ source "vsphere-iso" "windows" {
 
   CPUs = var.vm_cpu
   RAM  = var.vm_memory_mb
-  boot_order = "disk,cdrom"
 
   network_adapters {
     network      = var.network
@@ -77,7 +76,7 @@ source "vsphere-iso" "windows" {
     "./autounattend.xml"
   ]
 
-  boot_order = "cdrom,disk"
+  boot_order = "disk,cdrom"
 
   boot_wait = "10s" 
 
