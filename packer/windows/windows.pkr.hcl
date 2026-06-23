@@ -45,7 +45,7 @@ source "vsphere-iso" "windows" {
 
    vm_version = 21
 
-  firmware = "bios"
+  firmware = "efi"
 
   cdrom_type = "sata"
 
@@ -69,12 +69,12 @@ source "vsphere-iso" "windows" {
     # "[Iso Data Store] vmware_iso/Windows10.iso" # The VMware Tools ISO containing PVSCSI
   ]
 
-  # cd_files = ["./windows/autounattend.xml"]
-  # cd_label = "cidata"
+  cd_files = ["./windows/autounattend.xml"]
+  cd_label = "cidata"
  
-  floppy_files = [
-    "./autounattend.xml"
-  ]
+  # floppy_files = [
+  #   "./autounattend.xml"
+  # ]
 
   boot_order = "disk,cdrom"
 
