@@ -74,7 +74,7 @@ source "vsphere-iso" "windows" {
 
 
    floppy_files = [
-   "./windows/autounattend.xml"
+   "./autounattend.xml"
    ]
   boot_order = "disk,cdrom"
 
