@@ -33,7 +33,7 @@
 <DiskConfiguration>
   <Disk wcm:action="add">
     <DiskID>0</DiskID>
-    <!--WillWipeDisk>true</WillWipeDisk -->
+    <WillWipeDisk>true</WillWipeDisk>
 
     <CreatePartitions>
       <!-- System / EFI (required for UEFI boot) -->
