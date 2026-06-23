@@ -78,10 +78,12 @@ source "vsphere-iso" "windows" {
 
   boot_order = "disk,cdrom"
 
-  boot_wait = "10s" 
+  boot_wait = "5s" 
 
   boot_command = [
-
+  "<enter>",
+  "<enter>",
+  "<enter>",
   "<enter>",
   "<wait10>"
   ]
