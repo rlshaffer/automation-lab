@@ -64,18 +64,13 @@ source "vsphere-iso" "windows" {
     disk_thin_provisioned = true
   }
 
-  #iso_paths = [
-  #  "[LABVMW_DATASTORE] Repository/SW_DVD9_Win_Server_STD_CORE_2025_24H2.1_64Bit_English_DC_STD_MLF_X23-89914.ISO", # Your main OS ISO
-  #  # "[Iso Data Store] vmware_iso/Windows10.iso" # The VMware Tools ISO containing PVSCSI
-  #]
+  iso_paths = [
+    "[LABVMW_DATASTORE] Repository/SW_DVD9_Win_Server_STD_CORE_2025_24H2.1_64Bit_English_DC_STD_MLF_X23-89914.ISO", # Your main OS ISO
+    # "[Iso Data Store] vmware_iso/Windows10.iso" # The VMware Tools ISO containing PVSCSI
+  ]
 
   # cd_files = ["./windows/autounattend.xml"]
   # cd_label = "cidata"
-
-  cdrom {
-    datastore = var.datastore
-    path      = "Repository/SW_DVD9_Win_Server_STD_CORE_2025_24H2.1_64Bit_English_DC_STD_MLF_X23-89914.ISO"
-  }
 
   floppy_files = [
     "./autounattend.xml"
