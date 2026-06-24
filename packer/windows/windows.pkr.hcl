@@ -80,9 +80,9 @@ source "vsphere-iso" "windows" {
 
   boot_wait = "10s"
 
-boot_command = [
-  "<spacebar>"
-]
+  boot_command = [
+    "<spacebar>"
+  ]
 
   communicator = "winrm"
   winrm_username = "Administrator"
