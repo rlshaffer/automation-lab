@@ -78,7 +78,7 @@ source "vsphere-iso" "windows" {
 
   boot_order = "cdrom,disk"
 
-  boot_wait = "2s"
+  boot_wait = "1s"
 
 
   boot_command = [
