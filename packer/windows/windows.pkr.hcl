@@ -45,7 +45,7 @@ source "vsphere-iso" "windows" {
 
    vm_version = 21
 
-  firmware = "bios"
+  firmware = "efi"
 
   cdrom_type = "ide"
 
@@ -80,14 +80,8 @@ source "vsphere-iso" "windows" {
 
   boot_order = "cdrom,disk"
 
-  boot_wait = "20s" 
-
-  boot_command = [
-  "<enter>",
-  "<wait10>",
-  "<enter>"
-
-  ]
+  boot_wait = "10s"
+  boot_command = []
 
   communicator = "winrm"
   winrm_username = "Administrator"
