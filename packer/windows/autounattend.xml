@@ -132,7 +132,7 @@
 
       <UserAccounts>
         <AdministratorPassword>
-          <Value>Johnathan0730-!</Value>
+          <Value>var.vsphere_password</Value>
           <PlainText>true</PlainText>
         </AdministratorPassword>
       </UserAccounts>
@@ -140,7 +140,7 @@
       <AutoLogon>
         <Username>Administrator</Username>
         <Password>
-          <Value>Johnathan0730-!</Value>
+          <Value>var.vsphere_password</Value>
           <PlainText>true</PlainText>
         </Password>
         <Enabled>true</Enabled>
