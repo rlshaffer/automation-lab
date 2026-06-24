@@ -85,6 +85,9 @@ source "vsphere-iso" "windows" {
     "<spacebar>",
     "<spacebar>",
     "<spacebar>",
+    "<spacebar>",
+    "<spacebar>",
+    "<spacebar>",
     "<spacebar>"
   ]
 
