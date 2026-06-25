@@ -28,7 +28,8 @@ variable "vm_memory_mb" {
 }
 
 variable "vm_admin_password" {
-  type = string
+  type    = string
+  default = "V3ryC0mpleX!P@ssword2025" # <--- Must match autounattend.xml exactly
 }
 
 source "vsphere-iso" "windows" {
