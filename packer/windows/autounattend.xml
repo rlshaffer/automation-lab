@@ -13,34 +13,65 @@
         </component>
         <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://microsoft.com" xmlns:xsi="http://w3.org">
             <DiskConfiguration>
-              <Disk wcm:action="add">0</DiskID>
-                <WillWipeDisk>true</WillWipeDisk>
-
-                <CreatePartitions>
-                  <CreatePartition wcm:der>1</Order>
-                    <Type>Primary</Type>
-                    <Extend>true</Extend>
-                  </CreatePartition>
-                </CreatePartitions>
-
-                <ModifyPartitions>
-                  <ModifyPartition wcm:action/Order>
-                    <PartitionID>1</PartitionID>
-                    <Format>NTFS</Format>
-                    <Label>OS</Label>
-                    <Letter>C</Letter>
-                  </ModifyPartition>
-                </ModifyPartitions>
-
-              </Disk>
+                <Disk wcm:action="add">
+                    <DiskID>0</DiskID>
+                    <WillWipeDisk>true</WillWipeDisk>
+                    <!-- Mandatory EFI GPT Partition scheme -->
+                    <CreatePartitions>
+                        <!-- 1. System Partition (ESP) -->
+                        <CreatePartition wcm:action="add">
+                            <Order>1</Order>
+                            <Type>EFI</Type>
+                            <Size>100</Size>
+                        </CreatePartition>
+                        <!-- 2. Microsoft Reserved Partition (MSR) -->
+                        <CreatePartition wcm:action="add">
+                            <Order>2</Order>
+                            <Type>MSR</Type>
+                            <Size>128</Size>
+                        </CreatePartition>
+                        <!-- 3. Primary Windows OS Partition -->
+                        <CreatePartition wcm:action="add">
+                            <Order>3</Order>
+                            <Type>Primary</Type>
+                            <Extend>true</Extend>
+                        </CreatePartition>
+                    </CreatePartitions>
+                    <ModifyPartitions>
+                        <!-- Format System Partition -->
+                        <ModifyPartition wcm:action="add">
+                            <Order>1</Order>
+                            <PartitionID>1</PartitionID>
+                            <Format>FAT32</Format>
+                            <Label>System</Label>
+                        </ModifyPartition>
+                        <!-- Format OS Partition -->
+                        <ModifyPartition wcm:action="add">
+                            <Order>2</Order>
+                            <PartitionID>3</PartitionID>
+                            <Format>NTFS</Format>
+                            <Label>OS</Label>
+                            <Letter>C</Letter>
+                        </ModifyPartition>
+                    </ModifyPartitions>
+                </Disk>
             </DiskConfiguration>
+            <!-- Search secondary CD-ROM (VMware Tools ISO) for PVSCSI Storage Drivers -->
+            <DriverPaths>
+                <PathAndCredentials wcm:action="add" uid="1">
+                    <Path>D:\program files\VMware\VMware Tools\Drivers\pvscsi\Win8\amd64</Path>
+                </PathAndCredentials>
+                <PathAndCredentials wcm:action="add" uid="2">
+                    <Path>E:\program files\VMware\VMware Tools\Drivers\pvscsi\Win8\amd64</Path>
+                </PathAndCredentials>
+            </DriverPaths>
             <ImageInstall>
                 <OSImage>
                     <InstallTo>
                         <DiskID>0</DiskID>
                         <PartitionID>3</PartitionID>
                     </InstallTo>
-                    <!-- Selects the Standard Graphic Environment (Desktop Experience) via Index -->
+                    <!-- Index 2 typically targets Server Standard (Desktop Experience) -->
                     <InstallFrom>
                         <MetaData wcm:action="add">
                             <Key>/Image/Index</Key>
@@ -52,9 +83,9 @@
             </ImageInstall>
             <UserData>
                 <AcceptEula>true</AcceptEula>
-                <!-- Standard KMS/Evaluation Key for Windows Server (Bypasses Key Screen) -->
+                <!-- Windows Server 2025 Standard KMS Client Key -->
                 <ProductKey>
-                    <Key>VDYBN-27WPP-V4HQT-9VMD4-VMK7H</Key>
+                    <Key>D764K-2N374-GD38M-7YFPX-WW8X6</Key>
                     <WillShowUI>OnError</WillShowUI>
                 </ProductKey>
             </UserData>
@@ -94,11 +125,11 @@
                 <Username>Administrator</Username>
             </AutoLogon>
             <FirstLogonCommands>
-                <!-- Configures WinRM and opens Firewall ports during initial auto-logon -->
+                <!-- Native PowerShell commands to reliably enable WinRM for Packer's communicator -->
                 <SynchronousCommand wcm:action="add">
                     <Order>1</Order>
-                    <CommandLine>powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://githubusercontent.com'))"</CommandLine>
-                    <Description>Configure WinRM for Remote Management</Description>
+                    <CommandLine>powershell -NoProfile -ExecutionPolicy Bypass -Command "New-Service -Name WinRM -BinaryPathName 'cmd.exe /c' -ErrorAction SilentlyContinue; Set-Service WinRM -StartupType Automatic; winrm quickconfig -q; winrm set winrm/config/service/auth '@{Basic=\"true\"}'; winrm set winrm/config/service '@{AllowUnencrypted=\"true\"}'; New-NetFirewallRule -Name 'WinRM_HTTP' -DisplayName 'WinRM HTTP' -Enabled True -Profile Any -Protocol TCP -LocalPort 5985 -Action Allow"</CommandLine>
+                    <Description>Configure WinRM for Packer Connection</Description>
                 </SynchronousCommand>
             </FirstLogonCommands>
             <OOBE>
