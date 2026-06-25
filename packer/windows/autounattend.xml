@@ -13,48 +13,26 @@
         </component>
         <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://microsoft.com" xmlns:xsi="http://w3.org">
             <DiskConfiguration>
-                <Disk wcm:action="add">
-                    <CreatePartitions>
-                        <!-- System Partition (EFI) -->
-                        <CreatePartition wcm:action="add">
-                            <Order>1</Order>
-                            <Type>EFI</Type>
-                            <Size>512</Size>
-                        </CreatePartition>
-                        <!-- MSR Partition -->
-                        <CreatePartition wcm:action="add">
-                            <Order>2</Order>
-                            <Type>MSR</Type>
-                            <Size>128</Size>
-                        </CreatePartition>
-                        <!-- Primary Windows Partition -->
-                        <CreatePartition wcm:action="add">
-                            <Order>3</Order>
-                            <Type>Primary</Type>
-                            <Extend>true</Extend>
-                        </CreatePartition>
-                    </CreatePartitions>
-                    <ModifyPartitions>
-                        <ModifyPartition wcm:action="add">
-                            <Order>1</Order>
-                            <PartitionID>1</PartitionID>
-                            <Label>System</Label>
-                            <Format>FAT32</Format>
-                        </ModifyPartition>
-                        <ModifyPartition wcm:action="add">
-                            <Order>2</Order>
-                            <PartitionID>2</PartitionID>
-                        </ModifyPartition>
-                        <ModifyPartition wcm:action="add">
-                            <Order>3</Order>
-                            <PartitionID>3</PartitionID>
-                            <Label>Windows</Label>
-                            <Format>NTFS</Format>
-                        </ModifyPartition>
-                    </ModifyPartitions>
-                    <DiskID>0</DiskID>
-                    <WillWipeDisk>true</WillWipeDisk>
-                </Disk>
+              <Disk wcm:action="add">0</DiskID>
+                <WillWipeDisk>true</WillWipeDisk>
+
+                <CreatePartitions>
+                  <CreatePartition wcm:der>1</Order>
+                    <Type>Primary</Type>
+                    <Extend>true</Extend>
+                  </CreatePartition>
+                </CreatePartitions>
+
+                <ModifyPartitions>
+                  <ModifyPartition wcm:action/Order>
+                    <PartitionID>1</PartitionID>
+                    <Format>NTFS</Format>
+                    <Label>OS</Label>
+                    <Letter>C</Letter>
+                  </ModifyPartition>
+                </ModifyPartitions>
+
+              </Disk>
             </DiskConfiguration>
             <ImageInstall>
                 <OSImage>
