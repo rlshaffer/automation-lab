@@ -1,133 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<unattend xmlns="urn:schemas-microsoft-com:unattend"
-          xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+    <!-- Pass 1: Windows PE (Regional settings, Disk Partitioning, Image selection) -->
+    <settings pass="windowsPE">
+        <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://microsoft.com" xmlns:xsi="http://w3.org">
+            <SetupUILanguage>
+                <UILanguage>en-US</UILanguage>
+            </SetupUILanguage>
+            <InputLocale>en-US</InputLocale>
+            <SystemLocale>en-US</SystemLocale>
+            <UILanguage>en-US</UILanguage>
+            <UserLocale>en-US</UserLocale>
+        </component>
+        <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://microsoft.com" xmlns:xsi="http://w3.org">
+            <DiskConfiguration>
+                <Disk wcm:action="add">
+                    <CreatePartitions>
+                        <!-- System Partition (EFI) -->
+                        <CreatePartition wcm:action="add">
+                            <Order>1</Order>
+                            <Type>EFI</Type>
+                            <Size>512</Size>
+                        </CreatePartition>
+                        <!-- MSR Partition -->
+                        <CreatePartition wcm:action="add">
+                            <Order>2</Order>
+                            <Type>MSR</Type>
+                            <Size>128</Size>
+                        </CreatePartition>
+                        <!-- Primary Windows Partition -->
+                        <CreatePartition wcm:action="add">
+                            <Order>3</Order>
+                            <Type>Primary</Type>
+                            <Extend>true</Extend>
+                        </CreatePartition>
+                    </CreatePartitions>
+                    <ModifyPartitions>
+                        <ModifyPartition wcm:action="add">
+                            <Order>1</Order>
+                            <PartitionID>1</PartitionID>
+                            <Label>System</Label>
+                            <Format>FAT32</Format>
+                        </ModifyPartition>
+                        <ModifyPartition wcm:action="add">
+                            <Order>2</Order>
+                            <PartitionID>2</PartitionID>
+                        </ModifyPartition>
+                        <ModifyPartition wcm:action="add">
+                            <Order>3</Order>
+                            <PartitionID>3</PartitionID>
+                            <Label>Windows</Label>
+                            <Format>NTFS</Format>
+                        </ModifyPartition>
+                    </ModifyPartitions>
+                    <DiskID>0</DiskID>
+                    <WillWipeDisk>true</WillWipeDisk>
+                </Disk>
+            </DiskConfiguration>
+            <ImageInstall>
+                <OSImage>
+                    <InstallTo>
+                        <DiskID>0</DiskID>
+                        <PartitionID>3</PartitionID>
+                    </InstallTo>
+                    <!-- Selects the Standard Graphic Environment (Desktop Experience) via Index -->
+                    <InstallFrom>
+                        <MetaData wcm:action="add">
+                            <Key>/Image/Index</Key>
+                            <Value>2</Value>
+                        </MetaData>
+                    </InstallFrom>
+                    <WillShowUI>OnError</WillShowUI>
+                </OSImage>
+            </ImageInstall>
+            <UserData>
+                <AcceptEula>true</AcceptEula>
+                <!-- Standard KMS/Evaluation Key for Windows Server (Bypasses Key Screen) -->
+                <ProductKey>
+                    <Key>VDYBN-27WPP-V4HQT-9VMD4-VMK7H</Key>
+                    <WillShowUI>OnError</WillShowUI>
+                </ProductKey>
+            </UserData>
+        </component>
+    </settings>
 
-  <!-- WINDOWS PE -->
-  <settings pass="windowsPE">
-    <component name="Microsoft-Windows-Setup"
-               processorArchitecture="amd64"
-               publicKeyToken="31bf3856ad364e35"
-               language="neutral"
-               versionScope="nonSxS">
+    <!-- Pass 4: Specialize (Computer details, Network configuration) -->
+    <settings pass="specialize">
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://microsoft.com" xmlns:xsi="http://w3.org">
+            <ComputerName>SRV-AUTOMATION</ComputerName>
+            <TimeZone>UTC</TimeZone>
+        </component>
+        <component name="Microsoft-Windows-TerminalServices-LocalSessionManager" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://microsoft.com" xmlns:xsi="http://w3.org">
+            <fDenyTSConnections>false</fDenyTSConnections>
+        </component>
+        <component name="Microsoft-Windows-TerminalServices-RDP-WinStationExtensions" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://microsoft.com" xmlns:xsi="http://w3.org">
+            <UserAuthentication>0</UserAuthentication>
+        </component>
+    </settings>
 
-      <ImageInstall>
-        <OSImage>
-          <InstallFrom>
-            <MetaData wcm:actioney>/IMAGE/INDEX</Key>
-              <Value>2</Value>
-            </MetaData>
-          </InstallFrom>
-
-          <InstallTo>
-            <DiskID>0</DiskID>
-            <PartitionID>1</PartitionID>
-          </InstallTo>
-
-          <WillShowUI>OnError</WillShowUI>
-        </OSImage>
-      </ImageInstall>
-
-      <DiskConfiguration>
-        <Disk wcm:action="add">0</DiskID>
-          <WillWipeDisk>true</WillWipeDisk>
-
-          <CreatePartitions>
-            <CreatePartition wcm:der>1</Order>
-              <Type>Primary</Type>
-              <Extend>true</Extend>
-            </CreatePartition>
-          </CreatePartitions>
-
-          <ModifyPartitions>
-            <ModifyPartition wcm:action/Order>
-              <PartitionID>1</PartitionID>
-              <Format>NTFS</Format>
-              <Label>OS</Label>
-              <Letter>C</Letter>
-            </ModifyPartition>
-          </ModifyPartitions>
-
-        </Disk>
-      </DiskConfiguration>
-
-      <UserData>
-        <AcceptEula>true</AcceptEula>
-      </UserData>
-
-    </component>
-
-    <component name="Microsoft-Windows-International-Core-WinPE"
-               processorArchitecture="amd64"
-               publicKeyToken="31bf3856ad364e35"
-               language="neutral"
-               versionScope="nonSxS">
-
-      <SetupUILanguage>
-        <UILanguage>en-US</UILanguage>
-      </SetupUILanguage>
-
-      <InputLocale>en-US</InputLocale>
-      <SystemLocale>en-US</SystemLocale>
-      <UILanguage>en-US</UILanguage>
-      <UserLocale>en-US</UserLocale>
-
-    </component>
-  </settings>
-
-  <!-- SPECIALIZE -->
-  <settings pass="specialize">
-
-    <component name="Microsoft-Windows-Shell-Setup"
-               processorArchitecture="amd64"
-               publicKeyToken="31bf3856ad364e35"
-               language="neutral"
-               versionScope="nonSxS">
-      <ComputerName>*</ComputerName>
-    </component>
-
-  </settings>
-
-  <!-- OOBE SYSTEM -->
-  
-  <settings pass="oobeSystem">
-    <component name="Microsoft-Windows-Shell-Setup"
-              processorArchitecture="amd64"
-              publicKeyToken="31bf3856ad364e35"
-              language="neutral"
-              versionScope="nonSxS">
-
-      <OOBE>
-        <HideEULAPage>true</HideEULAPage>
-        <HideLocalAccountScreen>true</HideLocalAccountScreen>
-        <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>
-        <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
-        <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
-        <NetworkLocation>Work</NetworkLocation>
-        <ProtectYourPC>1</ProtectYourPC>
-      </OOBE>
-
-      <!-- ✅ CRITICAL: this must be exactly this -->
-      <UserAccounts>
-        <AdministratorPassword>
-          <Value>Johnathan0730-!</Value>
-          <PlainText>true</PlainText>
-        </AdministratorPassword>
-      </UserAccounts>
-
-      <!-- ✅ MUST match password -->
-      <AutoLogon>
-        <Username>Administrator</Username>
-        <Enabled>true</Enabled>
-        <LogonCount>2</LogonCount>
-        <Password>
-          <Value>Johnathan0730-!</Value>
-          <PlainText>true</PlainText>
-        </Password>
-      </AutoLogon>
-
-    </component>
-</settings>
-
-
+    <!-- Pass 7: OOBE System (Admin Account, Remote Management Setup) -->
+    <settings pass="oobeSystem">
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://microsoft.com" xmlns:xsi="http://w3.org">
+            <UserAccounts>
+                <AdministratorPassword>
+                    <Value>P@ssword123!</Value>
+                    <PlainText>true</PlainText>
+                </AdministratorPassword>
+            </UserAccounts>
+            <AutoLogon>
+                <Password>
+                    <Value>P@ssword123!</Value>
+                    <PlainText>true</PlainText>
+                </Password>
+                <Enabled>true</Enabled>
+                <LogonCount>1</LogonCount>
+                <Username>Administrator</Username>
+            </AutoLogon>
+            <FirstLogonCommands>
+                <!-- Configures WinRM and opens Firewall ports during initial auto-logon -->
+                <SynchronousCommand wcm:action="add">
+                    <Order>1</Order>
+                    <CommandLine>powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://githubusercontent.com'))"</CommandLine>
+                    <Description>Configure WinRM for Remote Management</Description>
+                </SynchronousCommand>
+            </FirstLogonCommands>
+            <OOBE>
+                <HideEULAPage>true</HideEULAPage>
+                <HideLocalAccountScreen>true</HideLocalAccountScreen>
+                <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>
+                <HideOnlineAccountScreen>true</HideOnlineAccountScreen>
+                <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+                <NetworkLocation>Work</NetworkLocation>
+                <ProtectYourPC>3</ProtectYourPC>
+            </OOBE>
+        </component>
+    </settings>
 </unattend>
