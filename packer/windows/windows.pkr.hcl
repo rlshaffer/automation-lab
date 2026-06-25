@@ -2,20 +2,20 @@ packer {
   required_plugins {
     vsphere = {
       version = ">= 1.1.0"
-      source  = "github.com/hashicorp/vsphere"
+      source  = "://github.com"
     }
   }
 }
-variable "vsphere_user" { type = string }
-variable "vsphere_password" { type = string }
-variable "vsphere_server" { type = string }
 
-variable "datacenter" { type = string }
-variable "cluster" { type = string }
-variable "datastore" { type = string }
-variable "network" { type = string }
-
-variable "template_name" { type = string }
+variable "vsphere_user"      { type = string }
+variable "vsphere_password"  { type = string }
+variable "vsphere_server"    { type = string }
+variable "datacenter"        { type = string }
+variable "cluster"           { type = string }
+variable "datastore"         { type = string }
+variable "network"           { type = string }
+variable "template_name"     { type = string }
+variable "vm_admin_password" { type = string }
 
 variable "vm_cpu" {
   type    = number
@@ -27,28 +27,20 @@ variable "vm_memory_mb" {
   default = 4096
 }
 
-variable "vm_admin_password" {
-  type    = string
-  default = "V3ryC0mpleX!P@ssword2025" # <--- Must match autounattend.xml exactly
-}
-
 source "vsphere-iso" "windows" {
-  vcenter_server = var.vsphere_server
-  username = "admin.shaffer@nordsoncorp.local"
-  password = var.vsphere_password
-  datacenter = var.datacenter
-  cluster    = var.cluster
-  datastore  = var.datastore
+  vcenter_server      = var.vsphere_server
+  username            = var.vsphere_user # Switched from hardcoded string to variable
+  password            = var.vsphere_password
+  datacenter          = var.datacenter
+  cluster             = var.cluster
+  datastore           = var.datastore
+  insecure_connection = true
 
-  vm_name = var.template_name
-
-  guest_os_type = "windows9Server64Guest"
-
-   vm_version = 21
-
-  firmware = "efi"
-
-  cdrom_type = "sata"
+  vm_name       = var.template_name
+  guest_os_type = "windows9Server64Guest" # Standard vSphere identifier
+  vm_version    = 21
+  firmware      = "efi"
+  cdrom_type    = "sata"
 
   CPUs = var.vm_cpu
   RAM  = var.vm_memory_mb
@@ -58,51 +50,39 @@ source "vsphere-iso" "windows" {
     network_card = "vmxnet3"
   }
 
-  disk_controller_type = ["lsilogic-sas"]
+  # Upgraded to high-performance VMware Paravirtual SCSI
+  disk_controller_type = ["pvscsi"]
 
   storage {
     disk_size             = 163840
     disk_thin_provisioned = true
   }
 
+  # Map BOTH the OS installation media and the ESXi native VMware Tools package
   iso_paths = [
-    "[LABVMW_DATASTORE] Repository/SW_DVD9_Win_Server_STD_CORE_2025_24H2.1_64Bit_English_DC_STD_MLF_X23-89914.ISO", # Your main OS ISO
-    # "[Iso Data Store] vmware_iso/Windows10.iso" # The VMware Tools ISO containing PVSCSI
+    "[LABVMW_DATASTORE] Repository/SW_DVD9_Win_Server_STD_CORE_2025_24H2.1_64Bit_English_DC_STD_MLF_X23-89914.ISO",
+    "[] /vmimages/tools-isoimages/windows.iso" # Built-in ESXi Hypervisor path
   ]
 
-  # cd_files = ["./windows/autounattend.xml"]
-  # cd_label = "cidata"
-
-  floppy_files = [
+  # CRITICAL: We move the answer file to a secondary CD-ROM so EFI reads it
+  cd_files = [
     "./autounattend.xml"
   ]
+  cd_label = "cidata"
 
   boot_order = "cdrom,disk"
-
-  boot_wait = "1s"
-
+  boot_wait  = "2s"
 
   boot_command = [
-    "<spacebar>",
-    "<spacebar>",
-    "<spacebar>",
-    "<spacebar>",
-    "<spacebar>",
-    "<spacebar>",
-    "<spacebar>",  
-    "<spacebar>",
-    "<spacebar>"
+    "<spacebar><spacebar><spacebar>"
   ]
 
-
-  communicator = "winrm"
+  communicator   = "winrm"
   winrm_username = "Administrator"
   winrm_password = var.vm_admin_password
   winrm_timeout  = "2h"
 
-  insecure_connection = true
   set_host_for_datastore_uploads = true
-
 }
 
 build {
@@ -114,10 +94,8 @@ build {
       "Set-NetConnectionProfile -NetworkCategory Private",
       "winrm quickconfig -q",
       "Enable-PSRemoting -Force",
-      "winrm delete winrm/config/listener?Address=*+Transport=HTTP 2> $null",
-      "winrm create winrm/config/listener?Address=*+Transport=HTTP",
       "Set-Service WinRM -StartupType Automatic",
-      "Enable-NetFirewallRule -DisplayGroup \"Windows Remote Management\""
+      "Enable-NetFirewallRule -DisplayGroup 'Windows Remote Management'"
     ]
   }
 }
