@@ -89,13 +89,13 @@
   </settings>
 
   <!-- OOBE SYSTEM -->
+  
   <settings pass="oobeSystem">
-
     <component name="Microsoft-Windows-Shell-Setup"
-               processorArchitecture="amd64"
-               publicKeyToken="31bf3856ad364e35"
-               language="neutral"
-               versionScope="nonSxS">
+              processorArchitecture="amd64"
+              publicKeyToken="31bf3856ad364e35"
+              language="neutral"
+              versionScope="nonSxS">
 
       <OOBE>
         <HideEULAPage>true</HideEULAPage>
@@ -107,6 +107,7 @@
         <ProtectYourPC>1</ProtectYourPC>
       </OOBE>
 
+      <!-- ✅ CRITICAL: this must be exactly this -->
       <UserAccounts>
         <AdministratorPassword>
           <Value>Johnathan0730-!</Value>
@@ -114,6 +115,7 @@
         </AdministratorPassword>
       </UserAccounts>
 
+      <!-- ✅ MUST match password -->
       <AutoLogon>
         <Username>Administrator</Username>
         <Enabled>true</Enabled>
@@ -124,26 +126,8 @@
         </Password>
       </AutoLogon>
 
-      <FirstLogonCommands>
-
-        <SynchronousCommand wcm:Order>
-          <Description>Enable WinRM</Description>
-          <CommandLine>powershell -ExecutionPolicy Bypass -Command "Enable-PSRemoting -Force"</CommandLine>
-        </SynchronousCommand>
-
-        <SynchronousCommand wcm:action="add"><Description>Set Network Private</Description>
-          <CommandLine>powershell -ExecutionPolicy Bypass -Command "Set-NetConnectionProfile -NetworkCategory Private"</CommandLine>
-        </SynchronousCommand>
-
-        <SynchronousCommand wcm:Order>
-          <Description>Configure WinRM Auth</Description>
-          <CommandLine>powershell -ExecutionPolicy Bypass -Command "winrm set winrm/config/service @{AllowUnencrypted='true'}; winrm set winrm/config/service/auth @{Basic='true'}"</CommandLine>
-        </SynchronousCommand>
-
-      </FirstLogonCommands>
-
     </component>
+</settings>
 
-  </settings>
 
 </unattend>
