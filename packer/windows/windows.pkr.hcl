@@ -69,9 +69,9 @@ source "vsphere-iso" "windows" {
   ]
 
   # CRITICAL: We move the answer file to a secondary CD-ROM so EFI reads it
-  cd_files = [
-    "./autounattend.xml"
-  ]
+  cd_content = {
+    "autounattend.xml" = file("${path.root}/autounattend.xml")
+  }
   cd_label = "cidata"
 
   boot_order = "cdrom,disk"
