@@ -2,11 +2,15 @@ packer {
   required_plugins {
     vsphere = {
       version = ">= 1.1.0"
-      source  = "://github.com" 
+      source  = "github.com/hashicorp/vsphere"
+    }
+
+    ansible = {
+      version = ">= 1.0.0"
+      source  = "github.com/hashicorp/ansible"
     }
   }
 }
-
 variable "vsphere_user"      { type = string }
 variable "vsphere_password"  { type = string }
 variable "vsphere_server"    { type = string }
