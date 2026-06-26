@@ -68,9 +68,8 @@ source "vsphere-iso" "windows" {
     "[Iso Data Store] vmware_iso/Windows10.iso" 
   ]
 
-  # CRITICAL: We move the answer file to a secondary CD-ROM so EFI reads it
   cd_content = {
-    "autounattend.xml" = file("${path.root}/autounattend.xml")
+    "autounattend.xml" = file("autounattend.xml")
   }
   cd_label = "cidata"
 
