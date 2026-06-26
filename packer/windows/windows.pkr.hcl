@@ -64,8 +64,8 @@ source "vsphere-iso" "windows" {
 
   # Map BOTH the OS installation media and the ESXi native VMware Tools package
   iso_paths = [
-    "[LABVMW_DATASTORE] Repository/SW_DVD9_Win_Server_STD_CORE_2025_24H2.1_64Bit_English_DC_STD_MLF_X23-89914.ISO",
-    "[] /vmimages/tools-isoimages/windows.iso" # Built-in ESXi Hypervisor path
+    "[LABVMW_DATASTORE] Repository/SW_DVD9_Win_Server_STD_CORE_2025_24H2.1_64Bit_English_DC_STD_MLF_X23-89914.ISO", # Your main OS ISO
+    "[Iso Data Store] vmware_iso/Windows10.iso" 
   ]
 
   # CRITICAL: We move the answer file to a secondary CD-ROM so EFI reads it
