@@ -74,12 +74,12 @@ source "vsphere-iso" "windows" {
     #"[Iso Data Store] vmware_iso/Windows10.iso" 
   ]
 
-  cd_files = ["${path.root}/autounattend.xml"]
-  cd_label = "cidata"
+  #cd_files = ["${path.root}/autounattend.xml"]
+  #cd_label = "cidata"
  
-  # floppy_files = [
-  #   "./autounattend.xml"
-  # ]
+  floppy_files = [
+    ["${path.root}/autounattend.xml"]
+  ]
 
   boot_order = "disk,cdrom"
 
