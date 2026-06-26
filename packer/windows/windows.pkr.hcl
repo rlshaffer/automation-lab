@@ -99,7 +99,7 @@ source "vsphere-iso" "windows" {
   winrm_timeout  = "2h"
 
   insecure_connection = true
-  set_host_for_datastore_uploads = true
+  set_host_for_datastore_uploads = false
 
 }
 
