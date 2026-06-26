@@ -74,7 +74,7 @@ source "vsphere-iso" "windows" {
     "[Iso Data Store] vmware_iso/Windows10.iso" 
   ]
 
-  cd_files = ["./autounattend.xml"]
+  cd_files = ["./windows/autounattend.xml"]
   cd_label = "cidata"
  
   # floppy_files = [
