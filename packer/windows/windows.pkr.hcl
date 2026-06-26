@@ -71,10 +71,10 @@ source "vsphere-iso" "windows" {
 
   iso_paths = [
     "[LABVMW_DATASTORE] Repository/SW_DVD9_Win_Server_STD_CORE_2025_24H2.1_64Bit_English_DC_STD_MLF_X23-89914.ISO", # Your main OS ISO
-    "[Iso Data Store] vmware_iso/Windows10.iso" 
+    #"[Iso Data Store] vmware_iso/Windows10.iso" 
   ]
 
-  cd_files = ["./windows/autounattend.xml"]
+  cd_files = ["./autounattend.xml"]
   cd_label = "cidata"
  
   # floppy_files = [
@@ -107,7 +107,7 @@ build {
   sources = ["source.vsphere-iso.windows"]
 
   provisioner "ansible" {
-    playbook_file   = "../ansible/base.yml"
+    playbook_file = "${path.root}/../ansible/base.yml"
     user            = "Administrator"
     extra_arguments = [
       "--extra-vars",
