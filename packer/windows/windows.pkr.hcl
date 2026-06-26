@@ -107,7 +107,7 @@ build {
   sources = ["source.vsphere-iso.windows"]
 
   provisioner "ansible" {
-    playbook_file   = "./ansible/base.yml"
+    playbook_file   = "../ansible/base.yml"
     user            = "Administrator"
     extra_arguments = [
       "--extra-vars",
