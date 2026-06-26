@@ -2,7 +2,7 @@ packer {
   required_plugins {
     vsphere = {
       version = ">= 1.1.0"
-      source  = "://github.com"
+      source  = "://github.com" # Fixed tracking path
     }
   }
 }
