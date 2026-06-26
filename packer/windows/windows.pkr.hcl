@@ -1,4 +1,3 @@
-
 packer {
   required_plugins {
     vsphere = {
